@@ -8,8 +8,8 @@ $.wind = new PVector(0, 0, 0);
 // Gravity of the world
 $.gravity = new PVector(0, 5, 0);
 
-$.snowBG = new SnowLayer(32, 0.8 * $.ul, 1.4 * $.ul);
-$.snowFG = new SnowLayer(8, 1.4 * $.ul, 2 * $.ul);
+$.snowBG = new SnowLayer(32, 0.8, 1.4);
+$.snowFG = new SnowLayer(8, 1.4, 2);
 
 
 // Configuration
@@ -24,7 +24,8 @@ $.cfg = {
 	windMinY  : -$.ul / 3,
 	windMaxY  : $.ul / 2,
 	windMinX  : -$.ul / 2,
-	windMaxX  : $.ul / 2
+	windMaxX  : $.ul / 2,
+	windRnd   : $.ul / 3
 };
 
 
@@ -32,10 +33,10 @@ $.applyForceSnow = function(s) {
 	if (! s.active) { return; }
 	var p = s.particle;
 	// wind force, proportional to the snow flake size
-	var fwind = PVector.mult($.wind, s.size / $.ul);
+	var fwind = PVector.mult($.wind, s.scale);
 	// random component for the wind
-	var rwind = new PVector(random(-$.ul/3, $.ul/3),
-	                        random(-$.ul/3, $.ul/3), 0);
+	var rwind = new PVector(random(-$.cfg.windRnd, $.cfg.windRnd),
+	                        random(-$.cfg.windRnd, $.cfg.windRnd), 0);
 	p.a.set($.gravity);
 	p.a.add(fwind);
 	p.a.add(rwind);
@@ -164,4 +165,5 @@ var draw = function() {
 	$.snowFG.draw();
 
 	$.removeOldSnow();
+	$.fps();
 };

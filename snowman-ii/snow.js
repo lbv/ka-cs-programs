@@ -1,22 +1,32 @@
-// A snow flake
-var Snow = function(id, particle, size, kol) {
+// A snowflake
+var Snow = function(id, particle, scale, kol) {
 	this.id       = id;
-	this.size     = size;
+	this.scale    = scale;
 	this.particle = particle;
 	this.kol      = kol;
 	this.active   = false;
 };
 
+Snow.size   = $.ul;
+Snow.shadow = $.ul / 8;
+
 Snow.prototype.draw = function() {
 	if (! this.active) { return; }
 
+	pushMatrix();
+	translate(this.particle.v.x, this.particle.v.y);
+	scale(this.scale, this.scale);
+
 	noStroke();
+	fill($.colors.gray1[2]);
+	ellipse(-Snow.shadow, Snow.shadow, Snow.size, Snow.size);
 	fill(this.kol);
-	var p = this.particle;
-	arc(p.v.x, p.v.y, this.size, this.size, 0, 360);
+	ellipse(0, 0, Snow.size, Snow.size);
+
+	popMatrix();
 };
 
-// A snow layer, with maxSnow flakes, with size between "small" and "big"
+// A snow layer, with maxSnow flakes, with a scale between "small" and "big"
 var SnowLayer = function(maxSnow, small, big) {
 	this.maxSnow = maxSnow;
 	this.small   = small;
@@ -33,15 +43,17 @@ var SnowLayer = function(maxSnow, small, big) {
 
 SnowLayer.prototype.addSnow = function() {
 	++this.n;
-	var id   = this.serial++;
-	var size = random(this.small, this.big);
-	var kol  = lerpColor($.colors.blue[0], $.colors.gray1[2],
-	                     random(0.33, 0.66));
+	var id    = this.serial++;
+	var scale = random(this.small, this.big);
+	var kol   = lerpColor($.colors.blue[0], $.colors.gray1[2],
+	                      random(0.4, 0.8));
 
-	var locX = random(size, width - size);
-	var part = this.ps.newParticle(locX, -size);
+	var sz = scale * Snow.size;
+	var locX = random(sz, width - sz);
+	var part = this.ps.newParticle(locX, -sz);
 
-	var s = new Snow(id, part, size, kol);
+	var s = new Snow(id, part, scale, kol);
+	s.size = sz;
 	var prop = 's_' + id;
 	this.snow[prop] = s;
 

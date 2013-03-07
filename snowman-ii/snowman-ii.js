@@ -7,10 +7,16 @@
  *
  * Original Snowman:
  *   http://www.khanacademy.org/cs/snowman/823735629
- * Snowman II:
+ *
+ * Snowman II version ?
  *
  *
  * Currently a work in progress.
+ *
+ * TODO:
+ *   Improve timers
+ *   Improve acceleration of particles
+ *   Add keyboard control for snowman
  *
  * This is released into the public domain. Feel free to use it as you please.
  */
@@ -19,6 +25,9 @@
  * Global object, filled with general goodies to use in different programs
  */
 var $ = {};
+
+// Reference to "main" context
+$.pjs = this;
 
 // Basic unit of length (approx 6 pixels in a 400x400 canvas)
 $.ul = width / 64;
@@ -67,6 +76,11 @@ $.loopStep = function() {
 		$.timers[0].cb();
 		$.timers.shift();
 	}
+};
+
+$.fps = function() {
+	fill($.colors.red[0]);
+	text($.pjs.__frameRate, 10, 10);
 };
 
 /**
@@ -120,25 +134,35 @@ ParticleSystem.prototype.remove = function(particle) {
 };
 
 
-// A snow flake
-var Snow = function(id, particle, size, kol) {
+// A snowflake
+var Snow = function(id, particle, scale, kol) {
 	this.id       = id;
-	this.size     = size;
+	this.scale    = scale;
 	this.particle = particle;
 	this.kol      = kol;
 	this.active   = false;
 };
 
+Snow.size   = $.ul;
+Snow.shadow = $.ul / 8;
+
 Snow.prototype.draw = function() {
 	if (! this.active) { return; }
 
+	pushMatrix();
+	translate(this.particle.v.x, this.particle.v.y);
+	scale(this.scale, this.scale);
+
 	noStroke();
+	fill($.colors.gray1[2]);
+	ellipse(-Snow.shadow, Snow.shadow, Snow.size, Snow.size);
 	fill(this.kol);
-	var p = this.particle;
-	arc(p.v.x, p.v.y, this.size, this.size, 0, 360);
+	ellipse(0, 0, Snow.size, Snow.size);
+
+	popMatrix();
 };
 
-// A snow layer, with maxSnow flakes, with size between "small" and "big"
+// A snow layer, with maxSnow flakes, with a scale between "small" and "big"
 var SnowLayer = function(maxSnow, small, big) {
 	this.maxSnow = maxSnow;
 	this.small   = small;
@@ -155,15 +179,17 @@ var SnowLayer = function(maxSnow, small, big) {
 
 SnowLayer.prototype.addSnow = function() {
 	++this.n;
-	var id   = this.serial++;
-	var size = random(this.small, this.big);
-	var kol  = lerpColor($.colors.blue[0], $.colors.gray1[2],
-	                     random(0.33, 0.66));
+	var id    = this.serial++;
+	var scale = random(this.small, this.big);
+	var kol   = lerpColor($.colors.blue[0], $.colors.gray1[2],
+	                      random(0.4, 0.8));
 
-	var locX = random(size, width - size);
-	var part = this.ps.newParticle(locX, -size);
+	var sz = scale * Snow.size;
+	var locX = random(sz, width - sz);
+	var part = this.ps.newParticle(locX, -sz);
 
-	var s = new Snow(id, part, size, kol);
+	var s = new Snow(id, part, scale, kol);
+	s.size = sz;
 	var prop = 's_' + id;
 	this.snow[prop] = s;
 
@@ -211,8 +237,8 @@ $.wind = new PVector(0, 0, 0);
 // Gravity of the world
 $.gravity = new PVector(0, 5, 0);
 
-$.snowBG = new SnowLayer(32, 0.5 * $.ul, 1.5*$.ul);
-$.snowFG = new SnowLayer(8, 1.5 * $.ul, 2*$.ul);
+$.snowBG = new SnowLayer(32, 0.8, 1.4);
+$.snowFG = new SnowLayer(8, 1.4, 2);
 
 
 // Configuration
@@ -227,7 +253,8 @@ $.cfg = {
 	windMinY  : -$.ul / 3,
 	windMaxY  : $.ul / 2,
 	windMinX  : -$.ul / 2,
-	windMaxX  : $.ul / 2
+	windMaxX  : $.ul / 2,
+	windRnd   : $.ul / 3
 };
 
 
@@ -235,10 +262,10 @@ $.applyForceSnow = function(s) {
 	if (! s.active) { return; }
 	var p = s.particle;
 	// wind force, proportional to the snow flake size
-	var fwind = PVector.mult($.wind, s.size / $.ul);
+	var fwind = PVector.mult($.wind, s.scale);
 	// random component for the wind
-	var rwind = new PVector(random(-$.ul/3, $.ul/3),
-	                        random(-$.ul/3, $.ul/3), 0);
+	var rwind = new PVector(random(-$.cfg.windRnd, $.cfg.windRnd),
+	                        random(-$.cfg.windRnd, $.cfg.windRnd), 0);
 	p.a.set($.gravity);
 	p.a.add(fwind);
 	p.a.add(rwind);
@@ -367,5 +394,6 @@ var draw = function() {
 	$.snowFG.draw();
 
 	$.removeOldSnow();
+	$.fps();
 };
 
