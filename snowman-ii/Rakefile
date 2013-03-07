@@ -1,0 +1,9 @@
+require 'rake/clean'
+
+CLOBBER.include('snowman-ii.js')
+
+task :default => 'snowman-ii.js'
+
+file 'snowman-ii.js' => [ 'snowman-ii.m4' ] do
+	sh "m4 -I ../lib -P snowman-ii.m4 > snowman-ii.js"
+end

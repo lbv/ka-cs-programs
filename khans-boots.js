@@ -4,9 +4,14 @@
  * A simple game based on the classic "Rocky's Boots", created for the Khan
  * Academy Computer Science platform.
  *
+ * Program:
+ *   http://www.khanacademy.org/cs/testing-ideas/1422956783
+ * Creator's profile:
+ *   https://www.khanacademy.org/profile/lbv0112358/
+ *
  * Currently a work in progress.
  *
- * This is released to the public domain. Feel free to use it as you please.
+ * This is released into the public domain. Feel free to use it as you please.
  */
 
 
@@ -58,6 +63,43 @@ $.callbacks = {
 //
 $.room = [];
 
+//
+// Queue of objects in the room that have changed, so they need to be checked
+//
+$.changeQueue = [];
+
+//
+// Enumerations
+//
+$.e = {
+	zoneType : {
+		// A zone that grabs objects (i.e. the "Hand")
+		GRABBER   : 'grabber',
+		// A zone at which an object can be grabbed
+		GRABBABLE : 'grabbable',
+
+		// Has the ability to receive flow
+		INPUT  : 'input',
+		// Has to ability to produce flow
+		OUTPUT : 'output',
+
+		// A zone that can connect to a socket
+		PLUG   : 'plug',
+		// A zone that can receive a plug
+		SOCKET : 'socket'
+	},
+
+	// Possible statuses for interaction zones
+	status : {
+		// a zone that is doing nothing, ready to interact
+		IDLE   : 'idle',
+		// a zone that is interacting with some other zone
+		ACTIVE : 'active',
+		// a zone that is "taken" and ignores others
+		BUSY   : 'busy'
+	}
+};
+
 
 /*************
  ** Classes **
@@ -71,14 +113,48 @@ $.extend = function(obj, from) {
 };
 
 //
+// Zone
+//
+// Defines an "interaction zone" for an object, intended to do interesting
+// stuff when it comes into contact with relevant zones from other objects
+//
+var Zone = function() {};
+$.extend(Zone.prototype, {
+	obj        : null,
+	type       : 'none',
+	wants      : 'none',
+	
+	state      : $.e.states.IDLE,
+	nBoxes     : 0,
+	boxDataSrc : []
+});
+
+Zone.prototype.init = function(zoneType, wantsType, nBoxes, dataSrcs) {
+	this.type       = zoneType;
+	this.wants      = wantsType;
+	this.nBoxes     = nBoxes;
+	this.boxDataSrc = dataSrcs;
+};
+
+//
 // KhanObject
 //
 // The basic class from which most other objects inherit.
 //
 var KhanObject = function() {};
 $.extend(KhanObject.prototype, {
-	x : 0, y : 0
+	x       : 0,
+	y       : 0,
+	idx     : -1,
+	changed : false,
+	zones   : []
 });
+
+KhanObject.prototype.signalChange = function() {
+	if (this.changed) { return; }
+	this.changed = true;
+	$.changeQueue.push(this);
+};
 
 //
 // Hand
@@ -101,6 +177,18 @@ Hand.prototype.onInit = function() {
 	this.x = (width - this.w) / 2;
 	this.y = (height - this.h) / 2;
 	this.kol = $.colors.red[0] | 0xaa000000;
+
+//	var z = new Zone();
+//	z.init($.e.zones.GRABBER, $.e.zones.GRABBABLE, 1, [ boxFunc ]);
+};
+
+Hand.prototype.move = function() {
+	this.x += this.vx;
+	this.y += this.vy;
+
+	this.x = constrain(this.x, 0, width - this.w);
+	this.y = constrain(this.y, 0, height - this.h);
+	this.signalChange();
 };
 
 Hand.prototype.onFrame = function() {
@@ -110,11 +198,7 @@ Hand.prototype.onFrame = function() {
 	this.vx = constrain(this.vx, -$.cfg.speedMax, $.cfg.speedMax);
 	this.vy = constrain(this.vy, -$.cfg.speedMax, $.cfg.speedMax);
 
-	this.x += this.vx;
-	this.y += this.vy;
-
-	this.x = constrain(this.x, 0, width - this.w);
-	this.y = constrain(this.y, 0, height - this.h);
+	if (this.vx !== 0 || this.vy !== 0) { this.move(); }
 };
 
 Hand.prototype.onDraw = function() {
@@ -174,7 +258,9 @@ Boot.prototype.onDraw = function() {
 $.kickIt = function() {
 	$.room.push(new Boot(), new Hand());
 
-	$.room.forEach(function(obj) {
+	$.room.forEach(function(obj, i) {
+		obj.idx = i;
+
 		if (typeof(obj.onInit) === 'function') { obj.onInit(); }
 		if (typeof(obj.onFrame) === 'function') {
 			$.callbacks.frame.push(obj);
@@ -191,14 +277,32 @@ $.kickIt = function() {
 	});
 };
 
+$.handleZoneIdle = function() {
+
+};
+
+$.handleZoneActive = function() {
+
+};
+
 //
 // Processing.JS callback for "draw" event
 //
 var draw = function() {
 	$.callbacks.frame.forEach(function(obj) { obj.onFrame(); });
 
-	background(255, 255, 255);
+	for (var i = 0; i < $.changeQueue.length; ++i) {
+		var obj = $.changeQueue[i];
+		for (var j = 0, J = obj.zones.length; j < J; ++i) {
+			var zn = obj.zones[j];
+			if (zn.state === $.e.states.IDLE) { $.handleZoneIdle(zn); }
+			else if (zn.state === $.e.states.ACTIVE) { $.handleZoneActive(zn); }
+		}
+		obj.changed = false;
+	}
+	$.changeQueue = [];
 
+	background(255, 255, 255);
 	$.callbacks.draw.forEach(function(obj) { obj.onDraw(); });
 };
 
@@ -209,7 +313,6 @@ var keyPressed = function() {
 	$.callbacks.keyPressed.forEach(function(obj) {
 		obj.onKeyPressed(key, keyCode);
 	});
-
 };
 
 //
@@ -222,6 +325,6 @@ var keyReleased = function() {
 };
 
 //
-// Let's start this party...
+// Let's get this party started...
 //
 $.kickIt();
