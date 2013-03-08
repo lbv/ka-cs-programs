@@ -10,6 +10,7 @@ task :default => 'snowman-ii.js'
 	'../lib/dollar-timers.js',
 	'../lib/particles.js',
 	'snow.js',
+	'snowman.js',
 	'snowman-ii-main.js',
 	'snowman-ii.m4'
 ]

@@ -14,7 +14,6 @@
  * Currently a work in progress.
  *
  * TODO:
- *   Improve acceleration of particles
  *   Add keyboard control for snowman
  *
  * This is released into the public domain. Feel free to use it as you please.
@@ -274,6 +273,93 @@ SnowLayer.prototype.draw = function() {
 	}
 };
 
+var Snowman = function(x, y, scale) {
+	this.ps     = new ParticleSystem();
+	this.p      = this.ps.newParticle(x, y);
+	this.ground = y;
+	this.scale  = scale;
+};
+
+Snowman.ball = $.ul * 25;
+Snowman.shadow = color(240, 240, 240);
+
+Snowman.prototype.draw = function() {
+	pushMatrix();
+	translate(this.p.r.x, this.p.r.y);
+	scale(this.scale, this.scale);
+
+	noStroke();
+
+	// bottom snowball
+	fill($.colors.white);
+	ellipse(0, - 0.5 * Snowman.ball, Snowman.ball, Snowman.ball);
+
+	// middle snowball shadow
+	fill(Snowman.shadow);
+	ellipse(0, - 1.09 * Snowman.ball, 0.8 * Snowman.ball, 0.8 * Snowman.ball);
+
+	// middle snowball
+	fill($.colors.white);
+	ellipse(0, - 1.12 * Snowman.ball, 0.8 * Snowman.ball, 0.8 * Snowman.ball);
+
+	// top snowball shadow
+	fill(Snowman.shadow);
+	ellipse(0, - 1.67 * Snowman.ball, 0.6 * Snowman.ball, 0.6 * Snowman.ball);
+
+	// top snowball
+	fill($.colors.white);
+	ellipse(0, - 1.7 * Snowman.ball, 0.6 * Snowman.ball, 0.6 * Snowman.ball);
+
+	// buttons
+	fill($.colors.red[1]);
+	ellipse(0, -1.25 * Snowman.ball, 0.06 * Snowman.ball, 0.06 * Snowman.ball);
+	ellipse(0, -1.06 * Snowman.ball, 0.06 * Snowman.ball, 0.06 * Snowman.ball);
+
+	//nose
+	fill($.colors.orange[1]);
+	triangle(0, -1.62 * Snowman.ball, 0, -1.55 * Snowman.ball,
+	         0.16 * Snowman.ball, -1.53 * Snowman.ball);
+
+	// set color for eyes, hat, and arms
+	fill($.colors.gray2[1]);
+
+	// eyes
+	var eyeSize = 0.08 * Snowman.ball;
+	var distanceFromCenter = 0.14 * Snowman.ball;
+	ellipse(-distanceFromCenter, -1.67 * Snowman.ball, eyeSize, eyeSize);
+	ellipse(distanceFromCenter, -1.67 * Snowman.ball, eyeSize, eyeSize);
+
+	// hat
+	fill($.colors.gray2[2]);
+	rect(-0.41 * Snowman.ball, -1.91 * Snowman.ball, 0.82 * Snowman.ball,
+	     0.03 * Snowman.ball);
+	rect(-0.25 * Snowman.ball, -2.27 * Snowman.ball, 0.49 * Snowman.ball,
+	     0.39 * Snowman.ball);
+
+
+	// for the arms, we want a thick line
+	stroke($.colors.gray2[1]);
+	strokeWeight(2);
+
+	// left arm
+	line(-0.82 * Snowman.ball, -1.6 * Snowman.ball,
+	     -0.38 * Snowman.ball, -1.3 * Snowman.ball);
+	line(-0.71 * Snowman.ball, -1.75 * Snowman.ball,
+	     -0.66 * Snowman.ball, -1.49 * Snowman.ball);
+	line(-0.86 * Snowman.ball, -1.4 * Snowman.ball,
+	     -0.59 * Snowman.ball, -1.44 * Snowman.ball);
+
+	// right arm
+	line(0.4 * Snowman.ball, -1.26 * Snowman.ball,
+	     0.88 * Snowman.ball, -1.57 * Snowman.ball);
+	line(0.68 * Snowman.ball, -1.44 * Snowman.ball,
+	     0.92 * Snowman.ball, -1.41 * Snowman.ball);
+	line(0.56 * Snowman.ball, -1.36 * Snowman.ball,
+	     0.73 * Snowman.ball, -1.7 * Snowman.ball);
+
+	popMatrix();
+};
+
 /**
  * Program specific data
  */
@@ -287,11 +373,12 @@ $.gravity = new PVector(0, 8*$.ul, 0);
 $.snowBG = new SnowLayer(32, 0.8, 1.4);
 $.snowFG = new SnowLayer(8, 1.4, 2);
 
+$.snowman = new Snowman(width / 2, height - $.ul * 2, 1.0);
+
 
 // Configuration
 $.cfg = {
 	colorSky    : lerpColor($.colors.blue[0], $.colors.white, 0.5),
-	colorHat    : $.colors.gray2[2],
 	colorGround : $.colors.gray1[1],
 
 	groundHeight : $.ul * 10,
@@ -350,77 +437,6 @@ $.removeOldSnow = function() {
 
 };
 
-$.drawSnowman = function() {
-	// we don't need outlines for any of these shapes
-	noStroke();
-
-	// ground
-	fill($.cfg.colorGround);
-	rect(0, height - $.cfg.groundHeight, width, $.cfg.groundHeight);
-
-	// set the size of the biggest snowball
-	var snowballSize = 154;
-	// set x coordinate of the snowman
-	var snowmanX = 200;
-
-	// bottom snowball
-	fill(255, 255, 255);
-	ellipse(snowmanX, 309, snowballSize, snowballSize);
-
-	// middle snowball shadow
-	fill(240, 240, 240);
-	ellipse(snowmanX, 218, 0.8 * snowballSize, 0.8 * snowballSize);
-
-	// middle snowball
-	fill(255, 255, 255);
-	ellipse(snowmanX, 212, 0.8 * snowballSize, 0.8 * snowballSize);
-
-	// top snowball shadow
-	fill(240, 240, 240);
-	ellipse(snowmanX, 128, 0.6 * snowballSize, 0.6 *snowballSize);
-
-	// top snowball
-	fill(255, 255, 255);
-	ellipse(snowmanX, 123, 0.6 * snowballSize, 0.6 *snowballSize);
-
-	// buttons
-	fill($.colors.red[1]);
-	ellipse(snowmanX, 194, 10, 10);
-	ellipse(snowmanX, 222, 10, 10);
-
-	//nose
-	fill($.colors.orange[1]);
-	triangle(snowmanX, 136, snowmanX, 147, snowmanX + 25, 151);
-
-	// set color for eyes, hat, and arms
-	fill(43, 38, 38);
-
-	// eyes
-	var eyeSize = 12;
-	var distanceFromCenter = 22;
-	ellipse(snowmanX - distanceFromCenter, 129, eyeSize, eyeSize);
-	ellipse(snowmanX + distanceFromCenter, 129, eyeSize, eyeSize);
-
-	// hat
-	fill($.cfg.colorHat);
-	rect(snowmanX - 63, 92, 126, 5);
-	rect(snowmanX - 39, 37, 76, 60);
-
-	// for the arms, we want a thick line
-	stroke(43, 38, 38);
-	strokeWeight(2);
-
-	// left arm
-	line(snowmanX - 127, 140, snowmanX - 58, 187);
-	line(snowmanX - 109, 117, snowmanX - 101, 157);
-	line(snowmanX - 132, 171, snowmanX - 91, 165);
-
-	// right arm
-	line(snowmanX + 61, 192, snowmanX + 135, 144);
-	line(snowmanX + 104, 165, snowmanX + 142, 169);
-	line(snowmanX + 86, 176, snowmanX + 113, 125);
-};
-
 var draw = function() {
 	$.loopStep();
 
@@ -436,7 +452,14 @@ var draw = function() {
 	background($.cfg.colorSky);
 
 	$.snowBG.draw();
-	$.drawSnowman();
+
+	noStroke();
+	// ground
+	fill($.cfg.colorGround);
+	rect(0, height - $.cfg.groundHeight, width, $.cfg.groundHeight);
+
+	$.snowman.draw();
+
 	$.snowFG.draw();
 
 	$.removeOldSnow();

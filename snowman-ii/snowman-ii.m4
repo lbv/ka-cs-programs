@@ -14,7 +14,6 @@
  * Currently a work in progress.
  *
  * TODO:
- *   Improve acceleration of particles
  *   Add keyboard control for snowman
  *
  * This is released into the public domain. Feel free to use it as you please.
@@ -26,4 +25,5 @@ m4_include(`dollar-timers.js')
 m4_include(`particles.js')
 
 m4_include(`snow.js')
+m4_include(`snowman.js')
 m4_include(`snowman-ii-main.js')
