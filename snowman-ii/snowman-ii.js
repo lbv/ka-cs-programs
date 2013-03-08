@@ -133,8 +133,9 @@ $.loopStep = function() {
  * A single particle 
  */
 var Particle = function(x, y, id) {
-	this.v  = new PVector(x, y, 0);  // vector for position of the particle
-	this.vo = new PVector(x, y, 0);  // old position vector
+	this.r  = new PVector(x, y, 0);  // vector for position of the particle
+	this.ro = new PVector(x, y, 0);  // old position vector
+	this.v  = new PVector(0, 0, 0);  // velocity approximation
 	this.a  = new PVector(0, 0, 0);  // acceleration vector
 	this.id = id;
 };
@@ -162,11 +163,11 @@ ParticleSystem.prototype.advance = function(timeStep) {
 	var t2 = timeStep * timeStep;
 	for (var name in this.p) {
 		var part = this.p[name];
-		var aux = new PVector(part.v.x, part.v.y, 0);
-		part.v.add(part.v);
-		part.v.sub(part.vo);
-		part.v.add(PVector.mult(part.a, t2));
-		part.vo = aux;
+		var aux = new PVector(part.r.x, part.r.y, 0);
+		part.v = PVector.sub(part.r, part.ro);
+		part.r.add(part.v);
+		part.r.add(PVector.mult(part.a, t2));
+		part.ro = aux;
 	}
 };
 
@@ -196,7 +197,7 @@ Snow.prototype.draw = function() {
 	if (! this.active) { return; }
 
 	pushMatrix();
-	translate(this.particle.v.x, this.particle.v.y);
+	translate(this.particle.r.x, this.particle.r.y);
 	scale(this.scale, this.scale);
 
 	noStroke();
@@ -245,8 +246,8 @@ SnowLayer.prototype.addSnow = function() {
 		--obj.nInactive;
 		s.active = true;
 	};
-	var delay = this.nInactive * 800;
-	$.addTimer(random(delay - 800, delay), activator);
+	var delay = this.nInactive * 1500;
+	$.addTimer(random(delay - 1500, delay), activator);
 };
 
 SnowLayer.prototype.removeSnow = function(snow) {
@@ -281,7 +282,7 @@ SnowLayer.prototype.draw = function() {
 $.wind = new PVector(0, 0, 0);
 
 // Gravity of the world
-$.gravity = new PVector(0, 5, 0);
+$.gravity = new PVector(0, 8*$.ul, 0);
 
 $.snowBG = new SnowLayer(32, 0.8, 1.4);
 $.snowFG = new SnowLayer(8, 1.4, 2);
@@ -296,7 +297,7 @@ $.cfg = {
 	groundHeight : $.ul * 10,
 
 	windDelta : $.ul / 2,
-	windMinY  : -$.ul / 3,
+	windMinY  : -$.ul / 4,
 	windMaxY  : $.ul / 2,
 	windMinX  : -$.ul / 2,
 	windMaxX  : $.ul / 2,
@@ -307,12 +308,15 @@ $.cfg = {
 $.applyForceSnow = function(s) {
 	if (! s.active) { return; }
 	var p = s.particle;
+
+	if (p.v.y <= 0) { p.a.set($.gravity); }
+	else            { p.a.set(0, 0, 0); }
+
 	// wind force, proportional to the snow flake size
 	var fwind = PVector.mult($.wind, s.scale);
 	// random component for the wind
 	var rwind = new PVector(random(-$.cfg.windRnd, $.cfg.windRnd),
-	                        random(-$.cfg.windRnd, $.cfg.windRnd), 0);
-	p.a.set($.gravity);
+	                        random($.cfg.windRnd), 0);
 	p.a.add(fwind);
 	p.a.add(rwind);
 };
@@ -332,9 +336,7 @@ $.removeOldSnow = function() {
 	var rem = [];
 	$.snowBG.forEach(function(s) {
 		var p = s.particle;
-		if (p.v.y > height - $.cfg.groundHeight + s.size) {
-			rem.push(s);
-		}
+		if (p.r.y > height - $.cfg.groundHeight + s.size) { rem.push(s); }
 	});
 	var i;
 	for (i = 0; i < rem.length; ++i) { $.snowBG.removeSnow(rem[i]); }
@@ -342,9 +344,7 @@ $.removeOldSnow = function() {
 	rem = [];
 	$.snowFG.forEach(function(s) {
 		var p = s.particle;
-		if (p.v.y > height + s.size) {
-			rem.push(s);
-		}
+		if (p.r.y > height + s.size) { rem.push(s); }
 	});
 	for (i = 0; i < rem.length; ++i) { $.snowFG.removeSnow(rem[i]); }
 

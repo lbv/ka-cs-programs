@@ -14,7 +14,7 @@ Snow.prototype.draw = function() {
 	if (! this.active) { return; }
 
 	pushMatrix();
-	translate(this.particle.v.x, this.particle.v.y);
+	translate(this.particle.r.x, this.particle.r.y);
 	scale(this.scale, this.scale);
 
 	noStroke();
@@ -63,8 +63,8 @@ SnowLayer.prototype.addSnow = function() {
 		--obj.nInactive;
 		s.active = true;
 	};
-	var delay = this.nInactive * 800;
-	$.addTimer(random(delay - 800, delay), activator);
+	var delay = this.nInactive * 1500;
+	$.addTimer(random(delay - 1500, delay), activator);
 };
 
 SnowLayer.prototype.removeSnow = function(snow) {

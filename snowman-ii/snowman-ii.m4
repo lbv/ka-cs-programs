@@ -14,7 +14,6 @@
  * Currently a work in progress.
  *
  * TODO:
- *   Improve timers
  *   Improve acceleration of particles
  *   Add keyboard control for snowman
  *
