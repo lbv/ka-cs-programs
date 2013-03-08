@@ -7,15 +7,21 @@
  * Spin-off of the official "Snowman" program. It adds falling snowflakes, and
  * control of the snowman with the keyboard.
  *
+ * This program seems to work fine in Google Chrome. In others browsers... not
+ * so much.
+ *
  * This program was built mainly to test a few things from the programming
  * platform. Because of this, it includes a few features that are not very
- * beginner-friendly for those who want to explore the source code. Sorry.
+ * beginner-friendly, for those who want to explore the source code. Sorry.
  *
  * Still, I hope you have fun looking at the code, and by taking your time with
  * it, I'm sure you will find interesting ways to tweak it :).
  *
  * Original Snowman:
  *   http://www.khanacademy.org/cs/snowman/823735629
+ *
+ * Snowman II on GitHub:
+ *   https://github.com/lbv/ka-cs-programs/tree/master/snowman-ii
  *
  * This is released into the public domain. Feel free to use it as you please.
  */
