@@ -2,19 +2,20 @@
  * Snowman II
  * ==========
  *
- * Spin-off of the official "Snowman" program. It adds falling snow flakes,
- * controlled by a simple physics-based simulation.
+ * Version 1 (2013-03-08)
+ *
+ * Spin-off of the official "Snowman" program. It adds falling snowflakes, and
+ * control of the snowman with the keyboard.
+ *
+ * This program was built mainly to test a few things from the programming
+ * platform. Because of this, it includes a few features that are not very
+ * beginner-friendly for those who want to explore the source code. Sorry.
+ *
+ * Still, I hope you have fun looking at the code, and by taking your time with
+ * it, I'm sure you will find interesting ways to tweak it :).
  *
  * Original Snowman:
  *   http://www.khanacademy.org/cs/snowman/823735629
- *
- * Snowman II version ?
- *
- *
- * Currently a work in progress.
- *
- * TODO:
- *   Add keyboard control for snowman
  *
  * This is released into the public domain. Feel free to use it as you please.
  */
@@ -299,8 +300,8 @@ SnowLayer.prototype.addSnow = function() {
 		--obj.nInactive;
 		s.active = true;
 	};
-	var delay = this.nInactive * 1500;
-	$.addTimer(random(delay - 1500, delay), activator);
+	var delay = this.nInactive * 800;
+	$.addTimer(random(delay - 800, delay), activator);
 };
 
 SnowLayer.prototype.removeSnow = function(snow) {
@@ -327,17 +328,69 @@ SnowLayer.prototype.draw = function() {
 	}
 };
 
+/**
+ * A snowman, whose appearance is based on the official "Snowman" program.
+ */
 var Snowman = function(x, y, scale) {
 	this.ps     = new ParticleSystem();
 	this.p      = this.ps.newParticle(x, y);
 	this.ground = y;
 	this.scale  = scale;
+
+	this.isGrowing   = false;
+	this.isShrinking = false;
+
+	this.moveL   = false;
+	this.moveR   = false;
+	this.moveD   = false;
+	this.jumping = false;
 };
 
-Snowman.ball = $.ul * 25;
+Snowman.ball   = $.ul * 25;
 Snowman.shadow = color(240, 240, 240);
+Snowman.ax     = $.ul * 64;   // horizontal acceleration
+Snowman.ay     = $.ul * 512;  // vertical acceleration
+Snowman.vjump  = $.ul * 3;    // max vertical speed when jumping
+Snowman.ag     = $.ul * 128;  // downwards (gravity) acceleration
+
+Snowman.prototype.onTheGround = function() {
+	return this.p.r.y >= this.ground - 8;
+};
 
 Snowman.prototype.draw = function() {
+	if (this.isGrowing || this.isShrinking) {
+		if (this.isGrowing)   { this.scale += 0.02; }
+		if (this.isShrinking) { this.scale -= 0.02; }
+		this.scale = constrain(this.scale, 0.4, 1.2);
+	}
+
+	this.p.a.set(0, 0, 0);
+	if (this.moveL) { this.p.a.x -= Snowman.ax * this.scale; }
+	if (this.moveR) { this.p.a.x += Snowman.ax * this.scale; }
+
+	if (this.jumping) {
+		this.p.a.y -= Snowman.ay * this.scale;
+	}
+	else {
+		this.p.a.y += Snowman.ag * this.scale;
+		if (this.moveD) { this.p.a.y += Snowman.ay * this.scale; }
+	}
+
+	this.ps.advance($.timeStep);
+
+	if (! this.moveL && ! this.moveR && this.onTheGround()) {
+		if (abs(this.p.v.x) < 1) { this.p.r.x = this.p.ro.x; }
+		else {
+			this.p.r.x = this.p.ro.x + this.p.v.x * 0.85;
+		}
+	}
+
+	if (this.p.r.y > this.ground) { this.p.r.y = this.ground; }
+	if (this.p.v.y < -Snowman.vjump * this.scale) {
+		this.p.r.y = this.p.ro.y - Snowman.vjump * this.scale;
+		this.jumping = false;
+	}
+
 	pushMatrix();
 	translate(this.p.r.x, this.p.r.y);
 	scale(this.scale, this.scale);
@@ -413,6 +466,23 @@ Snowman.prototype.draw = function() {
 	popMatrix();
 };
 
+Snowman.prototype.onKeyPressed = function(k, kc) {
+	if      (kc === 65) { this.isGrowing = true; }
+	else if (kc === 90) { this.isShrinking = true; }
+	else if (kc === RIGHT) { this.moveR = true; }
+	else if (kc === LEFT)  { this.moveL = true; }
+	else if (kc === DOWN)  { this.moveD = true; }
+	else if (kc === UP && this.onTheGround()) { this.jumping = true; }
+};
+
+Snowman.prototype.onKeyReleased = function(k, kc) {
+	if      (kc === 65) { this.isGrowing = false; }
+	else if (kc === 90) { this.isShrinking = false; }
+	else if (kc === RIGHT) { this.moveR = false; }
+	else if (kc === LEFT)  { this.moveL = false; }
+	else if (kc === DOWN)  { this.moveD = false; }
+};
+
 /**
  * Program specific data
  */
@@ -421,7 +491,7 @@ Snowman.prototype.draw = function() {
 $.wind = new PVector(0, 0, 0);
 
 // Gravity of the world
-$.gravity = new PVector(0, 8*$.ul, 0);
+$.gravity = new PVector(0, 16*$.ul, 0);
 
 // Two layers of snowflakes: one behind the snowman, and one in front
 $.snowBG = new SnowLayer(32, 0.8, 1.4);
@@ -448,6 +518,7 @@ $.cfg = {
 
 	groundHeight : $.ul * 10,
 
+	snowSpeed : $.ul * 0.15,
 	windDelta : $.ul / 2,
 	windMinY  : -$.ul / 4,
 	windMaxY  : $.ul / 2,
@@ -461,8 +532,8 @@ $.applyForceSnow = function(s) {
 	if (! s.active) { return; }
 	var p = s.particle;
 
-	if (p.v.y <= 0) { p.a.set($.gravity); }
-	else            { p.a.set(0, 0, 0); }
+	p.a.set(0, 0, 0);
+	if (p.v.y <= $.cfg.snowSpeed) { p.a.set($.gravity); }
 
 	// wind force, proportional to the snow flake size
 	var fwind = PVector.mult($.wind, s.scale);
@@ -529,14 +600,15 @@ var draw = function() {
 
 	$.removeOldSnow();
 	$.ki.draw();
-	$.fps();
 };
 
 var keyPressed = function() {
 	$.ki.onKeyPressed(key, keyCode);
+	$.snowman.onKeyPressed(key, keyCode);
 };
 
 var keyReleased = function() {
 	$.ki.onKeyReleased(key, keyCode);
+	$.snowman.onKeyReleased(key, keyCode);
 };
 

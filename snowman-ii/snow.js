@@ -63,8 +63,8 @@ SnowLayer.prototype.addSnow = function() {
 		--obj.nInactive;
 		s.active = true;
 	};
-	var delay = this.nInactive * 1500;
-	$.addTimer(random(delay - 1500, delay), activator);
+	var delay = this.nInactive * 800;
+	$.addTimer(random(delay - 800, delay), activator);
 };
 
 SnowLayer.prototype.removeSnow = function(snow) {

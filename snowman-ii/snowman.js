@@ -1,14 +1,66 @@
+/**
+ * A snowman, whose appearance is based on the official "Snowman" program.
+ */
 var Snowman = function(x, y, scale) {
 	this.ps     = new ParticleSystem();
 	this.p      = this.ps.newParticle(x, y);
 	this.ground = y;
 	this.scale  = scale;
+
+	this.isGrowing   = false;
+	this.isShrinking = false;
+
+	this.moveL   = false;
+	this.moveR   = false;
+	this.moveD   = false;
+	this.jumping = false;
 };
 
-Snowman.ball = $.ul * 25;
+Snowman.ball   = $.ul * 25;
 Snowman.shadow = color(240, 240, 240);
+Snowman.ax     = $.ul * 64;   // horizontal acceleration
+Snowman.ay     = $.ul * 512;  // vertical acceleration
+Snowman.vjump  = $.ul * 3;    // max vertical speed when jumping
+Snowman.ag     = $.ul * 128;  // downwards (gravity) acceleration
+
+Snowman.prototype.onTheGround = function() {
+	return this.p.r.y >= this.ground - 8;
+};
 
 Snowman.prototype.draw = function() {
+	if (this.isGrowing || this.isShrinking) {
+		if (this.isGrowing)   { this.scale += 0.02; }
+		if (this.isShrinking) { this.scale -= 0.02; }
+		this.scale = constrain(this.scale, 0.4, 1.2);
+	}
+
+	this.p.a.set(0, 0, 0);
+	if (this.moveL) { this.p.a.x -= Snowman.ax * this.scale; }
+	if (this.moveR) { this.p.a.x += Snowman.ax * this.scale; }
+
+	if (this.jumping) {
+		this.p.a.y -= Snowman.ay * this.scale;
+	}
+	else {
+		this.p.a.y += Snowman.ag * this.scale;
+		if (this.moveD) { this.p.a.y += Snowman.ay * this.scale; }
+	}
+
+	this.ps.advance($.timeStep);
+
+	if (! this.moveL && ! this.moveR && this.onTheGround()) {
+		if (abs(this.p.v.x) < 1) { this.p.r.x = this.p.ro.x; }
+		else {
+			this.p.r.x = this.p.ro.x + this.p.v.x * 0.85;
+		}
+	}
+
+	if (this.p.r.y > this.ground) { this.p.r.y = this.ground; }
+	if (this.p.v.y < -Snowman.vjump * this.scale) {
+		this.p.r.y = this.p.ro.y - Snowman.vjump * this.scale;
+		this.jumping = false;
+	}
+
 	pushMatrix();
 	translate(this.p.r.x, this.p.r.y);
 	scale(this.scale, this.scale);
@@ -82,4 +134,21 @@ Snowman.prototype.draw = function() {
 	     0.73 * Snowman.ball, -1.7 * Snowman.ball);
 
 	popMatrix();
+};
+
+Snowman.prototype.onKeyPressed = function(k, kc) {
+	if      (kc === 65) { this.isGrowing = true; }
+	else if (kc === 90) { this.isShrinking = true; }
+	else if (kc === RIGHT) { this.moveR = true; }
+	else if (kc === LEFT)  { this.moveL = true; }
+	else if (kc === DOWN)  { this.moveD = true; }
+	else if (kc === UP && this.onTheGround()) { this.jumping = true; }
+};
+
+Snowman.prototype.onKeyReleased = function(k, kc) {
+	if      (kc === 65) { this.isGrowing = false; }
+	else if (kc === 90) { this.isShrinking = false; }
+	else if (kc === RIGHT) { this.moveR = false; }
+	else if (kc === LEFT)  { this.moveL = false; }
+	else if (kc === DOWN)  { this.moveD = false; }
 };

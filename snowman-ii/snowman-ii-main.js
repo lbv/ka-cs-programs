@@ -6,7 +6,7 @@
 $.wind = new PVector(0, 0, 0);
 
 // Gravity of the world
-$.gravity = new PVector(0, 8*$.ul, 0);
+$.gravity = new PVector(0, 16*$.ul, 0);
 
 // Two layers of snowflakes: one behind the snowman, and one in front
 $.snowBG = new SnowLayer(32, 0.8, 1.4);
@@ -33,6 +33,7 @@ $.cfg = {
 
 	groundHeight : $.ul * 10,
 
+	snowSpeed : $.ul * 0.15,
 	windDelta : $.ul / 2,
 	windMinY  : -$.ul / 4,
 	windMaxY  : $.ul / 2,
@@ -46,8 +47,8 @@ $.applyForceSnow = function(s) {
 	if (! s.active) { return; }
 	var p = s.particle;
 
-	if (p.v.y <= 0) { p.a.set($.gravity); }
-	else            { p.a.set(0, 0, 0); }
+	p.a.set(0, 0, 0);
+	if (p.v.y <= $.cfg.snowSpeed) { p.a.set($.gravity); }
 
 	// wind force, proportional to the snow flake size
 	var fwind = PVector.mult($.wind, s.scale);
@@ -114,13 +115,14 @@ var draw = function() {
 
 	$.removeOldSnow();
 	$.ki.draw();
-	$.fps();
 };
 
 var keyPressed = function() {
 	$.ki.onKeyPressed(key, keyCode);
+	$.snowman.onKeyPressed(key, keyCode);
 };
 
 var keyReleased = function() {
 	$.ki.onKeyReleased(key, keyCode);
+	$.snowman.onKeyReleased(key, keyCode);
 };
