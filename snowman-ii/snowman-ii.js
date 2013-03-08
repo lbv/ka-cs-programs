@@ -47,7 +47,7 @@ $.colors = {
 
 $.fps = function() {
 	fill($.colors.red[0]);
-	text($.pjs.__frameRate, 10, 10);
+	text($.pjs.__frameRate, 16, height - 16);
 };
 
 /**
@@ -177,6 +177,60 @@ ParticleSystem.prototype.remove = function(particle) {
 		delete this.p[prop];
 		--this.n;
 	}
+};
+
+/**
+ * A small on-screen representation of a group of keys being pressed
+ */
+var KeysIndicator = function(x, y, keys) {
+	this.x = x;
+	this.y = y;
+	this.k = {};
+
+	for (var i = 0; i < keys.length; ++i) {
+		var key = keys[i];
+		this.k[key[0]] = {
+			str : key[1],
+			row : key[2],
+			col : key[3],
+			on  : false
+		};
+	}
+};
+
+KeysIndicator.size   = $.ul * 3;
+KeysIndicator.radius = $.ul * 0.5;
+KeysIndicator.font   = createFont("sans-serif", 18);
+
+KeysIndicator.prototype.drawKey = function(key) {
+	stroke($.colors.blue[2]);
+	strokeWeight(1.5);
+	if (key.on) { fill($.colors.blue[2] & 0xccffffff); }
+	else        { noFill(); }
+	rect(0, 0, KeysIndicator.size, KeysIndicator.size, KeysIndicator.radius);
+	if (key.on) { fill($.colors.white); }
+	else        { fill($.colors.blue[2]); }
+	textFont(KeysIndicator.font, 18);
+	text(key.str, 0, 16);
+};
+
+KeysIndicator.prototype.draw = function() {
+	for (var kc in this.k) {
+		var key = this.k[kc];
+		pushMatrix();
+		translate(this.x + key.col * KeysIndicator.size,
+		          this.y + key.row * KeysIndicator.size);
+		this.drawKey(key);
+		popMatrix();
+	}
+};
+
+KeysIndicator.prototype.onKeyPressed = function(k, kc) {
+	if (this.k.hasOwnProperty(kc)) { this.k[kc].on = true; }
+};
+
+KeysIndicator.prototype.onKeyReleased = function(k, kc) {
+	if (this.k.hasOwnProperty(kc)) { this.k[kc].on = false; }
 };
 
 
@@ -336,7 +390,6 @@ Snowman.prototype.draw = function() {
 	rect(-0.25 * Snowman.ball, -2.27 * Snowman.ball, 0.49 * Snowman.ball,
 	     0.39 * Snowman.ball);
 
-
 	// for the arms, we want a thick line
 	stroke($.colors.gray2[1]);
 	strokeWeight(2);
@@ -370,10 +423,22 @@ $.wind = new PVector(0, 0, 0);
 // Gravity of the world
 $.gravity = new PVector(0, 8*$.ul, 0);
 
+// Two layers of snowflakes: one behind the snowman, and one in front
 $.snowBG = new SnowLayer(32, 0.8, 1.4);
 $.snowFG = new SnowLayer(8, 1.4, 2);
 
+// The snowman
 $.snowman = new Snowman(width / 2, height - $.ul * 2, 1.0);
+
+// A small keyboard indicator
+$.ki = new KeysIndicator(width - $.ul * 17, $.ul * 2, [
+	[ UP,    " \u2191", 0, 1 ],
+	[ DOWN,  " \u2193", 1, 1 ],
+	[ RIGHT, "\u2192",  1, 2 ],
+	[ LEFT,  "\u2190",  1, 0 ],
+	[ 65,    " A",      0, 4 ],
+	[ 90,    " Z",      1, 4 ]
+]);
 
 
 // Configuration
@@ -463,6 +528,15 @@ var draw = function() {
 	$.snowFG.draw();
 
 	$.removeOldSnow();
+	$.ki.draw();
 	$.fps();
+};
+
+var keyPressed = function() {
+	$.ki.onKeyPressed(key, keyCode);
+};
+
+var keyReleased = function() {
+	$.ki.onKeyReleased(key, keyCode);
 };
 

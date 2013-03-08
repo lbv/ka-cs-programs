@@ -9,6 +9,7 @@ task :default => 'snowman-ii.js'
 	'../lib/heap.js',
 	'../lib/dollar-timers.js',
 	'../lib/particles.js',
+	'../lib/keys-indicator.js',
 	'snow.js',
 	'snowman.js',
 	'snowman-ii-main.js',

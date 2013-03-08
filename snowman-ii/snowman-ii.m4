@@ -23,6 +23,7 @@ m4_include(`dollar-basic.js')
 m4_include(`heap.js')
 m4_include(`dollar-timers.js')
 m4_include(`particles.js')
+m4_include(`keys-indicator.js')
 
 m4_include(`snow.js')
 m4_include(`snowman.js')

@@ -8,10 +8,22 @@ $.wind = new PVector(0, 0, 0);
 // Gravity of the world
 $.gravity = new PVector(0, 8*$.ul, 0);
 
+// Two layers of snowflakes: one behind the snowman, and one in front
 $.snowBG = new SnowLayer(32, 0.8, 1.4);
 $.snowFG = new SnowLayer(8, 1.4, 2);
 
+// The snowman
 $.snowman = new Snowman(width / 2, height - $.ul * 2, 1.0);
+
+// A small keyboard indicator
+$.ki = new KeysIndicator(width - $.ul * 17, $.ul * 2, [
+	[ UP,    " \u2191", 0, 1 ],
+	[ DOWN,  " \u2193", 1, 1 ],
+	[ RIGHT, "\u2192",  1, 2 ],
+	[ LEFT,  "\u2190",  1, 0 ],
+	[ 65,    " A",      0, 4 ],
+	[ 90,    " Z",      1, 4 ]
+]);
 
 
 // Configuration
@@ -101,5 +113,14 @@ var draw = function() {
 	$.snowFG.draw();
 
 	$.removeOldSnow();
+	$.ki.draw();
 	$.fps();
+};
+
+var keyPressed = function() {
+	$.ki.onKeyPressed(key, keyCode);
+};
+
+var keyReleased = function() {
+	$.ki.onKeyReleased(key, keyCode);
 };

@@ -61,7 +61,6 @@ Snowman.prototype.draw = function() {
 	rect(-0.25 * Snowman.ball, -2.27 * Snowman.ball, 0.49 * Snowman.ball,
 	     0.39 * Snowman.ball);
 
-
 	// for the arms, we want a thick line
 	stroke($.colors.gray2[1]);
 	strokeWeight(2);
