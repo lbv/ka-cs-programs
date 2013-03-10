@@ -7,6 +7,9 @@ task :default => 'gif-reader.js'
 @deps = [
 	'../lib/base64.js',
 	'../lib/gif.js',
+	'photo.js',
+	'pointer.js',
+	'logo.js',
 	'gif-reader-main.js',
 	'gif-reader.m4'
 ]

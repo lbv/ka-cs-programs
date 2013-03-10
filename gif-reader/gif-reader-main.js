@@ -1,19 +1,63 @@
+var photoImg;
+var pointerImg;
+var logoImg;
+var usePointer = false;
 
-
-var gif_data = "R0lGODlhZABkAIABAAAA/////yH+EUNyZWF0ZWQgd2l0aCBHSU1QACwAAAAAZABkAAACoYyPqcvt\nD6OctNqLs968+w+G4kiW5omm6sq27gvH8kzX9o3n+s73/g8MCofEovGITCqXzKbzCY1Kp9Sq9YrN\narcYgJer8IrH4LGZnD2rv9e1u+1WW+NvKn1dvcunery0vxcFeGY3yMZnCJCXODcIB4gFmXZX5gd2\nIHapucnZ6fkJGio6SlpqeoqaqrrK2ur6ChsrO0tba3uLm6u7y9vr61EAADs=";
-
-var mainImg;
 try {
-	var b64 = new Base64Reader(gif_data);
-	var gif = new GIFReader(b64);
-	var res = gif.readImages();
-	mainImg = res[0];
+	var gif = new GIFReader(new Base64Reader(pointerData));
+	pointerImg = gif.readImages()[0];
+	gif = new GIFReader(new Base64Reader(logoData));
+	logoImg = gif.readImages()[0];
+
+	gif = new GIFReader(new Base64Reader(photoData));
+	photoImg = gif.readImages()[0];
 }
 catch (e) {
 	println("Error: " + e);
 }
 
+var photoY = (height - photoImg.height) / 2;
+var photoDir = 1;
+var photoSpeed = 3;
+var photoMoving = false;
+
 var draw = function() {
-	background(200, 200, 200);
-	image(mainImg, 50, 50);
+	background(0xffeeeeec);
+	image(photoImg, 0, photoY);
+	image(logoImg, width - logoImg.width, 0);
+
+	if (usePointer && mouseY >= photoY && mouseY <= photoY + photoImg.height) {
+		noFill();
+		stroke(0xffef2929);
+		strokeWeight(2);
+		rect(1, photoY + 1, width - 2, photoImg.height - 2);
+	}
+	if (photoMoving) {
+		photoY += photoSpeed * photoDir;
+		if (photoY > height - photoImg.height) {
+			photoY = height - photoImg.height;
+			photoDir = -1;
+		}
+		if (photoY < 0) {
+			photoY = 0;
+			photoDir = 1;
+		}
+	}
+
+	if (usePointer) { image(pointerImg, mouseX, mouseY); }
+};
+
+var mouseOut = function() {
+	usePointer = false;
+};
+
+var mouseOver = function() {
+	usePointer = true;
+	noCursor();
+};
+
+var mousePressed = function() {
+	if (mouseY >= photoY && mouseY <= photoY + photoImg.height) {
+		photoMoving = !photoMoving;
+	}
 };
