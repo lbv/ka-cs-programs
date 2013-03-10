@@ -55,11 +55,25 @@
  *      turning an arbitrary Base64 string into a JS string is not very
  *      hard, just inconvenient to do by hand.
  *
- *  If you want to learn about the internal details of the GIF format, you
- *  might enjoy the following two documents:
+ * If you want to learn about the internal details of the GIF format, you
+ * might enjoy the following two documents:
  *
- *    http://www.cs.cmu.edu/~cil/lzw.and.gif.txt
- *    http://www.w3.org/Graphics/GIF/spec-gif89a.txt
+ *   http://www.cs.cmu.edu/~cil/lzw.and.gif.txt
+ *   http://www.w3.org/Graphics/GIF/spec-gif89a.txt
+ *
+ * - - -
+ *
+ * This was partly inspired by the "George Washington" program, which
+ * produces a very nice picture using purely basic drawing primitives.
+ *
+ * George Washington program:
+ *   http://www.khanacademy.org/cs/george-washington/1389359708
+ *
+ * GIF Reader v1:
+ *   http://www.khanacademy.org/cs/gif-reader/1449053934
+ *
+ * GIF Reader on GitHub:
+ *   https://github.com/lbv/ka-cs-programs/tree/master/gif-reader
  */
 
 m4_include(`base64.js')
