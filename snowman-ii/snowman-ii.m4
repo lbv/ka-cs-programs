@@ -20,6 +20,9 @@
  * Original Snowman:
  *   http://www.khanacademy.org/cs/snowman/823735629
  *
+ * Snowman II v1:
+ *   http://www.khanacademy.org/cs/snowman-ii/1444744956
+ *
  * Snowman II on GitHub:
  *   https://github.com/lbv/ka-cs-programs/tree/master/snowman-ii
  *
