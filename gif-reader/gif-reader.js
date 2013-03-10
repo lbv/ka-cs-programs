@@ -63,11 +63,15 @@
  *
  * - - -
  *
- * This was partly inspired by the "George Washington" program, which
- * produces a very nice picture using purely basic drawing primitives.
+ * This was partly inspired by the "Mona Lisa" program, by Peter
+ * Collingridge, which produces a very nice picture using purely basic
+ * drawing primitives.
  *
- * George Washington program:
- *   http://www.khanacademy.org/cs/george-washington/1389359708
+ * Mona Lisa program:
+ *   http://www.khanacademy.org/cs/mona-lisa/1153732313
+ *
+ * GIF Reader on K.A.:
+ *   http://www.khanacademy.org/cs/gif-reader/1449958817
  *
  * GIF Reader on GitHub:
  *   https://github.com/lbv/ka-cs-programs/tree/master/gif-reader
