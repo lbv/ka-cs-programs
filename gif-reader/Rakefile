@@ -1,0 +1,16 @@
+require 'rake/clean'
+
+CLOBBER.include('gif-reader.js')
+
+task :default => 'gif-reader.js'
+
+@deps = [
+	'../lib/base64.js',
+	'../lib/gif.js',
+	'gif-reader-main.js',
+	'gif-reader.m4'
+]
+
+file 'gif-reader.js' => @deps do
+	sh "m4 -I ../lib -P gif-reader.m4 > gif-reader.js"
+end
