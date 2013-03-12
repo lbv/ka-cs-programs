@@ -1,0 +1,29 @@
+require 'rake/clean'
+
+CLEAN.include('mona-lisa-data.coffee')
+CLOBBER.include('mona-lisa-full.js', 'mona-lisa-data.js')
+
+task :default => 'mona-lisa-full.js'
+
+@deps = [
+	'../lib/base64.js',
+	'../lib/gif-reader.js',
+	'../lib/text-helper.js',
+	'mona-lisa-data.js',
+	'mona-lisa-main.js',
+	'mona-lisa-full.m4'
+]
+
+file 'mona-lisa-data.coffee' => [ 'mona-lisa.gif' ] do
+	sh "echo 'monaLisaData = \"\"\"' > mona-lisa-data.coffee"
+	sh "recode data..b64 < mona-lisa.gif >> mona-lisa-data.coffee"
+	sh "echo '\"\"\"' >> mona-lisa-data.coffee"
+end
+
+file 'mona-lisa-data.js' => [ 'mona-lisa-data.coffee' ] do
+	sh "coffee -b -c mona-lisa-data.coffee"
+end
+
+file 'mona-lisa-full.js' => @deps do
+	sh "m4 -I ../lib -P mona-lisa-full.m4 > mona-lisa-full.js"
+end
