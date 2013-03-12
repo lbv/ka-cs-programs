@@ -1,12 +1,14 @@
 require 'rake/clean'
 
-CLOBBER.include('gif-reader.js')
+CLEAN.include('photo.coffee', 'logo.coffee', 'pointer.coffee')
 
-task :default => 'gif-reader.js'
+CLOBBER.include('gif-reader-prg.js', 'photo.js', 'logo.js', 'pointer.js')
+
+task :default => 'gif-reader-prg.js'
 
 @deps = [
 	'../lib/base64.js',
-	'../lib/gif.js',
+	'../lib/gif-reader.js',
 	'photo.js',
 	'pointer.js',
 	'logo.js',
@@ -14,6 +16,37 @@ task :default => 'gif-reader.js'
 	'gif-reader.m4'
 ]
 
-file 'gif-reader.js' => @deps do
-	sh "m4 -I ../lib -P gif-reader.m4 > gif-reader.js"
+file 'photo.coffee' => [ 'photo.gif' ] do
+	sh "echo 'photoData = \"\"\"' > photo.coffee"
+	sh "recode data..b64 < photo.gif >> photo.coffee"
+	sh "echo '\"\"\"' >> photo.coffee"
+end
+
+file 'pointer.coffee' => [ 'pointer.gif' ] do
+	sh "echo 'pointerData = \"\"\"' > pointer.coffee"
+	sh "recode data..b64 < pointer.gif >> pointer.coffee"
+	sh "echo '\"\"\"' >> pointer.coffee"
+end
+
+file 'logo.coffee' => [ 'logo.gif' ] do
+	sh "echo 'logoData = \"\"\"' > logo.coffee"
+	sh "recode data..b64 < logo.gif >> logo.coffee"
+	sh "echo '\"\"\"' >> logo.coffee"
+end
+
+
+file 'photo.js' => [ 'photo.coffee' ] do
+	sh "coffee -b -c photo.coffee"
+end
+
+file 'pointer.js' => [ 'pointer.coffee' ] do
+	sh "coffee -b -c pointer.coffee"
+end
+
+file 'logo.js' => [ 'logo.coffee' ] do
+	sh "coffee -b -c logo.coffee"
+end
+
+file 'gif-reader-prg.js' => @deps do
+	sh "m4 -I ../lib -P gif-reader.m4 > gif-reader-prg.js"
 end

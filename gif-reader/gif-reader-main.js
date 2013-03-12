@@ -5,11 +5,11 @@ var usePointer = false;
 
 try {
 	var gif = new GIFReader(new Base64Reader(pointerData));
-	pointerImg = gif.readImages()[0];
+	pointerImg = gif.getImages()[0];
 	gif = new GIFReader(new Base64Reader(logoData));
-	logoImg = gif.readImages()[0];
+	logoImg = gif.getImages()[0];
 	gif = new GIFReader(new Base64Reader(photoData));
-	photoImg = gif.readImages()[0];
+	photoImg = gif.getImages()[0];
 }
 catch (e) {
 	println("Error: " + e);
