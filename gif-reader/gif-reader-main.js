@@ -8,7 +8,6 @@ try {
 	pointerImg = gif.readImages()[0];
 	gif = new GIFReader(new Base64Reader(logoData));
 	logoImg = gif.readImages()[0];
-
 	gif = new GIFReader(new Base64Reader(photoData));
 	photoImg = gif.readImages()[0];
 }
@@ -24,9 +23,9 @@ var photoMoving = false;
 var draw = function() {
 	background(0xffeeeeec);
 	image(photoImg, 0, photoY);
-	image(logoImg, width - logoImg.width, 0);
 
-	if (usePointer && mouseY >= photoY && mouseY <= photoY + photoImg.height) {
+	if (usePointer && mouseY >= photoY &&
+	    mouseY <= photoY + photoImg.height) {
 		noFill();
 		stroke(0xffef2929);
 		strokeWeight(2);
@@ -43,6 +42,7 @@ var draw = function() {
 			photoDir = 1;
 		}
 	}
+	image(logoImg, width - logoImg.width, 0);
 
 	if (usePointer) { image(pointerImg, mouseX, mouseY); }
 };
@@ -57,7 +57,8 @@ var mouseOver = function() {
 };
 
 var mousePressed = function() {
-	if (mouseY >= photoY && mouseY <= photoY + photoImg.height) {
+	if (mouseY >= photoY &&
+	    mouseY <= photoY + photoImg.height) {
 		photoMoving = !photoMoving;
 	}
 };
