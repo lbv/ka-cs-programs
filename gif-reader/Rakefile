@@ -17,21 +17,21 @@ task :default => 'gif-reader-prg.js'
 ]
 
 file 'photo.coffee' => [ 'photo.gif' ] do
-	sh "echo 'photoData = \"\"\"' > photo.coffee"
+	sh "echo 'photoData = \"' > photo.coffee"
 	sh "recode data..b64 < photo.gif >> photo.coffee"
-	sh "echo '\"\"\"' >> photo.coffee"
+	sh "echo '\"' >> photo.coffee"
 end
 
 file 'pointer.coffee' => [ 'pointer.gif' ] do
-	sh "echo 'pointerData = \"\"\"' > pointer.coffee"
+	sh "echo 'pointerData = \"' > pointer.coffee"
 	sh "recode data..b64 < pointer.gif >> pointer.coffee"
-	sh "echo '\"\"\"' >> pointer.coffee"
+	sh "echo '\"' >> pointer.coffee"
 end
 
 file 'logo.coffee' => [ 'logo.gif' ] do
-	sh "echo 'logoData = \"\"\"' > logo.coffee"
+	sh "echo 'logoData = \"' > logo.coffee"
 	sh "recode data..b64 < logo.gif >> logo.coffee"
-	sh "echo '\"\"\"' >> logo.coffee"
+	sh "echo '\"' >> logo.coffee"
 end
 
 

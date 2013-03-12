@@ -2,8 +2,6 @@
  * GIF Reader
  * ==========
  *
- * Version 2 (2013-03-11)
- *
  * A decoder for images in the GIF format.
  *
  * This is just an experiment to see if it was feasible to
@@ -46,7 +44,7 @@
  *      Otherwise, search the web for alternative ways to
  *      encode into Base64.
  *
- *   2) Once you have the image in Case64, you have to turn
+ *   2) Once you have the image in Base64, you have to turn
  *      it into JS code. The main problem is that JS doesn't
  *      allow line breaks in strings, so most methods to 
  *      turn the Base64 data into a JS string are very
@@ -54,16 +52,22 @@
  *      which is a language that can be "translated" into
  *      Javascript. You just write:
  *
- *        myVariable = """
+ *        myVariable = "
  *            ..... blah blah ...
  *            ..... large string ...
  *            ..... with many line breaks ...
- *        """
+ *        "
  *
  *      and then turn it into JS with the CoffeeScript
  *      compiler. Anyway, turning an arbitrary Base64 string
  *      into a JS string is not very hard, just inconvenient
  *      to do by hand.
+ *
+ * Be aware that complex images are typically large in size,
+ * and there is a limit to the size of your programs in
+ * K.A., so you have to carefully prepare the data you use
+ * to make the source code and the encoded GIFs stay under
+ * the limit.
  *
  * If you want to learn about the internal details of the
  * GIF format, you might enjoy the following two documents:
@@ -85,6 +89,21 @@
  *
  * Mona Lisa program
  *   http://www.khanacademy.org/cs/mona-lisa/1153732313
+ *
+ * - - -
+ *
+ * ChangeLog
+ *
+ *   Version 3 (2013-03-12)
+ *     Reduced size by using regular Coffeescript strings
+ *     and not block strings. Replaced the pointer GIF.
+ *     Increased the number of colors in the photo to 70.
+ *
+ *   Version 2 (2013-03-11)
+ *     Updated code to fit in 60 columns, fixed minor
+ *     problems.
+ *
+ *   Version 1 (2013-03-10)
  */
 
 m4_include(`base64.js')
