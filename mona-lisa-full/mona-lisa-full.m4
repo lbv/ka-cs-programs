@@ -2,6 +2,8 @@
  * Mona Lisa (Full)
  * ================
  *
+ * Version 1 (2013-03-11)
+ *
  * Simple program to display the full Mona Lisa, read from
  * a GIF image.
  *
@@ -12,8 +14,11 @@
  * program, it was processed using dithering, and a palette
  * of only 4 colors!
  *
- *   Mona Lisa (Full) on GitHub
+ *   Mona Lisa (Full)
+ *     https://www.khanacademy.org/cs/mona-lisa-full/1454350231
  *
+ *   Mona Lisa (Full) on GitHub
+ *     https://github.com/lbv/ka-cs-programs/tree/master/mona-lisa-full
  *
  *   GIF Reader
  *     https://www.khanacademy.org/cs/gif-reader/1449958817
