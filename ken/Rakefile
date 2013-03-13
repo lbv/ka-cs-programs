@@ -1,0 +1,31 @@
+require 'rake/clean'
+
+CLEAN.include('ken-anim.coffee')
+CLOBBER.include('ken.js', 'ken-anim.js')
+
+task :default => 'ken.js'
+
+@deps = [
+	'../lib/base64.js',
+	'../lib/gif-reader.js',
+	'../lib/keys-indicator.js',
+	'../lib/key-event-handler.js',
+	'player.js',
+	'ken-anim.js',
+	'ken-main.js',
+	'ken.m4'
+]
+
+file 'ken-anim.coffee' => [ 'ken-anim.gif' ] do
+	sh "echo 'kenData = \"' > ken-anim.coffee"
+	sh "recode data..b64 < ken-anim.gif >> ken-anim.coffee"
+	sh "echo '\"' >> ken-anim.coffee"
+end
+
+file 'ken-anim.js' => [ 'ken-anim.coffee' ] do
+	sh "coffee -b -c ken-anim.coffee"
+end
+
+file 'ken.js' => @deps do
+	sh "m4 -I ../lib -P ken.m4 > ken.js"
+end
