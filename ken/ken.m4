@@ -30,8 +30,11 @@
  * This program uses the GIF Reader code, to decode the
  * individual frames from a single GIF data stream.
  *
- * Ken on GitHub
+ * Ken
+ *   http://www.khanacademy.org/cs/ken/1458582372
  *
+ * Ken on GitHub
+ *   https://github.com/lbv/ka-cs-programs/tree/master/ken
  *
  * GIF Reader
  *   http://www.khanacademy.org/cs/gif-reader/1449958817
