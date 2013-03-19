@@ -67,10 +67,10 @@
  * - - -
  *
  * Cloth Simulation:
- *
+ *   http://www.khanacademy.org/cs/cloth-simulation/1473881030
  *
  * Cloth Simulation on GitHub:
- *
+ *   https://github.com/lbv/ka-cs-programs/tree/master/cloth-simulation
  *
  * - - -
  *
