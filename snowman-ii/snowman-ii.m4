@@ -2,36 +2,43 @@
  * Snowman II
  * ==========
  *
- * Version 1 (2013-03-08)
+ * Spin-off of the official "Snowman" program. It adds
+ * falling snowflakes, and control of the snowman with the
+ * keyboard.
  *
- * Spin-off of the official "Snowman" program. It adds falling snowflakes, and
- * control of the snowman with the keyboard.
+ * This program was built mainly to test a few things from
+ * the programming platform. Because of this, it includes a
+ * few features that may not be very beginner-friendly.
+ * Still, I hope you have fun looking at the code, and by
+ * taking your time with it, I'm sure you could find
+ * interesting ways to tweak it :).
  *
- * This program seems to work fine in Google Chrome. In others browsers... not
- * so much.
+ * - - -
  *
- * This program was built mainly to test a few things from the programming
- * platform. Because of this, it includes a few features that are not very
- * beginner-friendly, for those who want to explore the source code. Sorry.
- *
- * Still, I hope you have fun looking at the code, and by taking your time with
- * it, I'm sure you will find interesting ways to tweak it :).
- *
- * Original Snowman:
- *   http://www.khanacademy.org/cs/snowman/823735629
- *
- * Snowman II v1:
+ * Snowman II:
  *   http://www.khanacademy.org/cs/snowman-ii/1444744956
  *
  * Snowman II on GitHub:
  *   https://github.com/lbv/ka-cs-programs/tree/master/snowman-ii
  *
- * This is released into the public domain. Feel free to use it as you please.
+ * Original Snowman:
+ *   http://www.khanacademy.org/cs/snowman/823735629
+ *
+ * - - -
+ *
+ * ChangeLog
+ *
+ *   Version 2
+ *
+ *
+ *   Version 1 (2013-03-08)
  */
 
-m4_include(`dollar-basic.js')
+var $pjs = this;
+
+m4_include(`util-colors.js')
 m4_include(`heap.js')
-m4_include(`dollar-timers.js')
+m4_include(`timer.js')
 m4_include(`particles.js')
 m4_include(`keys-indicator.js')
 

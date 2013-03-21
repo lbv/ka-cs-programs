@@ -1,128 +1,89 @@
-/**
- * Program specific data
- */
+//
+// Global variables
+//
 
-// Wind vector (for the snow flakes)
-$.wind = new PVector(0, 0, 0);
-
-// Gravity of the world
-$.gravity = new PVector(0, 16*$.ul, 0);
-
-// Two layers of snowflakes: one behind the snowman, and one in front
-$.snowBG = new SnowLayer(32, 0.8, 1.4);
-$.snowFG = new SnowLayer(8, 1.4, 2);
+// Two layers of snowflakes: one behind the snowman, and one
+// in front
+var snowBG = new SnowLayer(32, 0.8, 1.4);
+var snowFG = new SnowLayer(8, 1.4, 2);
 
 // The snowman
-$.snowman = new Snowman(width / 2, height - $.ul * 2, 1.0);
+var snowman = new Snowman(200, 388, 1.0);
 
 // A small keyboard indicator
-$.ki = new KeysIndicator(width - $.ul * 17, $.ul * 2, [
-	[ UP,    " \u2191", 0, 1 ],
-	[ DOWN,  " \u2193", 1, 1 ],
-	[ RIGHT, "\u2192",  1, 2 ],
-	[ LEFT,  "\u2190",  1, 0 ],
-	[ 65,    " A",      0, 4 ],
-	[ 90,    " Z",      1, 4 ]
+var keysInd = new KeysIndicator(
+	8, 8, $colors.blue[1], $colors.white, [
+	[ UP,    "\u2191", 0, 1 ],
+	[ DOWN,  "\u2193", 1, 1 ],
+	[ RIGHT, "\u2192", 1, 2 ],
+	[ LEFT,  "\u2190", 1, 0 ],
+	[ 65,    "A",      0, 4 ],
+	[ 90,    "Z",      1, 4 ]
 ]);
 
 
 // Configuration
-$.cfg = {
-	colorSky    : lerpColor($.colors.blue[0], $.colors.white, 0.5),
-	colorGround : $.colors.gray1[1],
+var $cfg = {
+	colorSky :
+		lerpColor($colors.blue[0], $colors.white, 0.5),
+	colorGround : $colors.gray1[1],
 
-	groundHeight : $.ul * 10,
-
-	snowSpeed : $.ul * 0.15,
-	windDelta : $.ul / 2,
-	windMinY  : -$.ul / 4,
-	windMaxY  : $.ul / 2,
-	windMinX  : -$.ul / 2,
-	windMaxX  : $.ul / 2,
-	windRnd   : $.ul / 3
+	groundHeight : 60
 };
 
 
-$.applyForceSnow = function(s) {
-	if (! s.active) { return; }
-	var p = s.particle;
-
-	p.a.set(0, 0, 0);
-	if (p.v.y <= $.cfg.snowSpeed) { p.a.set($.gravity); }
-
-	// wind force, proportional to the snow flake size
-	var fwind = PVector.mult($.wind, s.scale);
-	// random component for the wind
-	var rwind = new PVector(random(-$.cfg.windRnd, $.cfg.windRnd),
-	                        random($.cfg.windRnd), 0);
-	p.a.add(fwind);
-	p.a.add(rwind);
-};
-
-$.forces = function() {
-	$.wind.x = constrain($.wind.x + random(-$.cfg.windDelta, $.cfg.windDelta),
-	                     $.cfg.windMinX, $.cfg.windMaxX);
-	$.wind.y = constrain($.wind.y + random(-$.cfg.windDelta, $.cfg.windDelta),
-	                     $.cfg.windMinY, $.cfg.windMaxY);
-
-
-	$.snowBG.forEach($.applyForceSnow);
-	$.snowFG.forEach($.applyForceSnow);
-};
-
-$.removeOldSnow = function() {
+//
+// Functions
+//
+var removeOldSnow = function() {
 	var rem = [];
-	$.snowBG.forEach(function(s) {
+	snowBG.forEach(function(s) {
 		var p = s.particle;
-		if (p.r.y > height - $.cfg.groundHeight + s.size) { rem.push(s); }
+		if (p.r.y > height - $cfg.groundHeight + s.size) {
+			rem.push(s); }
 	});
 	var i;
-	for (i = 0; i < rem.length; ++i) { $.snowBG.removeSnow(rem[i]); }
+	for (i = 0; i < rem.length; ++i) {
+		snowBG.removeSnow(rem[i]); }
 
 	rem = [];
-	$.snowFG.forEach(function(s) {
+	snowFG.forEach(function(s) {
 		var p = s.particle;
 		if (p.r.y > height + s.size) { rem.push(s); }
 	});
-	for (i = 0; i < rem.length; ++i) { $.snowFG.removeSnow(rem[i]); }
-
+	for (i = 0; i < rem.length; ++i) {
+		snowFG.removeSnow(rem[i]); }
 };
 
 var draw = function() {
-	$.loopStep();
-
-	$.snowBG.check();
-	$.snowFG.check();
-
-	$.forces();
-
-	$.snowBG.ps.advance($.timeStep);
-	$.snowFG.ps.advance($.timeStep);
+	snowBG.check();
+	snowFG.check();
 
 	// the sky
-	background($.cfg.colorSky);
+	background($cfg.colorSky);
 
-	$.snowBG.draw();
+	snowBG.draw();
 
-	noStroke();
 	// ground
-	fill($.cfg.colorGround);
-	rect(0, height - $.cfg.groundHeight, width, $.cfg.groundHeight);
+	noStroke();
+	fill($cfg.colorGround);
+	rect(0, height - $cfg.groundHeight,
+	     width, $cfg.groundHeight);
 
-	$.snowman.draw();
+	snowman.draw();
 
-	$.snowFG.draw();
+	snowFG.draw();
 
-	$.removeOldSnow();
-	$.ki.draw();
+	removeOldSnow();
+	keysInd.draw();
 };
 
 var keyPressed = function() {
-	$.ki.onKeyPressed(key, keyCode);
-	$.snowman.onKeyPressed(key, keyCode);
+	keysInd.onKeyPressed();
+	snowman.onKeyPressed();
 };
 
 var keyReleased = function() {
-	$.ki.onKeyReleased(key, keyCode);
-	$.snowman.onKeyReleased(key, keyCode);
+	keysInd.onKeyReleased();
+	snowman.onKeyReleased();
 };

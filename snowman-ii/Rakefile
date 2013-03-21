@@ -5,9 +5,9 @@ CLOBBER.include('snowman-ii.js')
 task :default => 'snowman-ii.js'
 
 @deps = [
-	'../lib/dollar-basic.js',
+	'../lib/util-colors.js',
 	'../lib/heap.js',
-	'../lib/dollar-timers.js',
+	'../lib/timer.js',
 	'../lib/particles.js',
 	'../lib/keys-indicator.js',
 	'snow.js',
