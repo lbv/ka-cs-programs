@@ -28,20 +28,21 @@
  *
  * ChangeLog
  *
- *   Version 2
- *
+ *   Version 2 (2013-)
+ *     Improved rendering of "key indicator".
  *
  *   Version 1 (2013-03-08)
  */
 
 var $pjs = this;
 
-m4_include(`util-colors.js')
-m4_include(`heap.js')
-m4_include(`timer.js')
-m4_include(`particles.js')
-m4_include(`keys-indicator.js')
+m4_undivert(`util-colors.js')
+m4_undivert(`heap.js')
+m4_undivert(`timer.js')
+m4_undivert(`particles.js')
+m4_undivert(`canvas-wrapper.js')
+m4_undivert(`keys-indicator.js')
 
-m4_include(`snow.js')
-m4_include(`snowman.js')
-m4_include(`snowman-ii-main.js')
+m4_undivert(`snow.js')
+m4_undivert(`snowman.js')
+m4_undivert(`snowman-ii-main.js')

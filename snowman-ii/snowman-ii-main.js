@@ -12,7 +12,7 @@ var snowman = new Snowman(200, 388, 1.0);
 
 // A small keyboard indicator
 var keysInd = new KeysIndicator(
-	8, 8, $colors.blue[1], $colors.white, [
+	8, 8, [
 	[ UP,    "\u2191", 0, 1 ],
 	[ DOWN,  "\u2193", 1, 1 ],
 	[ RIGHT, "\u2192", 1, 2 ],
