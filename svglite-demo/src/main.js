@@ -1,35 +1,153 @@
-try {
+var getSVGImages = function() {
+	var svgSnow = new SVGLiteSVG({
+		height : 100, width : 100 });
 
-var path = "m271.73 254.34c139.07 254.95 297.05 113.52 55.17-47.2-325.76-216.45 108.06-313.54-95.64 20.33-151.26 247.92 50.21 314.01 68.46 24.18 24.56-390.34 325.56-63.19-65.43-72.66-290.33-7.04-246.84 200.49 13.29 71.37 350.33-173.89 217.5 250.36 30.21-92.99-139.07-254.95-297.05-113.52-55.16 47.2 325.76 216.45-108.07 313.54 95.64-20.33 151.25-247.92-50.22-314.02-68.46-24.18-24.57 390.34-325.57 63.19 65.43 72.66 290.32 7.04 246.83-200.49-13.3-71.37-350.33 173.89-217.5-250.36-30.21 92.99z";
+	var svgLayer = new SVGLiteGroup({
+		id        : 'layer1',
+		transform : 'translate(-296.55 -476.87)'
+	});
 
-var svg = new SVGLiteSVG({ height : 100, width : 100 });
+	var svgPath = new SVGLitePath({
+		id : "path5372",
+		d  : pathSnowflake,
 
-var svgLayer = new SVGLiteGroup({
-	id        : 'layer1',
-	transform : 'translate(-296.55 -476.87)'
-});
+		fill     : "#204a87",
+		opacity  : 0.54419,
+		fillRule : "evenodd",
 
-var svgPath = new SVGLitePath({
-	id : "path5372",
-	d  : path,
+		transform :
+			"matrix(.178 -.105 .105 .178 275.03 518.82)"
+	});
 
-	fill     : "#204a87",
-	opacity  : 0.54419,
-	fillRule : "evenodd",
+	svgLayer.add(svgPath);
+	svgSnow.add(svgLayer);
 
-	transform :
-		"matrix(.178 -.105 .105 .178 275.03 518.82)"
-});
+	var svgJimi = new SVGLiteSVG({
+		width: 1080, height: 1080 });
 
-svgLayer.add(svgPath);
-svg.add(svgLayer);
+	svgLayer = new SVGLiteGroup({
+		id        : "layer1",
+		transform : "translate(0 27.64)"
+	});
+	svgPath = new SVGLitePath({
+		id : "path3011",
+		d  : pathJimiHendrix
+	});
 
-var cw = svg.render(60, 60);
+	svgLayer.add(svgPath);
+	svgJimi.add(svgLayer);
 
-cw.draw();
+	return [
+		{
+			svg      : svgSnow,
+			name     : 'Snowflake',
+			rendered : false,
+			width    : 200,
+			height   : 200,
+			angle    : 0,
+			scale    : 1,
+			maxScale : 2.1
+		},
+		{
+			svg      : svgJimi,
+			name     : 'Jimi Hendrix',
+			rendered : false,
+			width    : 200,
+			height   : 200,
+			angle    : 0,
+			scale    : 1,
+			maxScale : 2.1
+		}
+	];
+};
 
+var images       = getSVGImages();
+var nImages      = images.length;
+var currentImg   = 0;
+var shiftPressed = false;
+var title        = new CanvasWrapper(200, 40);
 
-}
-catch(e) {
-	$c.log("Error", e, e.message, e.stack);
-}
+imageMode(CENTER);
+
+var renderTitle = function() {
+	title.clear();
+	title.ctx.font = '14px sans-serif';
+	title.ctx.fillStyle = '#ffffff';
+	title.ctx.textAlign = 'center';
+	var pic = (currentImg + 1).toString();
+	title.ctx.fillText(
+		'Graphic ' + pic + ' of ' + nImages, 100, 16);
+	title.ctx.font = 'bold 16px sans-serif';
+	title.ctx.fillText(images[currentImg].name, 100, 34);
+};
+
+var draw = function() {
+	var img = images[currentImg];
+	if (! img.rendered) {
+		var w = round(img.width * img.scale);
+		var h = round(img.height * img.scale);
+		img.cw = img.svg.render(w, h);
+		img.rendered = true;
+	}
+
+	background(255, 255, 255);
+
+	pushMatrix();
+	translate(200, 200);
+	rotate(img.angle);
+	img.cw.draw();
+	popMatrix();
+
+	fill(0xcc2e3436);
+	noStroke();
+	rect(100, 16, 200, 40, 8);
+
+	pushMatrix();
+	translate(200, 36);
+	title.draw();
+	popMatrix();
+};
+
+var keyPressed = function() {
+	var img = images[currentImg];
+	switch (keyCode) {
+	case SHIFT:
+		shiftPressed = true;
+		break;
+
+	case RIGHT:
+		if (shiftPressed) {
+			img.angle += 5; }
+		else {
+			currentImg = (currentImg + 1) % nImages;
+			renderTitle();
+		}
+		break;
+
+	case LEFT:
+		if (shiftPressed) {
+			img.angle -= 5; }
+		else {
+			currentImg = currentImg - 1 + nImages;
+			currentImg %= nImages;
+			renderTitle();
+		}
+		break;
+
+	case UP:
+		img.scale = min(img.maxScale, img.scale + 0.09);
+		img.rendered = false;
+		break;
+
+	case DOWN:
+		img.scale = max(0.1, img.scale - 0.09);
+		img.rendered = false;
+		break;
+	}
+};
+
+var keyReleased = function() {
+	if (keyCode === SHIFT) { shiftPressed = false; }
+};
+
+renderTitle();

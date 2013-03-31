@@ -1,28 +1,33 @@
 title: SVGLite Demo
 summary: |
-  A demonstration program for the simple SVGLite class.
+  A demonstration program for SVGLite, a JavaScript
+  implementation for a small subset of SVG, a standard format
+  for describing vector graphics.
 
-  Its purpose is to parse and render images using a small
-  subset of the SVG standard. Ideally, this would not be
-  necessary at all, because there are other, better, ways
-  that are meant to be used for rendering SVG data on a HTML
-  canvas, including the `drawImage` method from the canvas
-  context object, and some basic support for SVG shapes from
-  Processing.JS through the `PShape` type.
+  Ideally, something like this should not be necessary at all,
+  because there are mechanisms that, at least in theory, are
+  meant to be straightforward ways of rendering SVG data on a
+  HTML canvas. These include the browser's own ability to
+  render SVG images and then draw them on a canvas using the
+  `drawImage` call, as well as some basic support for SVG
+  shapes in Processing.JS via the `PShape` type.
 
-  Unfortunately, both of these methods have their
-  limitations. The regular HTML canvas approach doesn't work
-  too well in _Chrome_, due to a strange bug that taints the
+  Unfortunately, both of these methods have their limitations.
+  The standard HTML approach doesn't work too well in Google
+  Chrome, for example, due to a strange bug that taints the
   canvas when rendering data from a dynamically generated
-  `HTMLImage` element. Using the `PShape` type from P.JS is
-  unreliable, as some basic things (like e.g. the
-  `fill-rule` attribute) are not supported.
+  `HTMLImage` element. On the other hand, using the `PShape`
+  type from P.JS is unreliable, as some basic things (like
+  e.g. the `fill-rule` attribute) are not supported; in
+  addition, PShapes can't be rendered to an off-screen canvas.
 
-  Because of this, I decided to simply implement my own
-  subset of the SVG standard, supporting the few things that
-  I wanted to properly render a few simple SVG files. It's
-  of course very limited, but at least it helped scratch my
-  own itch :).
+  Because of this, I decided to simply implement the subset of
+  the SVG standard that I was interested in, supporting the
+  few things that I wanted in order to properly render some
+  simple SVG files. Hence, SVGLite was created.
+
+  It's very limited, as you'd imagine, but at least it helped
+  me scratch my own itch :).
 
 version: rev1
 links:
@@ -30,3 +35,11 @@ links:
     url  : http://www.khanacademy.org/cs/
   - desc : This program on GitHub
     url  : https://github.com/lbv/ka-cs-programs/
+  - desc : Snowflake art
+    url  : http://openclipart.org/detail/100699/dark-blue-snowflakes-by-gem
+  - desc : Jimi Hendrix art
+    url  : http://openclipart.org/detail/174372/jimi-by-caw-174372
+todo:
+  - Implement gradients, to be able to render some SVG icons.
+  - Add widgets to control the demo.
+  - Implement XML parsing.
