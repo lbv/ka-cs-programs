@@ -1,0 +1,35 @@
+CanvasWrapper
+
+Simple wrapper for the HTML canvas API. Created mainly to
+avoid some strange bugs related to circular references
+when using things PFont objects, but also because it can
+be useful to have the lower-level access.
+
+Basically it creates a new `PImage`, and obtains a Canvas
+context object from it, on which you operate.
+
+Properties:
+
+  img
+    The `PImage` that is created around the canvas.
+
+  ctx
+    The canvas' context object.
+
+Methods:
+
+  constructor(width, height)
+    Build a canvas, of size (width * height), or 400x400
+    if not specified.
+
+  render(x, y)
+    Draws the internal canvas on the real canvas, at
+    position (x,y), or (0,0) if left unspecified.
+
+  clear()
+    Clears everything from the canvas.
+
+  toCssColor(color)
+    Returns the given `color` as a CSS definition for the
+    same colour.
+
