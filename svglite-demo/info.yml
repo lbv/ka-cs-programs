@@ -1,7 +1,6 @@
 title: SVGLite Demo
-summary: >
+summary: |
   A demonstration program for the simple SVGLite class.
-
 
   Its purpose is to parse and render images using a small
   subset of the SVG standard. Ideally, this would not be
@@ -11,7 +10,6 @@ summary: >
   context object, and some basic support for SVG shapes from
   Processing.JS through the `PShape` type.
 
-
   Unfortunately, both of these methods have their
   limitations. The regular HTML canvas approach doesn't work
   too well in _Chrome_, due to a strange bug that taints the
@@ -19,7 +17,6 @@ summary: >
   `HTMLImage` element. Using the `PShape` type from P.JS is
   unreliable, as some basic things (like e.g. the
   `fill-rule` attribute) are not supported.
-
 
   Because of this, I decided to simply implement my own
   subset of the SVG standard, supporting the few things that
@@ -29,5 +26,7 @@ summary: >
 
 version: rev1
 links:
-  ka: http://www.khanacademy.org/cs/
-  gh: https://github.com/lbv/ka-cs-programs/
+  - desc : This program on Khan Academy
+    url  : http://www.khanacademy.org/cs/
+  - desc : This program on GitHub
+    url  : https://github.com/lbv/ka-cs-programs/

@@ -1,0 +1,39 @@
+#! /usr/bin/env coffee
+
+fs   = require 'fs'
+yaml = require 'js-yaml'
+
+INPUT  = 'info.yml'
+OUTPUT = './doc/top-summary.mkd'
+
+makeTitle = (title, c = '=') ->
+    str = "#{title}\n"
+    line = ''
+    line += c for i in [1 .. title.length]
+    str += "#{line}\n"
+    return str
+
+console.log "Reading data from #{INPUT}"
+rawInfo = fs.readFileSync INPUT, { encoding: 'utf8' }
+info = yaml.load rawInfo
+
+data = ''
+
+data += makeTitle info.title
+data += "\n#{info.summary}"
+
+data += "\n- - -\n\n"
+data += makeTitle 'Links', '-'
+for link in info.links
+    data += "\n  #{link.desc}"
+    data += "\n    #{link.url}\n"
+
+clog = fs.readFileSync 'ChangeLog', { encoding: 'utf8' }
+data += "\n- - -\n\n"
+data += makeTitle 'ChangeLog', '-'
+data += "\n(current revision: #{info.version})\n\n"
+data += clog
+
+
+console.log "Writing #{OUTPUT}..."
+fs.writeFileSync OUTPUT, data

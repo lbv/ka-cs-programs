@@ -1,6 +1,13 @@
 require 'rake/clean'
 
 CLOBBER.include('src/svglite-demo.js')
+CLEAN.include('doc/top-summary.mkd')
+
+DIR_TOP = '..'
+DIR_TOOLS = "#{DIR_TOP}/tools"
+
+tool_doc_top = "#{DIR_TOOLS}/doc-top"
+
 
 task :default => 'src/svglite-demo.js'
 
@@ -9,9 +16,19 @@ task :default => 'src/svglite-demo.js'
 	'../lib/canvas-wrapper.js',
 	'../lib/parser-base.js',
 	'../lib/svg-lite.js',
+	'doc/top-summary.mkd',
 	'src/main.js',
 	'svglite-demo.m4'
 ]
+
+@summary_deps = [
+	'info.yml',
+	'ChangeLog'
+]
+
+file 'doc/top-summary.mkd' => @summary_deps do
+	sh tool_doc_top
+end
 
 file 'src/svglite-demo.js' => @deps do
 	sh "m4 -I ../lib -I ./src -P svglite-demo.m4 > src/svglite-demo.js"
