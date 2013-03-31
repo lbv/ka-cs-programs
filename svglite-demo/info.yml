@@ -1,0 +1,33 @@
+title: SVGLite Demo
+summary: >
+  A demonstration program for the simple SVGLite class.
+
+
+  Its purpose is to parse and render images using a small
+  subset of the SVG standard. Ideally, this would not be
+  necessary at all, because there are other, better, ways
+  that are meant to be used for rendering SVG data on a HTML
+  canvas, including the `drawImage` method from the canvas
+  context object, and some basic support for SVG shapes from
+  Processing.JS through the `PShape` type.
+
+
+  Unfortunately, both of these methods have their
+  limitations. The regular HTML canvas approach doesn't work
+  too well in _Chrome_, due to a strange bug that taints the
+  canvas when rendering data from a dynamically generated
+  `HTMLImage` element. Using the `PShape` type from P.JS is
+  unreliable, as some basic things (like e.g. the
+  `fill-rule` attribute) are not supported.
+
+
+  Because of this, I decided to simply implement my own
+  subset of the SVG standard, supporting the few things that
+  I wanted to properly render a few simple SVG files. It's
+  of course very limited, but at least it helped scratch my
+  own itch :).
+
+version: rev1
+links:
+  ka: http://www.khanacademy.org/cs/
+  gh: https://github.com/lbv/ka-cs-programs/
