@@ -14,5 +14,6 @@ m4_undivert(`parser-base.js')
 m4_undivert(`svg-lite.js')
 
 m4_undivert(`path-snowflake.js')
+m4_undivert(`path-dove.js')
 m4_undivert(`path-jimi-hendrix.js')
 m4_undivert(`main.js')

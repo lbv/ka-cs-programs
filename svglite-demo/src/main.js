@@ -37,10 +37,40 @@ var getSVGImages = function() {
 	svgLayer.add(svgPath);
 	svgJimi.add(svgLayer);
 
+	var svgDove = new SVGLiteSVG({
+		width: 100, height: 100 });
+	svgLayer = new SVGLiteGroup({
+		id        : "layer1",
+		transform :
+			"translate(-470.56 -633.94) " +
+			"matrix(.95172 0 0 .95172 25.104 32.979)"
+	});
+	svgPath = new SVGLitePath({
+		d    : pathDove1,
+		fill : "#2c2ca0"
+	});
+	svgLayer.add(svgPath);
+	svgPath = new SVGLitePath({
+		d    : pathDove2,
+		fill : "#ffffff"
+	});
+	svgLayer.add(svgPath);
+	svgDove.add(svgLayer);
+
 	return [
 		{
 			svg      : svgSnow,
 			name     : 'Snowflake',
+			rendered : false,
+			width    : 200,
+			height   : 200,
+			angle    : 0,
+			scale    : 1,
+			maxScale : 2.1
+		},
+		{
+			svg      : svgDove,
+			name     : 'White Dove',
 			rendered : false,
 			width    : 200,
 			height   : 200,

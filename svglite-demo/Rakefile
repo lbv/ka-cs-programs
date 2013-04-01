@@ -18,6 +18,7 @@ task :default => 'src/svglite-demo.js'
 	'../lib/svg-lite.js',
 	'doc/top-summary.mkd',
 	'src/path-snowflake.js',
+	'src/path-dove.js',
 	'src/path-jimi-hendrix.js',
 	'src/main.js',
 	'svglite-demo.m4'
