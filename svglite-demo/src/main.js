@@ -91,28 +91,92 @@ var getSVGImages = function() {
 	];
 };
 
-var images       = getSVGImages();
-var nImages      = images.length;
-var currentImg   = 0;
-var shiftPressed = false;
-var title        = new CanvasWrapper(200, 40);
+var App = {};
 
-imageMode(CENTER);
-
-var renderTitle = function() {
-	title.clear();
-	title.ctx.font = '14px sans-serif';
-	title.ctx.fillStyle = '#ffffff';
-	title.ctx.textAlign = 'center';
-	var pic = (currentImg + 1).toString();
-	title.ctx.fillText(
-		'Graphic ' + pic + ' of ' + nImages, 100, 16);
-	title.ctx.font = 'bold 16px sans-serif';
-	title.ctx.fillText(images[currentImg].name, 100, 34);
+App.renderTitle = function() {
+	var A = App;
+	var pic = (A.currentImg + 1).toString();
+	var gtxt = 'Graphic ' + pic + ' of ' + A.nImages;
+	A.title.setText(0, 0, gtxt);
+	A.title.setText(1, 0, A.images[A.currentImg].name);
+	A.title.render();
 };
 
+App.init = function() {
+	App.images     = getSVGImages();
+	App.nImages    = App.images.length;
+	App.currentImg = 0;
+
+	App.shiftPressed = false;
+	App.showHelp     = false;
+
+	App.title = new TextBox(
+		{ width: 160, height: 40 }, { vAlign : 'top' });
+	App.title.addText('Graphic');
+	App.title.addGroup({
+		vAlign       : 'bottom',
+		marginBottom : 6,
+		font         : 'bold 14px sans-serif' });
+	App.title.addText('Name', 1);
+
+	var U = $UnicodeChars;
+	App.help = new TextBox({
+		width  : 300,
+		height : 220,
+		stroke : '#555753',
+		color  : CanvasWrapper.toCssColor(0xddeeeeec)
+	}, {
+		vAlign    : 'top',
+		marginTop : 16,
+		color     : '#4e9a06',
+		font      : 'bold 18px serif'
+	});
+	App.help.addText('Keyboard Controls');
+	App.help.addGroup({
+		hAlign     : 'left',
+		vAlign     : 'top',
+		marginTop  : 58,
+		marginLeft : 26,
+		color      : '#4e9a06',
+		font       : '14px monospace',
+		height     : 14,
+		spacing    : 6
+	});
+	App.help.addText("H", 1);
+	App.help.addText(U.left, 1);
+	App.help.addText(U.right, 1);
+	App.help.addText(U.up, 1);
+	App.help.addText(U.down, 1);
+	App.help.addText("Shift " + U.left, 1);
+	App.help.addText("Shift " + U.right, 1);
+	App.help.addGroup({
+		hAlign     : 'left',
+		vAlign     : 'top',
+		marginTop  : 58,
+		marginLeft : 98,
+		color      : '#000000',
+		font       : '14px serif',
+		height     : 14,
+		spacing    : 6
+	});
+	App.help.addText('Show/hide this help', 2);
+	App.help.addText('Go to previous graphic', 2);
+	App.help.addText('Go to next graphic', 2);
+	App.help.addText('Increase size of current graphic', 2);
+	App.help.addText('Decrease size of current graphic', 2);
+	App.help.addText('Rotate to the left', 2);
+	App.help.addText('Rotate to the right', 2);
+	App.help.render();
+
+	imageMode(CENTER);
+	App.renderTitle();
+	println("Press 'H' to toggle the help box");
+};
+
+
 var draw = function() {
-	var img = images[currentImg];
+	var img = App.images[App.currentImg];
+
 	if (! img.rendered) {
 		var w = round(img.width * img.scale);
 		var h = round(img.height * img.scale);
@@ -128,39 +192,50 @@ var draw = function() {
 	img.cw.draw();
 	popMatrix();
 
-	fill(0xcc2e3436);
-	noStroke();
-	rect(100, 16, 200, 40, 8);
-
 	pushMatrix();
 	translate(200, 36);
-	title.draw();
+	App.title.cw.draw();
 	popMatrix();
+
+	if (App.showHelp) {
+		pushMatrix();
+		translate(200, 200);
+		App.help.cw.draw();
+		popMatrix();
+	}
 };
 
 var keyPressed = function() {
-	var img = images[currentImg];
+	var A = App;
+	var img = A.images[A.currentImg];
+
 	switch (keyCode) {
 	case SHIFT:
-		shiftPressed = true;
+		A.shiftPressed = true;
+		break;
+
+	case 72:  // 'H'
+		A.showHelp = ! A.showHelp;
 		break;
 
 	case RIGHT:
-		if (shiftPressed) {
+		if (A.shiftPressed) {
 			img.angle += 5; }
 		else {
-			currentImg = (currentImg + 1) % nImages;
-			renderTitle();
+			A.currentImg = A.currentImg + 1;
+			A.currentImg %= A.nImages;
+			A.renderTitle();
 		}
 		break;
 
 	case LEFT:
-		if (shiftPressed) {
+		if (App.shiftPressed) {
 			img.angle -= 5; }
 		else {
-			currentImg = currentImg - 1 + nImages;
-			currentImg %= nImages;
-			renderTitle();
+			A.currentImg = A.currentImg - 1;
+			A.currentImg += A.nImages;
+			A.currentImg %= A.nImages;
+			A.renderTitle();
 		}
 		break;
 
@@ -177,7 +252,7 @@ var keyPressed = function() {
 };
 
 var keyReleased = function() {
-	if (keyCode === SHIFT) { shiftPressed = false; }
+	if (keyCode === SHIFT) { App.shiftPressed = false; }
 };
 
-renderTitle();
+App.init();

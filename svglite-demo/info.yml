@@ -1,9 +1,9 @@
 title: SVGLite Demo
-summary: |
+description: >
   A demonstration program for SVGLite, a JavaScript
   implementation for a small subset of SVG, a standard format
   for describing vector graphics.
-
+summary: |
   Ideally, something like this should not be necessary at all,
   because there are mechanisms that, at least in theory, are
   meant to be straightforward ways of rendering SVG data on a

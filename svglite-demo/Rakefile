@@ -13,7 +13,9 @@ task :default => 'src/svglite-demo.js'
 
 @deps = [
 	'../lib/util-class.js',
+	'../lib/util-unicode-chars.js',
 	'../lib/canvas-wrapper.js',
+	'../lib/text-box.js',
 	'../lib/parser-base.js',
 	'../lib/svg-lite.js',
 	'doc/top-summary.mkd',
