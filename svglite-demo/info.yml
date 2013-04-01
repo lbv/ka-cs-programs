@@ -32,9 +32,9 @@ summary: |
 version: rev1
 links:
   - desc : This program on Khan Academy
-    url  : http://www.khanacademy.org/cs/
+    url  : http://www.khanacademy.org/cs/svglite-demo/1507692267
   - desc : This program on GitHub
-    url  : https://github.com/lbv/ka-cs-programs/
+    url  : https://github.com/lbv/ka-cs-programs/tree/master/svglite-demo
   - desc : Snowflake art
     url  : http://openclipart.org/detail/100699/dark-blue-snowflakes-by-gem
   - desc : White dove art
