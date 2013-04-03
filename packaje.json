@@ -1,0 +1,14 @@
+{
+    "name"    : "ka-cs-programs-website",
+    "version" : "0.0.1",
+
+    "description" : "Website for my collection of Khan Academy programs",
+    "private"     : true,
+    "homepage"    : "http://lbv.github.com/ka-cs-programs/",
+    "author"      : "Leonardo B <leonardo@diptongonante.com>",
+
+    "engines" : {
+        "node" : ">=0.10.2",
+        "npm"  : ">=1.2.15"
+    }
+}
