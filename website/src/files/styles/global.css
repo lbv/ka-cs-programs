@@ -1,6 +1,0 @@
-p.sig {
-    font-style: oblique;
-}
-p.sig:before {
-    content: "—";
-}

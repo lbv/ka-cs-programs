@@ -1,20 +1,21 @@
 {
-	"name": "Website",
-	"version": "0.0.1",
-	"private": true,
-	"engines" : {
-		"node": ">=0.8",
-		"npm": ">=1.1"
-	},
-	"dependencies": {
-		"docpad": "6.x",
-		"docpad-plugin-coffeekup": "2.x",
-		"docpad-plugin-coffeescript": "2.x",
-		"docpad-plugin-less": "2.x",
-		"docpad-plugin-partials": "2.x"
-	},
-	"devDependencies": {
-		"docpad-plugin-livereload": "2.x"
-	},
-	"main": "../node_modules/docpad/bin/docpad-server"
+  "name": "Website",
+  "version": "0.0.1",
+  "private": true,
+  "engines": {
+    "node": ">=0.8",
+    "npm": ">=1.1"
+  },
+  "dependencies": {
+    "docpad": "6.x",
+    "docpad-plugin-coffeekup": "2.x",
+    "docpad-plugin-coffeescript": "2.x",
+    "docpad-plugin-less": "2.x",
+    "docpad-plugin-partials": "2.x",
+    "robotskirt": "~2.7.1"
+  },
+  "devDependencies": {
+    "docpad-plugin-livereload": "2.x"
+  },
+  "main": "../node_modules/docpad/bin/docpad-server"
 }
