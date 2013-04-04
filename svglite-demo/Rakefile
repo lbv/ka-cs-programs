@@ -26,12 +26,7 @@ task :default => 'src/svglite-demo.js'
 	'svglite-demo.m4'
 ]
 
-@summary_deps = [
-	'info.yml',
-	'ChangeLog'
-]
-
-file 'doc/top-summary.mkd' => @summary_deps do
+file 'doc/top-summary.mkd' => [ 'info.yml' ] do
 	sh tool_doc_top
 end
 

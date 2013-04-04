@@ -18,6 +18,11 @@ console.log "Reading data from #{INPUT}"
 rawInfo = fs.readFileSync INPUT, { encoding: 'utf8' }
 info = yaml.load rawInfo
 
+info.links.push {
+    desc: 'More programs',
+    url:  'http://lbv.github.com/ka-cs-programs/'
+}
+
 data = ''
 
 data += makeTitle info.title
@@ -30,11 +35,10 @@ for link in info.links
     data += "\n  #{link.desc}"
     data += "\n    #{link.url}\n"
 
-clog = fs.readFileSync 'ChangeLog', { encoding: 'utf8' }
 data += "\n- - -\n\n"
 data += makeTitle 'ChangeLog', '-'
 data += "\n(current revision: #{info.version})\n\n"
-data += clog
+data += "#{info.changelog}\n"
 
 
 console.log "Writing #{OUTPUT}..."

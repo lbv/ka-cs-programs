@@ -1,7 +1,0 @@
-2013-03-31
-
-    * First version of this program. Includes three
-      graphics, testing different aspects of the SVG
-      rendering: a snowflake, with transparency and
-      'evenodd' fill-rule, a white dove over a blue circle,
-      and the portrait of a famous musical genius.

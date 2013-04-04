@@ -3,6 +3,7 @@ description: >
   A demonstration program for SVGLite, a JavaScript
   implementation for a small subset of SVG, a standard format
   for describing vector graphics.
+tags: svg, demo, graphics, html, canvas
 summary: |
   Ideally, something like this should not be necessary at all,
   because there are mechanisms that, at least in theory, are
@@ -30,6 +31,14 @@ summary: |
   me scratch my own itch :).
 
 version: rev1
+changelog: |
+  2013-03-31
+
+      * First version of this program. Includes three
+        graphics, testing different aspects of the SVG
+        rendering: a snowflake, with transparency and
+        'evenodd' fill-rule, a white dove over a blue circle,
+        and the portrait of a famous musical genius.
 links:
   - desc : This program on Khan Academy
     url  : http://www.khanacademy.org/cs/svglite-demo/1507692267
