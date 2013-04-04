@@ -71,7 +71,7 @@ docpadConfig = {
             for n in nav
                 html += "<span> &#8883; </span>" if html != ''
                 if n.url?
-                    html += """<a href="#{n.url}">#{n.name}</a>"""
+                    html += """<a href="#{@getUrl n.url}">#{n.name}</a>"""
                 else
                     html += """<span>#{n.name}</span>"""
             html = """
