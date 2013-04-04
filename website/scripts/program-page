@@ -1,0 +1,76 @@
+#! /usr/bin/env coffee
+
+fs   = require 'fs'
+path = require 'path'
+rs   = require 'robotskirt'
+util = require 'util'
+yaml = require 'js-yaml'
+
+mdParser = rs.Markdown.std()
+
+
+usage = ->
+    util.puts "#{process.argv[1]} YML"
+    process.exit 1
+
+renderMd = (md) ->
+    rs.smartypantsHtml mdParser.render md
+
+
+usage() if process.argv.length < 3
+
+ymlFile  = process.argv[2]
+id       = path.basename ymlFile, '.yml'
+
+yml = fs.readFileSync ymlFile, encoding: 'utf8'
+
+prg = yaml.load yml
+
+prg.description = renderMd prg.description
+prg.summary     = renderMd prg.summary
+
+linksMd = ''
+for lnk in prg.links
+    linksMd += "* [#{lnk.desc}](#{lnk.url})\n"
+links = renderMd linksMd
+
+todo = ''
+todo += "* #{td}\n" for td in prg.todo
+todo = renderMd todo
+
+outFile = "src/documents/programs/#{id}.html.coffee"
+data = """
+  ---
+  title: #{prg.title} | KA CS
+  layout: default
+  nav:
+    - name: Home
+      url:  /
+    - name: Programs
+    - name: #{prg.title}
+  ---
+  section class: 'grid-container', ->
+    div class: 'grid-100, program', ->
+      img class: 'program-thumb', src: @getUrl '/img/programs/#{id}.png'
+      h1 '#{prg.title}'
+      text ""\"#{prg.description}""\"
+      text @md '**Tags**: #{prg.tags}'
+
+      h2 'Summary'
+      text ""\"#{prg.summary}""\"
+
+      h2 'Links'
+      text ""\"#{links}""\"
+
+      h2 'ChangeLog'
+      text @md '**Current revision**: #{prg.version}'
+      pre ""\"
+
+  #{prg.changelog}""\"
+
+      h2 'To Do'
+      text ""\"#{todo}""\"
+"""
+
+util.puts "Writing #{outFile}..."
+fs.writeFileSync outFile, data

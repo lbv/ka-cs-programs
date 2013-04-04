@@ -1,6 +1,12 @@
+fs   = require 'fs'
+glob = require 'glob'
+nomo = require 'node-monkey'
+path = require 'path'
 rs   = require 'robotskirt'
 util = require 'util'
+yaml = require 'js-yaml'
 
+# nomo.start()
 mdParser = rs.Markdown.std()
 
 docpadConfig = {
@@ -44,6 +50,35 @@ docpadConfig = {
 
         getUrl: (relUrl) ->
             "#{@site.url}#{relUrl}"
+
+        getPrograms: ->
+            dataPattern = "#{process.cwd()}/data/*.yml"
+            prgs = []
+            for file in glob.sync dataPattern
+                id = path.basename file, '.yml'
+                yml = fs.readFileSync file, encoding: 'utf8'
+                json = yaml.load yml
+                prgs.push {
+                    img : "/img/programs/#{id}.png"
+                    url : "/programs/#{id}.html"
+                    title: json.title
+                    description: json.description
+                }
+            prgs
+
+        getNav: (nav) ->
+            html = ''
+            for n in nav
+                html += "<span> &#8883; </span>" if html != ''
+                if n.url?
+                    html += """<a href="#{n.url}">#{n.name}</a>"""
+                else
+                    html += """<span>#{n.name}</span>"""
+            html = """
+              <nav class="grid-100">
+                #{html}
+              </nav>
+            """
 
         googleWebFont: (name) ->
             "<link href=\"http://fonts.googleapis.com/css?family=#{name}\"" +

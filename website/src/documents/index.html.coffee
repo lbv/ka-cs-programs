@@ -31,4 +31,11 @@ section id: 'intro', class: 'grid-container', ->
 section id: 'programs', class: 'grid-container', ->
   div class: 'grid-100', ->
     h1 'Programs'
-    p 'My programs'
+    for prg in @getPrograms()
+      div ->
+        img class: 'program-list-thumb', src: prg.img
+        text @md """
+          [**#{prg.title}**](#{@getUrl prg.url})
+        """
+        text @md prg.description
+      div class: 'clear'

@@ -10,18 +10,21 @@ html ->
     title @document.title
 
   body ->
-    header class: 'grid-container, site-header', ->
+    header class: 'grid-container site-header', ->
       div class: 'grid-100', ->
         span class: 'ka', 'KA'
         span class: 'cs', 'CS'
-      div class: 'grid-80', ->
-        div class: 'tagline', ->
-          span 'Coding for the Khan Academy computer science platform'
+      div class: 'grid-100 tagline', ->
+        span 'Coding for the Khan Academy computer science platform'
+      text @getNav @document.nav if @document.nav?
+
     text @content
+
     footer class: 'grid-container', ->
-      div class: 'grid-80, site-footer', ->
+      div class: 'grid-100 site-footer', ->
         p @lastUpdate()
         p ->
           a href: 'http://creativecommons.org/publicdomain/zero/1.0/',
-            'No rights reserved.'
+            'No rights reserved'
+
     @getBlock('scripts').toHTML()
