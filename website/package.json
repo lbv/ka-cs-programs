@@ -12,7 +12,8 @@
     "docpad-plugin-coffeescript": "2.x",
     "docpad-plugin-less": "2.x",
     "docpad-plugin-partials": "2.x",
-    "robotskirt": "~2.7.1"
+    "robotskirt": "~2.7.1",
+    "docpad-plugin-ghpages": "~2.0.1"
   },
   "devDependencies": {
     "docpad-plugin-livereload": "2.x"
