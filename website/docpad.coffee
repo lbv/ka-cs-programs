@@ -1,4 +1,5 @@
-rs = require 'robotskirt'
+rs   = require 'robotskirt'
+util = require 'util'
 
 mdParser = rs.Markdown.std()
 
@@ -13,31 +14,25 @@ docpadConfig = {
     templateData:
 
         site:
-            # The production url of our website
-            url: "http://lbv.github.com/ka-cs-programs/"
+            url: "http://lbv.github.com/ka-cs-programs"
 
-            # The default title of our website
             title: "Khan Academy CS Programs"
 
-            # The website description (for SEO)
             description: """
                 Programs written for the Khan Academy Computer Science
                 platform.
             """
 
-            # The website keywords (for SEO) separated by commas
             keywords: """
                 khan-academy, javascript, processing.js, programming
             """
 
-            # The website's styles
             styles: [
                 '/vendor/normalize.css'
                 '/vendor/unsemantic.css'
                 '/styles/global.css'
             ]
 
-            # The website's scripts
             scripts: [
                 '/vendor/jquery.js'
             ]
@@ -47,6 +42,29 @@ docpadConfig = {
             str = rs.smartypantsHtml str
             mdParser.render str
 
+        getUrl: (relUrl) ->
+            "#{@site.url}#{relUrl}"
+
+        googleWebFont: (name) ->
+            "<link href=\"http://fonts.googleapis.com/css?family=#{name}\"" +
+            "rel=\"stylesheet\" type=\"text/css\" />"
+
+        lastUpdate: ->
+            d = new Date
+
+            yy = d.getFullYear()
+            mm = d.getMonth().toString()
+            dd = d.getDay().toString()
+
+            mm = "0#{mm}" if mm.length < 2
+            dd = "0#{dd}" if dd.length < 2
+            "Last update: #{yy}-#{mm}-#{dd}"
+
+    environments:
+        development:
+            templateData:
+                site:
+                    url: 'http://localhost:9778'
 }
 
 # Export our DocPad Configuration
