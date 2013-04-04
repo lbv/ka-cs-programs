@@ -33,7 +33,7 @@ section id: 'programs', class: 'grid-container', ->
     h1 'Programs'
     for prg in @getPrograms()
       div ->
-        img class: 'program-list-thumb', src: prg.img
+        img class: 'program-list-thumb', src: (@getUrl prg.img)
         text @md """
           [**#{prg.title}**](#{@getUrl prg.url})
         """
