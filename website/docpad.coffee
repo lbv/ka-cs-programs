@@ -36,6 +36,7 @@ docpadConfig = {
             styles: [
                 '/vendor/normalize.css'
                 '/vendor/unsemantic.css'
+                '/vendor/zenburn.css'
                 '/styles/global.css'
             ]
 
@@ -100,6 +101,11 @@ docpadConfig = {
             templateData:
                 site:
                     url: 'http://localhost:9778'
+
+    plugins:
+        robotskirt:
+            robotskirtOptions:
+                HTML_HARD_WRAP: false
 }
 
 # Export our DocPad Configuration

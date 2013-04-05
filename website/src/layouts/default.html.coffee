@@ -18,7 +18,8 @@ html ->
         span 'Coding for the Khan Academy computer science platform'
       text @getNav @document.nav if @document.nav?
 
-    text @content
+    section class: 'grid-container site-body', ->
+      text @content
 
     footer class: 'grid-container', ->
       div class: 'grid-100 site-footer', ->

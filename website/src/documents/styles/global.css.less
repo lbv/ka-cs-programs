@@ -6,6 +6,13 @@
     -webkit-border-radius: @r;
 }
 
+.pre-wrap () {
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    white-space: pre-wrap;
+}
+
 body {
     font-size: 0.9em;
 
@@ -26,6 +33,10 @@ img.program-list-thumb {
     margin: 0 16px 16px 0;
 }
 
+pre.highlighted {
+    .pre-wrap;
+    width: 40em;
+}
 
 .sig {
     .name {

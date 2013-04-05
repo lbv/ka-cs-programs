@@ -14,7 +14,9 @@
     "docpad-plugin-partials": "2.x",
     "robotskirt": "~2.7.1",
     "docpad-plugin-ghpages": "~2.0.1",
-    "glob": "~3.1.21"
+    "glob": "~3.1.21",
+    "docpad-plugin-robotskirt": "~2.0.3",
+    "docpad-plugin-highlightjs": "~2.1.3"
   },
   "devDependencies": {
     "docpad-plugin-livereload": "2.x"
