@@ -7,7 +7,7 @@ html ->
     (link rel: 'stylesheet', href: @getUrl s) for s in @site.styles
     (script src: @getUrl s) for s in @site.scripts
     meta charset: 'utf-8'
-    title @document.title
+    title @getDocTitle
 
   body ->
     header class: 'grid-container site-header', ->
