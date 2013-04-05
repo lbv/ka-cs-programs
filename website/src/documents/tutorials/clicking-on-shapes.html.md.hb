@@ -1,6 +1,8 @@
 ---
-title: Clicking on Shapes | KA CS
+title: Clicking on Shapes
 layout: default
+description: >
+  How to detect shapes through mouse clicks.
 nav:
   - name: Home
     url:  /
@@ -49,6 +51,8 @@ radius, then the mouse is inside the circle.
 
 Let's see how all of this would look in an example:
 
+{{{kaExample 'Identifying figures based on their location and shape'
+'http://www.khanacademy.org/cs/example-detection-of-clicks-based-on-mouse-coordinates/1520783583'}}}
 
 ``` javascript
 strokeWeight(2);
@@ -133,8 +137,6 @@ var mouseClicked = function() {
 };
 ```
 
-[See the example
-running](http://www.khanacademy.org/cs/example-detection-of-clicks-based-on-mouse-coordinates/1520783583)
 
 ## Method 2: Detection based on pixel color ##
 
@@ -142,7 +144,7 @@ The previous method, as simple as it is, has its limitations. For example,
 what if you want to detect shapes that are _not_ rectangles and circles,
 like stars or ellipses? Perhaps you could try approximating the general
 shape of your figure by combining different rectangles and circles, but
-soonere or later this could turn into a big problem that is not easy to
+sooner or later this could turn into a big problem that is not easy to
 maintain.
 
 Fortunately, there is another simple method, which is using the color of the
@@ -151,8 +153,10 @@ This tends to work really well in practice because usually shapes in a
 graphical environment are colourful and as long as you can easily and
 efficiently recognize something by its color alone, you're all set!
 
-For this we'll be using the Processing.JS function
-[`get`](http://processingjs.org/reference/get_/). Let's see an example...
+For this we'll be using {{{pjsRef 'get_'}}}. Let's see an example...
+
+{{{kaExample 'Identifying shapes by their color'
+'http://www.khanacademy.org/cs/example-detecting-clicks-using-pixel-color/1520899184'}}}
 
 ``` javascript
 // Use an "alias" for Processing.JS 'get'
@@ -199,5 +203,3 @@ var mouseClicked = function() {
 	}
 };
 ```
-[See this example
-running](http://www.khanacademy.org/cs/example-detecting-clicks-using-pixel-color/1520899184)

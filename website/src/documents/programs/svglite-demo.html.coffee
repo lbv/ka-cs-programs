@@ -1,5 +1,5 @@
 ---
-title: SVGLite Demo | KA CS
+title: SVGLite Demo
 layout: default
 nav:
   - name: Home

@@ -41,7 +41,7 @@ todo = renderMd todo
 outFile = "src/documents/programs/#{id}.html.coffee"
 data = """
   ---
-  title: #{prg.title} | KA CS
+  title: #{prg.title}
   layout: default
   nav:
     - name: Home

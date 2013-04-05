@@ -6,7 +6,7 @@ rs   = require 'robotskirt'
 util = require 'util'
 yaml = require 'js-yaml'
 
-# nomo.start()
+#nomo.start()
 mdParser = rs.Markdown.std()
 
 docpadConfig = {
@@ -22,15 +22,16 @@ docpadConfig = {
         site:
             url: "http://lbv.github.com/ka-cs-programs"
 
-            title: "Khan Academy CS Programs"
+            title: "KA CS"
 
             description: """
-                Programs written for the Khan Academy Computer Science
-                platform.
+                Collection of assets created for the Khan Academy computer
+                science platform.
             """
 
             keywords: """
-                khan-academy, javascript, processing.js, programming
+                khan-academy, javascript, processing.js, programming, html,
+                canvas, program, tutorial
             """
 
             styles: [
@@ -51,6 +52,12 @@ docpadConfig = {
 
         getUrl: (relUrl) ->
             "#{@site.url}#{relUrl}"
+
+        getDocTitle: ->
+            title = @site.title
+            if @document.title? and @document.title != @site.title
+                title = "#{@document.title} | #{title}"
+            title
 
         getPrograms: ->
             dataPattern = "#{process.cwd()}/data/*.yml"
@@ -106,6 +113,25 @@ docpadConfig = {
         robotskirt:
             robotskirtOptions:
                 HTML_HARD_WRAP: false
+
+        handlebars:
+            helpers:
+                pjsRef: (id) ->
+                    url   = "http://processingjs.org/reference/#{id}/"
+                    name  = id.replace /_$/, ''
+                    title = "Processing.JS reference for #{name}"
+                    """<a href="#{url}" title="#{title}">""" +
+                    """<code>#{name}</code></a>"""
+
+                kaExample: (title, url) ->
+                    """
+                      <p>
+                        <strong>Example:</strong>
+                        <a href="#{url}" title="See this example running!">
+                          #{title}</a>
+                      </p>
+                    """
+
 }
 
 # Export our DocPad Configuration
