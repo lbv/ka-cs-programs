@@ -5,7 +5,7 @@
  * "Snowman" program.
  */
 var Snowman = function(x, y, scale) {
-	this.ps     = new ParticleSystem();
+	this.ps     = new ParticleSystem(42);
 	this.p      = this.ps.newParticle(x, y, 1);
 	this.ground = y;
 	this.scale  = scale;
