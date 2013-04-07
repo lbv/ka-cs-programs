@@ -20,7 +20,7 @@ info = yaml.load rawInfo
 
 info.links.push {
     desc: 'More programs',
-    url:  'http://lbv.github.com/ka-cs-programs/'
+    url:  'http://lbv.github.io/ka-cs-programs/'
 }
 
 data = ''
