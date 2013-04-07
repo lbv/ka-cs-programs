@@ -1,89 +1,84 @@
-//
-// Global variables
-//
+var App = {};
 
-// Two layers of snowflakes: one behind the snowman, and one
-// in front
-var snowBG = new SnowLayer(32, 0.8, 1.4);
-var snowFG = new SnowLayer(8, 1.4, 2);
+App.init = function() {
+	// Two layers of snowflakes: one behind the snowman, and
+	// one on the front
+	App.snowBG = new SnowLayer(32, 0.8, 1.4);
+	App.snowFG = new SnowLayer(8, 1.4, 2);
 
-// The snowman
-var snowman = new Snowman(200, 388, 1.0);
+	// The snowman
+	App.snowman = new Snowman(200, 388, 1.0);
 
-// A small keyboard indicator
-var keysInd = new KeysIndicator(
-	8, 8, [
-	[ UP,    "\u2191", 0, 1 ],
-	[ DOWN,  "\u2193", 1, 1 ],
-	[ RIGHT, "\u2192", 1, 2 ],
-	[ LEFT,  "\u2190", 1, 0 ],
-	[ 65,    "A",      0, 4 ],
-	[ 90,    "Z",      1, 4 ]
-]);
+	// A small keyboard indicator
+	App.keysInd = new KeysIndicator(
+		8, 8, [
+		[ UP,    "\u2191", 0, 1 ],
+		[ DOWN,  "\u2193", 1, 1 ],
+		[ RIGHT, "\u2192", 1, 2 ],
+		[ LEFT,  "\u2190", 1, 0 ],
+		[ 65,    "A",      0, 4 ],
+		[ 90,    "Z",      1, 4 ]
+	]);
 
+	App.colorSky = lerpColor(
+		$colors.blue[0], $colors.white, 0.5);
+	App.colorGround = $colors.gray1[1];
 
-// Configuration
-var $cfg = {
-	colorSky :
-		lerpColor($colors.blue[0], $colors.white, 0.5),
-	colorGround : $colors.gray1[1],
-
-	groundHeight : 60
+	App.groundHeight = 60;
 };
 
 
-//
-// Functions
-//
-var removeOldSnow = function() {
+App.removeOldSnow = function() {
 	var rem = [];
-	snowBG.forEach(function(s) {
+	App.snowBG.forEach(function(s) {
 		var p = s.particle;
-		if (p.r.y > height - $cfg.groundHeight + s.size) {
+		if (p.r.y > height - App.groundHeight + s.size) {
 			rem.push(s); }
 	});
 	var i;
 	for (i = 0; i < rem.length; ++i) {
-		snowBG.removeSnow(rem[i]); }
+		App.snowBG.removeSnow(rem[i]); }
 
 	rem = [];
-	snowFG.forEach(function(s) {
+	App.snowFG.forEach(function(s) {
 		var p = s.particle;
 		if (p.r.y > height + s.size) { rem.push(s); }
 	});
 	for (i = 0; i < rem.length; ++i) {
-		snowFG.removeSnow(rem[i]); }
+		App.snowFG.removeSnow(rem[i]); }
 };
 
 var draw = function() {
-	snowBG.check();
-	snowFG.check();
+	App.snowBG.check();
+	App.snowFG.check();
 
 	// the sky
-	background($cfg.colorSky);
+	background(App.colorSky);
 
-	snowBG.draw();
+	App.snowBG.draw();
 
 	// ground
 	noStroke();
-	fill($cfg.colorGround);
-	rect(0, height - $cfg.groundHeight,
-	     width, $cfg.groundHeight);
+	fill(App.colorGround);
+	rect(0, height - App.groundHeight,
+	     width, App.groundHeight);
 
-	snowman.draw();
+	App.snowman.draw();
 
-	snowFG.draw();
+	App.snowFG.draw();
 
-	removeOldSnow();
-	keysInd.draw();
+	App.removeOldSnow();
+	App.keysInd.draw();
 };
 
 var keyPressed = function() {
-	keysInd.onKeyPressed();
-	snowman.onKeyPressed();
+	App.keysInd.onKeyPressed();
+	App.snowman.onKeyPressed();
 };
 
 var keyReleased = function() {
-	keysInd.onKeyReleased();
-	snowman.onKeyReleased();
+	App.keysInd.onKeyReleased();
+	App.snowman.onKeyReleased();
 };
+
+App.init();

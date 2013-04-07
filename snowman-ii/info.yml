@@ -20,7 +20,8 @@ changelog: |
   2013-04-07
 
       * Improved many of the components that this program
-        depends on.
+        depends on. Fixed movement of snowman, so that all
+        of his jumps are consistent.
 
   2013-03-08
 
