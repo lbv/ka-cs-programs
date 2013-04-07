@@ -4,8 +4,7 @@ A collection of "small" programs designed for the programming platform used
 in Khan Academy's computer science section. That is, they use KA's own
 dialect of JavaScript + Processing.JS.
 
-For more information, you may visit [this
-website](http://lbv.github.com/ka-cs-programs/).
+Website: http://lbv.github.io/ka-cs-programs/
 
 ## Terms of Use ##
 
