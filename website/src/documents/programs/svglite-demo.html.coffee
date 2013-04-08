@@ -7,16 +7,15 @@ nav:
   - name: Programs
   - name: SVGLite Demo
 ---
-section class: 'grid-container', ->
-  div class: 'grid-100, program', ->
-    img class: 'program-thumb', src: @getUrl '/img/programs/svglite-demo.png'
-    h1 'SVGLite Demo'
-    text """<p>A demonstration program for SVGLite, a JavaScript implementation for a small subset of SVG, a standard format for describing vector graphics.</p>
+section class: 'grid-100, program', ->
+  img class: 'program-thumb', src: @getUrl '/img/programs/svglite-demo.png'
+  h1 'SVGLite Demo'
+  text """<p>A demonstration program for SVGLite, a JavaScript implementation for a small subset of SVG, a standard format for describing vector graphics.</p>
 """
-    text @md '**Tags**: svg, demo, graphics, html, canvas'
+  text @md '**Tags**: svg, demo, graphics, html, canvas'
 
-    h2 'Summary'
-    text """<p>Ideally, something like this should not be necessary at all,
+  h2 'Summary'
+  text """<p>Ideally, something like this should not be necessary at all,
 because there are mechanisms that, at least in theory, are
 meant to be straightforward ways of rendering SVG data on a
 HTML canvas. These include the browser&#39;s own ability to
@@ -42,8 +41,8 @@ simple SVG files. Hence, SVGLite was created.</p>
 me scratch my own itch :).</p>
 """
 
-    h2 'Links'
-    text """<ul>
+  h2 'Links'
+  text """<ul>
 <li><a href="http://www.khanacademy.org/cs/svglite-demo/1507692267">This program on Khan Academy</a></li>
 <li><a href="https://github.com/lbv/ka-cs-programs/tree/master/svglite-demo">This program on GitHub</a></li>
 <li><a href="http://openclipart.org/detail/100699/dark-blue-snowflakes-by-gem">Snowflake art</a></li>
@@ -52,10 +51,11 @@ me scratch my own itch :).</p>
 </ul>
 """
 
-    h2 'ChangeLog'
-    text @md '**Current revision**: rev1'
-    pre """
+  h2 'ChangeLog'
+  text @md """
+**Current revision**: rev1
 
+```no-highlight
 2013-03-31
 
     * First version of this program. Includes three
@@ -63,10 +63,12 @@ me scratch my own itch :).</p>
       rendering: a snowflake, with transparency and
       'evenodd' fill-rule, a white dove over a blue circle,
       and the portrait of a famous musical genius.
+
+```
 """
 
-    h2 'To Do'
-    text """<ul>
+  h2 'To Do'
+  text """<ul>
 <li>Implement gradients, to be able to render some SVG icons.</li>
 <li>Add widgets to control the demo.</li>
 <li>Implement XML parsing.</li>

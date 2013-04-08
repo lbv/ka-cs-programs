@@ -49,27 +49,29 @@ data = """
     - name: Programs
     - name: #{prg.title}
   ---
-  section class: 'grid-container', ->
-    div class: 'grid-100, program', ->
-      img class: 'program-thumb', src: @getUrl '/img/programs/#{id}.png'
-      h1 '#{prg.title}'
-      text ""\"#{prg.description}""\"
-      text @md '**Tags**: #{prg.tags}'
+  section class: 'grid-100, program', ->
+    img class: 'program-thumb', src: @getUrl '/img/programs/#{id}.png'
+    h1 '#{prg.title}'
+    text ""\"#{prg.description}""\"
+    text @md '**Tags**: #{prg.tags}'
 
-      h2 'Summary'
-      text ""\"#{prg.summary}""\"
+    h2 'Summary'
+    text ""\"#{prg.summary}""\"
 
-      h2 'Links'
-      text ""\"#{links}""\"
+    h2 'Links'
+    text ""\"#{links}""\"
 
-      h2 'ChangeLog'
-      text @md '**Current revision**: #{prg.version}'
-      pre ""\"
+    h2 'ChangeLog'
+    text @md ""\"
+  **Current revision**: #{prg.version}
 
-  #{prg.changelog}""\"
+  ```no-highlight
+  #{prg.changelog}
+  ```
+  ""\"
 
-      h2 'To Do'
-      text ""\"#{todo}""\"
+    h2 'To Do'
+    text ""\"#{todo}""\"
 """
 
 util.puts "Writing #{outFile}..."
