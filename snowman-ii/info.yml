@@ -21,7 +21,8 @@ changelog: |
 
       * Improved many of the components that this program
         depends on. Fixed movement of snowman, so that all
-        of his jumps are consistent.
+        of his jumps are consistent. Changed the appearance
+        of snowflakes to SVG images.
 
   2013-03-08
 
