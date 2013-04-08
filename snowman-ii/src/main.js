@@ -1,6 +1,8 @@
 var App = {};
 
 App.init = function() {
+	CreateSnowPatterns();
+
 	// Two layers of snowflakes: one behind the snowman, and
 	// one on the front
 	App.snowBG = new SnowLayer(32, 0.8, 1.4);
