@@ -1,0 +1,29 @@
+title: Chemical Formulas Tool
+description: >
+  A simple tool that identifies elements from a chemical
+  formula, and provides useful information about them.
+tags: chemistry, formulas, elements, compounds, jqueryui
+summary: |
+  I learned some basic chemistry for the first time in my life
+  thanks to the Khan Academy. The videos and exercises are
+  very useful. However, since I wasn't familiar with the
+  periodic table, reading some of the chemical formulas given
+  in the exercises was confusing and forced me to go to the
+  periodic table repeatedly and basically "hunt" for the
+  elements and their basic data over and over.
+
+  This program is just a small effort towards making that
+  experience go a little smoother. Type in your chemical
+  formulas, and receive useful information back!
+
+version: rev1
+changelog: |
+  2013-04-29
+
+      * First version of this program.
+links:
+  - desc : This program on Khan Academy
+    url  : 
+  - desc : This program on GitHub
+    url  : 
+todo:
