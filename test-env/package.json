@@ -1,0 +1,11 @@
+{
+  "name": "test-env",
+  "version": "0.0.0",
+  "description": "Testing environment, similar to Khan Academy's CS framework",
+  "main": "app.coffee",
+  "repository": "",
+  "author": "",
+  "dependencies": {
+    "express": "~3.2.0"
+  }
+}

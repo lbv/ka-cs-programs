@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Execution Environment</title>
+    <style type="text/css">
+html, body {
+	margin: 0;
+	min-width: 0;
+	overflow: hidden;
+}
+
+#output-canvas {
+	position: relative;
+}
+    </style>
+    <script src="js/vendor/jquery-1.9.1.min.js"></script>
+    <script src="js/vendor/processing-1.4.1.min.js"></script>
+    <script src="js/vendor/jshint-1.1.0.js"></script>
+    <script>
+
+var onLoaded = function(data) {
+	var canvas = $('#output-canvas')[0];
+	new Processing(canvas, function(proc) {
+		proc.size(400, 400);
+		proc.frameRate(30);
+
+		var jshOpt = {
+			curly     : true,
+			eqeqeq    : true,
+			noarg     : true,
+			smarttabs : true,
+			undef     : true
+		};
+		var jshGlob = {};
+
+		for (var prop in proc) {
+			jshGlob[prop] = true;
+		}
+
+		var res = JSHINT(data, jshOpt, jshGlob);
+		var msg, i;
+		
+		if (! res) {
+			console.log("JsHint errors:");
+			for (i = 0; i < JSHINT.errors.length; ++i)
+				console.log(JSHINT.errors[i]);
+			return;
+		}
+
+		proc.draw = function() {};
+
+		var objs = [ 'Array', 'Function', 'Object', 'String', 'Error' ];
+		for (i = 0; i < objs.length; ++i)
+			proc[objs[i]] = undefined;
+
+		try {
+			(new Function('with (this) { ' + data + ' }'))
+			.call(proc);
+		}
+		catch (e) {
+			msg = "Exception caught: " + e.message
+				+ "\n\n" + e.stack;
+			console.log(msg);
+		}
+	});
+};
+
+var init = function() {
+	$.ajax('prg.js', { dataType: 'text' }).done(onLoaded);
+};
+
+$(document).ready(init);
+
+    </script>
+  </head>
+  <body>
+
+<div id="output">
+<canvas id="output-canvas" width="400" height="400" tabindex="0"></canvas>
+<div style="display: none;"></div>
+</div>
+<pre id="error-block"></pre>
+
+  </body>
+</html>
