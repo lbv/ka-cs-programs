@@ -7,13 +7,15 @@ htmlUI = """
 <div id="HelpDialog" title="Help">
   <p>
     Type in the chemical formula of an element or compound
-    in the text field at the top. For example, try typing
-    <em>H20</em>, and the program will report back some
-    useful information about it.
+    in the text field at the top-left. For example, try
+    typing <em>H2O</em>, and the program will report back
+    some useful information about it.
   </p>
   <p>
     You may use parentheses to group compounds. Whitespaces
-	are ignored.
+	are ignored. Notice that formulas are case-sensitive, so
+	make sure to use uppercase/lowercase letters
+	accordingly.
   </p>
 </div>
 <div id="Tabs">
@@ -41,7 +43,22 @@ htmlUI = """
     </div>
   </div>
   <div id="PubChem">
-    Nom!
+    <div id="PubChemActivateDiv">
+      <div id="PubChemActivateText">
+        In order to know more about the formula
+        <span id="PubChemFormula"></span>, press the button
+        below, which will run a query against the
+        <a href="http://pubchem.ncbi.nlm.nih.gov" target="_blank">PubChem</a> database.
+      </div>
+      <div>
+        <button id="PubChemActivate">Run Query</button>
+      </div>
+    </div>
+    <div id="PubChemRunning">
+      Running ...
+    </div>
+    <div id="PubChemResults">
+    </div>
   </div>
 </div>
 

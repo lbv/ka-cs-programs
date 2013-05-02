@@ -25,5 +25,9 @@ links:
   - desc : This program on Khan Academy
     url  : 
   - desc : This program on GitHub
-    url  : 
+    url  :
+  - desc : PubChem REST API, used by this program
+    url  : http://pubchem.ncbi.nlm.nih.gov/pug_rest/PUG_REST.html
 todo:
+  - Add more information about some compounds (general and
+    interesting facts).

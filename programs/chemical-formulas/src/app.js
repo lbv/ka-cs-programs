@@ -8,8 +8,54 @@ App.Templates = {
 		'<td class="num"><%- e.molar %></td>' +
 		'<td class="num"><%- e.atoms %></td>' +
 		'<td class="num"><%- e.total %></td>' +
-		'</tr><% }); %>')
+		'</tr><% }); %>'),
+
+	pubChemUrl : _.template(
+		'http://pubchem.ncbi.nlm.nih.gov/rest/pug/' +
+		'compound/formula/<%= formula %>/JSON'),
+
+	pubChemUrl2 : _.template(
+		'http://pubchem.ncbi.nlm.nih.gov/rest/pug/' +
+		'compound/listkey/<%= key %>/cids/JSON'),
+
+	pubChemSynUrl : _.template(
+		'http://pubchem.ncbi.nlm.nih.gov/rest/pug/' +
+		'compound/cid/<%= cid %>/synonyms/JSON'),
+
+	pubChemPropUrl : _.template(
+		'http://pubchem.ncbi.nlm.nih.gov/rest/pug/' +
+		'compound/cid/<%= cid %>/property/' +
+		'MolecularFormula,MolecularWeight,' +
+		'ExactMass,Charge/JSON'),
+
+	pubChemPngUrl : _.template(
+		'http://pubchem.ncbi.nlm.nih.gov/rest/pug/' +
+		'compound/cid/<%= cid %>/PNG'),
+
+	pubChemNoResults : _.template(
+		'<p>No results found for the chemical formula ' +
+		'<%= formula %></p>'),
+
+	pubChemResults : _.template(
+		'<h3>Basic Information</h3>' +
+		'<table><tr><th>Molecular Formula</th>' +
+		'<td><%- prop.MolecularFormula %></td></tr>' +
+		'<tr><th>Molecular Weight</th>' +
+		'<td><%- prop.MolecularWeight %></td></tr>' +
+		'<tr><th>Exact Mass</th>' +
+		'<td><%- prop.ExactMass %></td></tr>' +
+		'<tr><th>Charge</th>' +
+		'<td><%- prop.Charge %></td></tr></table>' +
+		'<h3>Synonyms</h3>' +
+		'<ul><% _.each(synonyms, function(s) { %>' +
+		'<li><%- s %></li>' +
+		'<% }); %></ul>' +
+		'<h3>Image of Molecule</h3>' +
+		'<img src="http://pubchem.ncbi.nlm.nih.gov/rest/' +
+		'pug/compound/cid/<%= cid %>/PNG" />')
 };
+
+App.PubChemCache = {};
 
 App.updateElementsHtml = function(comp) {
 	var sortElementsBy = function(symbol) {
@@ -36,6 +82,7 @@ App.updateElementsHtml = function(comp) {
 	$('#ElementTableBody').html(html);
 	App.updateStyles();
 	$('#TotalMolar').html(totalMolar.toFixed(2));
+	$('#Elements').fadeIn();
 };
 
 App.updateData = function() {
@@ -48,6 +95,21 @@ App.updateData = function() {
 
 	var comp = App.formula.getComposition();
 	App.updateElementsHtml(comp);
+
+	if (fStr !== "") {
+		$('#PubChemFormula').html(App.formulaHtml);
+
+		if (App.PubChemCache[App.formulaStr]) {
+			$('#PubChemActivateDiv').fadeOut();
+			$('#PubChemResults').fadeIn().html(
+				App.PubChemCache[App.formulaStr]);
+		}
+		else {
+			$('#PubChemResults').fadeOut();
+			$('#PubChemActivateDiv').fadeIn();
+		}
+	}
+
 };
 
 App.onInputChange = function() {
@@ -66,6 +128,69 @@ App.onInputChange = function() {
 	App.updateData();
 };
 
+App.onPubChemQuery3 = function(synData, propData) {
+	var prop = propData[0].PropertyTable.Properties[0];
+	var syn = [];
+	var synList = synData[0].InformationList.Information[0]
+		.Synonym;
+	var i, len = min(3, synList.length);
+	for (i = 0; i < len; ++i) {
+		syn.push(synList[i]); }
+
+	var html = App.Templates.pubChemResults({
+		prop     : prop,
+		cid      : prop.CID,
+		synonyms : syn
+	});
+	App.PubChemCache[App.formulaStr] = html;
+	$('#PubChemRunning').fadeOut();
+	$('#PubChemResults').fadeIn().html(html);
+};
+
+App.onPubChemQuery2 = function(data) {
+	if (data.IdentifierList === undefined) {
+		$G.get('setTimeout')(App.runPubChemQ2, 3000);
+		return;
+	}
+
+	if (data.IdentifierList.CID.length === 0) {
+		var html = App.Templates.pubChemNoResults({
+			formula : App.formulaHtml });
+		App.PubChemCache[App.formulaStr] = html;
+		$('#PubChemRunning').fadeOut();
+		$('#PubChemResults').fadeIn().html(html);
+		return;
+	}
+
+	var cid = data.IdentifierList.CID[0];
+	var urlSyn = App.Templates.pubChemSynUrl(
+		{ cid : cid });
+	var urlProp = App.Templates.pubChemPropUrl(
+		{ cid : cid });
+	$.when($.getJSON(urlSyn), $.getJSON(urlProp)).
+		done(App.onPubChemQuery3);
+};
+
+App.runPubChemQ2 = function() {
+	var url = App.Templates.pubChemUrl2(
+		{ key : App.PubChemKey });
+	$.getJSON(url, App.onPubChemQuery2);
+};
+
+App.onPubChemQuery = function(data) {
+	App.PubChemKey = data.Waiting.ListKey;
+	$G.get('setTimeout')(App.runPubChemQ2, 3000);
+};
+
+App.runPubChemQuery = function() {
+	$('#PubChemActivateDiv').hide();
+	$('#PubChemRunning').fadeIn();
+
+	var url = App.Templates.pubChemUrl(
+		{ formula: App.formulaStr });
+	$.getJSON(url, App.onPubChemQuery);
+};
+
 App.updateStyles = function() {
 	$('#ElementTable th, #ElementTable td').css({
 		padding: '4px'
@@ -82,12 +207,11 @@ App.updateStyles = function() {
 
 App.buildUI = function() {
 	$('body').css({
-		'font-size' : '11px'
+		fontSize : '11px'
 	});
 	$('input').addClass("ui-widget ui-corner-all");
 
 	$('#Frame').css({
-		'position' : 'absolute',
 		'width'  : '400px',
 		'height' : '400px'
 	}).position({
@@ -115,9 +239,9 @@ App.buildUI = function() {
 	});
 
 	$('#Input').css({
-		'font-size' : '16px',
-		'height'    : '22px',
-		'width'     : '172px'
+		fontSize : '16px',
+		height   : '22px',
+		width    : '172px'
 	}).position({
 		my : 'left top',
 		at : 'left+8 top+8',
@@ -125,12 +249,12 @@ App.buildUI = function() {
 	}).keyup(App.onInputChange);
 
 	$('#Formula').css({
-		'padding-top' : '2px',
-		'text-align' : 'center',
-		'font-weight' : 'bold',
-		'font-size' : '16px',
-		'width'  : '168px',
-		'height' : '24px'
+		paddingTop : '2px',
+		textAlign  : 'center',
+		fontWeight : 'bold',
+		fontSize   : '16px',
+		width      : '168px',
+		height     : '24px'
 	}).
 	addClass('ui-widget ui-state-highlight ui-corner-all').
 	position({
@@ -152,14 +276,13 @@ App.buildUI = function() {
 		$('#HelpDialog').dialog('open');
 	});
 
-	$('#Tabs').tabs().css({
-		'position' : 'absolute',
-		'width'  : '378px',
-		'height' : '340px'
+	$('#Tabs').css({
+		width    : '378px',
+		height   : '340px'
 	}).position({
 		my : 'left top',
-		at : 'left+8 top+48',
-		of : '#Frame'
+		at : 'left bottom+16',
+		of : '#Input'
 	});
 
 	$('#MessageDiv').css({
@@ -194,7 +317,7 @@ App.buildUI = function() {
 	$('#Message').css({
 		width  : '300px',
 		height : '180px',
-		'background-color' : '#ffffff',
+		backgroundColor : '#ffffff',
 		border  : 'solid 1px #babdb6',
 		padding : '8px'
 	}).addClass('ui-widget ui-corner-all').
@@ -215,11 +338,46 @@ App.buildUI = function() {
 		textAlign      : 'center',
 		padding        : '4px'
 	});
-	$('#TotalMolarDiv').position({
+	$('#TotalMolarDiv').css({
+		marginTop : '16px'
+	}).position({
 		my : 'left bottom',
-		at : 'left+16 bottom',
+		at : 'left bottom',
 		of : '#Elements'
 	});
+
+	$('#PubChem').css({
+		height    : '270px',
+		overflowY : 'auto'
+	});
+
+	$('#PubChemActivateDiv').css({
+		width  : '200px',
+		height : '200px'
+	}).position({
+		my : 'center center',
+		at : 'center center',
+		of : '#PubChem'
+	});
+
+	$('#PubChemActivate').button().position({
+		my : 'center top',
+		at : 'center bottom+32',
+		of : '#PubChemActivateText'
+	}).click(App.runPubChemQuery);
+	
+	$('#PubChemRunning').css({
+		textAlign  : 'center',
+		fontWeight : 'bold',
+		width      : '120px',
+		padding    : '16px'
+	}).
+	addClass('ui-widget ui-state-highlight ui-corner-all');
+
+	$('#Tabs').tabs();
+	$('#Elements').hide();
+	$('#PubChemActivateDiv').hide();
+	$('#PubChemRunning').hide();
 
 	App.updateStyles();
 };
