@@ -1,5 +1,43 @@
 var App = {};
 
+App.Templates = {
+	elements : _.template(
+		'<% _.each(elements, function(e) { %><tr>' +
+		'<td class="ele"><%- e.name %></td>' +
+		'<td class="sym"><%- e.symbol %></td>' +
+		'<td class="num"><%- e.molar %></td>' +
+		'<td class="num"><%- e.atoms %></td>' +
+		'<td class="num"><%- e.total %></td>' +
+		'</tr><% }); %>')
+};
+
+App.updateElementsHtml = function(comp) {
+	var sortElementsBy = function(symbol) {
+		return Elements[symbol][2];
+	};
+	var sorted = _.sortBy(_.keys(comp), sortElementsBy);
+	var i, len = sorted.length;
+	var totalMolar = 0;
+	var elements = [];
+	for (i = 0; i < len; ++i) {
+		var symbol = sorted[i];
+		var info   = Elements[symbol];
+		elements.push({
+			name   : info[0],
+			symbol : symbol,
+			molar  : info[1].toFixed(2),
+			atoms  : comp[symbol],
+			total  : (comp[symbol] * info[1]).toFixed(2)
+		});
+		totalMolar += comp[symbol] * info[1];
+	}
+	var html = App.Templates.elements(
+		{ elements: elements });
+	$('#ElementTableBody').html(html);
+	App.updateStyles();
+	$('#TotalMolar').html(totalMolar.toFixed(2));
+};
+
 App.updateData = function() {
 	var fStr = App.formula.toString();
 	if (fStr === App.formulaStr) { return; }
@@ -7,8 +45,9 @@ App.updateData = function() {
 	App.formulaStr  = fStr;
 	App.formulaHtml = App.formula.toHtml();
 	$('#Formula').html(App.formulaHtml);
+
 	var comp = App.formula.getComposition();
-	var table = '';
+	App.updateElementsHtml(comp);
 };
 
 App.onInputChange = function() {
@@ -25,6 +64,20 @@ App.onInputChange = function() {
 	$('#MessageDiv').fadeOut();
 	App.formula = f;
 	App.updateData();
+};
+
+App.updateStyles = function() {
+	$('#ElementTable th, #ElementTable td').css({
+		padding: '4px'
+	});
+	$('#ElementTable td.ele').css({ textAlign : 'left' });
+	$('#ElementTable .ele').css({ width : '32%' });
+	$('#ElementTable .sym').css({
+		textAlign : 'center',
+		width     : '17%'
+	});
+	$('#ElementTable td.num').css({ textAlign: 'right' });
+	$('#ElementTable num').css({ width: '17%' });
 };
 
 App.buildUI = function() {
@@ -99,9 +152,7 @@ App.buildUI = function() {
 		$('#HelpDialog').dialog('open');
 	});
 
-	$('#Tabs').tabs({
-		disabled : [ 2 ]
-	}).css({
+	$('#Tabs').tabs().css({
 		'position' : 'absolute',
 		'width'  : '378px',
 		'height' : '340px'
@@ -154,6 +205,23 @@ App.buildUI = function() {
 	});
 
 	$('#MessageDiv').hide();
+
+	$('#ElementTable').css({
+		borderCollapse : 'collapse',
+		border         : '1px solid #babdb6'
+	});
+	$('#ElementTable th').css({
+		border         : '1px solid #babdb6',
+		textAlign      : 'center',
+		padding        : '4px'
+	});
+	$('#TotalMolarDiv').position({
+		my : 'left bottom',
+		at : 'left+16 bottom',
+		of : '#Elements'
+	});
+
+	App.updateStyles();
 };
 
 App.init = function() {

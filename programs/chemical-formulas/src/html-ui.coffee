@@ -20,28 +20,28 @@ htmlUI = """
   <ul>
     <li><a href="#Elements"><span>Elements</span></a></li>
     <li><a href="#PubChem"><span>PubChem Query</span></a></li>
-    <li><a href="#Other"><span>Other</span></a></li>
   </ul>
   <div id="Elements">
     <table id="ElementTable">
       <thead>
         <tr>
-		  <th>Element</th>
-		  <th>Symbol</th>
-		  <th>Molar mass</th>
-		  <th>Atoms</th>
-		  <th>Total molar mass</th>
+		  <th class="ele">Element</th>
+		  <th class="sym">Symbol</th>
+		  <th class="num">Molar mass</th>
+		  <th class="num">Atoms</th>
+		  <th class="num">Total molar mass</th>
 		</tr>
       </thead>
       <tbody id="ElementTableBody">
       </tbody>
     </table>
+    <div id="TotalMolarDiv">
+      Total Molar Mass:
+      <span id="TotalMolar"></span>
+    </div>
   </div>
   <div id="PubChem">
     Nom!
-  </div>
-  <div id="Other">
-    Other!
   </div>
 </div>
 

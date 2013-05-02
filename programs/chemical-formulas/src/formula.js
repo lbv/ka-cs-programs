@@ -51,6 +51,22 @@ Formula.prototype.toHtml = function() {
 };
 
 Formula.prototype.getComposition = function() {
+	var comp = {};
+	if (! this.isComp) {
+		comp[this.element] = this.number;
+		return comp;
+	}
 	
+	var i;
+	var len = this.children.length;
+	for (i = 0; i < len; ++i) {
+		var ccomp = this.children[i].getComposition();
+		for (var e in ccomp) {
+			if (! comp.hasOwnProperty(e)) {
+				comp[e] = 0; }
+			comp[e] += ccomp[e] * this.number;
+		}
+	}
+	return comp;
 };
 
