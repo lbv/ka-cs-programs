@@ -3,12 +3,21 @@ var App = {};
 App.Templates = {
 	elements : _.template(
 		'<% _.each(elements, function(e) { %><tr>' +
-		'<td class="ele"><%- e.name %></td>' +
+		'<td class="ele"><%= e.name %></td>' +
 		'<td class="sym"><%- e.symbol %></td>' +
 		'<td class="num"><%- e.molar %></td>' +
 		'<td class="num"><%- e.atoms %></td>' +
 		'<td class="num"><%- e.total %></td>' +
 		'</tr><% }); %>'),
+
+	audioSpan : _.template(
+		'<%- str %><span id="<%= id %>"></span>'),
+
+	audioElement : _.template(
+		'<audio id="<%= id %>" src="<%= src %>" />'),
+
+	ttsUrl : _.template(
+		'http://tts-api.com/tts.mp3?q=<%= q %>'),
 
 	pubChemUrl : _.template(
 		'http://pubchem.ncbi.nlm.nih.gov/rest/pug/' +
@@ -56,6 +65,61 @@ App.Templates = {
 };
 
 App.PubChemCache = {};
+App.AudioCache   = {};
+
+App.AudioCount     = 0;
+App.AudioSpanCount = 0;
+
+
+App.audioString = function(str) {
+	var spanId = 'AudioSpan' +
+		App.AudioSpanCount.toString();
+	++App.AudioSpanCount;
+
+	var html = App.Templates.audioSpan({
+		str : str,
+		id  : spanId
+	});
+
+	if (App.AudioCache[str] === undefined) {
+		var audioId = 'Audio' + App.AudioCount.toString();
+		++App.AudioCount;
+
+		var encoded = $G.get('encodeURIComponent')(str);
+		var url = App.Templates.ttsUrl({ q: encoded });
+		var audioHtml = App.Templates.audioElement({
+			id  : audioId,
+			src : url
+		});
+
+		var dfd   = new $.Deferred();
+		var audio = $(audioHtml);
+
+		audio.on('canplay', function() {
+			dfd.resolve(audio);
+		});
+		$('#AudioElements').append(audio);
+		App.AudioCache[str] = dfd.promise();
+	}
+
+	var audioDfd = App.AudioCache[str];
+	var attachAudio = function() {
+		audioDfd.then(function(data) {
+			$('#' + spanId).button({
+				icons: { primary: 'ui-icon-volume-on' },
+				text: false
+			}).css({
+				height : '16px'
+			}).click(function() { data[0].play(); });
+		});
+	};
+
+	var retObj = {
+		html: html,
+		func: attachAudio
+	};
+	return retObj;
+};
 
 App.updateElementsHtml = function(comp) {
 	var sortElementsBy = function(symbol) {
@@ -65,11 +129,14 @@ App.updateElementsHtml = function(comp) {
 	var i, len = sorted.length;
 	var totalMolar = 0;
 	var elements = [];
+	var cbs      = [];
 	for (i = 0; i < len; ++i) {
 		var symbol = sorted[i];
 		var info   = Elements[symbol];
+		var audio  = App.audioString(info[0]);
+		cbs.push(audio.func);
 		elements.push({
-			name   : info[0],
+			name   : audio.html,
 			symbol : symbol,
 			molar  : info[1].toFixed(2),
 			atoms  : comp[symbol],
@@ -80,9 +147,12 @@ App.updateElementsHtml = function(comp) {
 	var html = App.Templates.elements(
 		{ elements: elements });
 	$('#ElementTableBody').html(html);
-	App.updateStyles();
 	$('#TotalMolar').html(totalMolar.toFixed(2));
-	$('#Elements').fadeIn();
+	App.updateStyles();
+
+	len = cbs.length;
+	for (i = 0; i < len; ++i) {
+		cbs[i].call(); }
 };
 
 App.updateData = function() {
@@ -203,6 +273,9 @@ App.updateStyles = function() {
 	});
 	$('#ElementTable td.num').css({ textAlign: 'right' });
 	$('#ElementTable num').css({ width: '17%' });
+
+	if (App.formulaStr !== '') {
+		$('#ElementsContent').fadeIn(); }
 };
 
 App.buildUI = function() {
@@ -374,10 +447,10 @@ App.buildUI = function() {
 	}).
 	addClass('ui-widget ui-state-highlight ui-corner-all');
 
-	$('#Tabs').tabs();
-	$('#Elements').hide();
+	$('#ElementsContent').hide();
 	$('#PubChemActivateDiv').hide();
 	$('#PubChemRunning').hide();
+	$('#Tabs').tabs();
 
 	App.updateStyles();
 };

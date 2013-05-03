@@ -24,28 +24,29 @@ htmlUI = """
     <li><a href="#PubChem"><span>PubChem Query</span></a></li>
   </ul>
   <div id="Elements">
-    <table id="ElementTable">
-      <thead>
-        <tr>
-		  <th class="ele">Element</th>
-		  <th class="sym">Symbol</th>
-		  <th class="num">Molar mass</th>
-		  <th class="num">Atoms</th>
-		  <th class="num">Total molar mass</th>
-		</tr>
-      </thead>
-      <tbody id="ElementTableBody">
-      </tbody>
-    </table>
-    <div id="TotalMolarDiv">
-      Total Molar Mass:
-      <span id="TotalMolar"></span>
+    <div id="ElementsContent">
+      <table id="ElementTable">
+        <thead>
+          <tr>
+            <th class="ele">Element</th>
+            <th class="sym">Symbol</th>
+            <th class="num">Molar mass</th>
+            <th class="num">Atoms</th>
+            <th class="num">Total molar mass</th>
+          </tr>
+        </thead>
+        <tbody id="ElementTableBody">
+        </tbody>
+      </table>
+      <div id="TotalMolarDiv">
+        Total Molar Mass: <span id="TotalMolar"></span>
+      </div>
     </div>
   </div>
   <div id="PubChem">
     <div id="PubChemActivateDiv">
       <div id="PubChemActivateText">
-        In order to know more about the formula
+        To know a few more details about the formula
         <span id="PubChemFormula"></span>, press the button
         below, which will run a query against the
         <a href="http://pubchem.ncbi.nlm.nih.gov" target="_blank">PubChem</a> database.
@@ -70,6 +71,8 @@ htmlUI = """
 	<p><span id="MessageReason"></span></p>
   </div>
 </div>
+
+<div id="AudioElements"></div>
 
 </div><!-- Frame -->
 """
