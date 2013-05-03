@@ -1,0 +1,31 @@
+title: About Me
+description: >
+  Some info about who I am, and my programs for the Khan
+  Academy CS platform.
+tags: jqueryui
+summary: |
+  I'd just like to share a short paragraph, written by one of
+  my heroes, Ernesto Sabato (please excuse my rough
+  translation from spanish):
+
+    (..)
+    I propose to you then, with the solemnity of life's final
+    words, that we embrace each other in a commitment: let us
+    go out to open spaces, let us take chances with one
+    another, let us hope, along with those who open their
+    arms, for a new wave of history that lifts us upwards.
+
+      -- from "Antes del fin".
+
+version: rev1
+changelog: |
+  2013-05-02
+
+      * First version of this program.
+links:
+  - desc : This program on Khan Academy
+    url  : https://www.khanacademy.org/cs/about-me/1607698204
+  - desc : This program on GitHub
+    url  : 
+todo:
+

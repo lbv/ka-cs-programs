@@ -1,0 +1,30 @@
+require 'rake/clean'
+
+PRG = 'about-me'
+
+CLOBBER.include("out/#{PRG}.js")
+CLEAN.include('doc/top-summary.md')
+
+tool_doc_top = "../../tools/doc-top"
+
+task :default => "out/#{PRG}.js"
+
+@deps = [
+	'../../lib/global-iface.js',
+	'doc/top-summary.md',
+	'gen/html-ui.js',
+	'src/app.js',
+	"#{PRG}.m4"
+]
+
+file 'doc/top-summary.md' => [ 'info.yml' ] do
+	sh tool_doc_top
+end
+
+file 'gen/html-ui.js' => [ 'src/html-ui.coffee' ] do
+	sh "coffee -b -o gen/ src/html-ui.coffee"
+end
+
+file "out/#{PRG}.js" => @deps do
+	sh "m4 -I ../../lib -I src/ -P #{PRG}.m4 > out/#{PRG}.js"
+end
