@@ -10,7 +10,7 @@ summary: |
   periodic table, reading some of the chemical formulas given
   in the exercises was confusing and forced me to go to the
   periodic table repeatedly and basically "hunt" for the
-  elements and their basic data over and over.
+  elements and their basic data over and over again.
 
   This program is just a small effort towards making that
   experience go a little smoother. Type in your chemical
@@ -18,14 +18,14 @@ summary: |
 
 version: rev1
 changelog: |
-  2013-04-29
+  2013-05-02
 
       * First version of this program.
 links:
   - desc : This program on Khan Academy
-    url  : 
+    url  : https://www.khanacademy.org/cs/chemical-formulas-tool/1606949985
   - desc : This program on GitHub
-    url  :
+    url  : https://github.com/lbv/ka-cs-programs/tree/master/programs/chemical-formulas
   - desc : PubChem REST API, used by this program
     url  : http://pubchem.ncbi.nlm.nih.gov/pug_rest/PUG_REST.html
   - desc : TTS service provided by
