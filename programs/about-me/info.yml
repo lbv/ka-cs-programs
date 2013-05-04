@@ -17,8 +17,12 @@ summary: |
 
       -- from "Antes del fin".
 
-version: rev1
+version: rev2
 changelog: |
+  2013-05-03
+
+      * Added background image
+
   2013-05-02
 
       * First version of this program.
@@ -27,5 +31,7 @@ links:
     url  : https://www.khanacademy.org/cs/about-me/1607698204
   - desc : This program on GitHub
     url  : https://github.com/lbv/ka-cs-programs/tree/master/programs/about-me
+  - desc : Background image taken from Tango's "Emblem" icon
+    url  : http://commons.wikimedia.org/wiki/Tango_icons
 todo:
 

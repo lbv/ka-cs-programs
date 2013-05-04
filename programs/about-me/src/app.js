@@ -6,8 +6,10 @@ App.buildUI = function() {
 	});
 
 	$('#Frame').css({
-		'width'  : '400px',
-		'height' : '400px'
+		backgroundColor : '#eeeeed',
+		opacity : '0.9',
+		width   : '400px',
+		height  : '400px'
 	}).position({
 		my : 'left top',
 		at : 'left top',
@@ -23,6 +25,10 @@ App.buildUI = function() {
 };
 
 App.init = function() {
+	var bg = getBackground();
+	background(255, 255, 255);
+	image(bg, 0, 0);
+
 	$G.insertHtml(htmlUI);
 	$G.loadJQueryUI(App.buildUI);
 };

@@ -13,6 +13,7 @@ task :default => "out/#{PRG}.js"
 	'../../lib/global-iface.js',
 	'doc/top-summary.md',
 	'gen/html-ui.js',
+	'src/background.js',
 	'src/app.js',
 	"#{PRG}.m4"
 ]
