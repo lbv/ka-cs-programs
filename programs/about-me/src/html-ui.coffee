@@ -15,7 +15,7 @@ htmlUI = """
       about education. Given this, it shouldn't be a
       surprise if I tell you that I strongly appreciate the
       Khan Academy, and I have the utmost respect and
-      admiration for what Salman and his team.
+      admiration for Salman and his team.
     </p>
     <p>
       I work as a software developer. I am very fond of
