@@ -18,6 +18,7 @@ task :default => "out/#{PRG}.js"
 	'gen/html-ui.js',
 	'src/formula.js',
 	'src/chem-parser.js',
+	'src/background.js',
 	'src/app.js',
 	"#{PRG}.m4"
 ]

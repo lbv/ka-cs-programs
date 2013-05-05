@@ -16,8 +16,12 @@ summary: |
   experience go a little smoother. Type in your chemical
   formulas, and receive useful information back!
 
-version: rev1
+version: rev2
 changelog: |
+  2013-05-03
+
+      * Added background image.
+
   2013-05-02
 
       * First version of this program.
@@ -30,6 +34,8 @@ links:
     url  : http://pubchem.ncbi.nlm.nih.gov/pug_rest/PUG_REST.html
   - desc : TTS service provided by
     url  : http://tts-api.com/
+  - desc : Background image from the Tango "Chemistry" icon
+    url  : http://commons.wikimedia.org/wiki/Tango_icons
 todo:
   - Add more information about some compounds (general and
     interesting facts).

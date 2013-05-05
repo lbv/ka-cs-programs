@@ -285,8 +285,10 @@ App.buildUI = function() {
 	$('input').addClass("ui-widget ui-corner-all");
 
 	$('#Frame').css({
-		'width'  : '400px',
-		'height' : '400px'
+		backgroundColor : '#ffffff',
+		opacity : '0.9',
+		width  : '400px',
+		height : '400px'
 	}).position({
 		my : 'left top',
 		at : 'left top',
@@ -453,9 +455,13 @@ App.buildUI = function() {
 	$('#Tabs').tabs();
 
 	App.updateStyles();
+	background(255, 255, 255);
+	image(App.bg, 0, 0);
 };
 
 App.init = function() {
+	App.bg = getBackground();
+
 	App.formula     = null;
 	App.formulaStr  = '';
 	App.formulaHtml = '';
