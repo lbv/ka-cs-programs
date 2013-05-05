@@ -8,15 +8,28 @@ htmlUI = """
     into JavaScript code that you can use directly in your
     Khan Academy programs.
   </p>
-  <h3>A short message..</h3>
+  <h3>But before you continue &hellip;</h3>
   <p>
-    A bloo bloo.
+    &hellip; I'd like to invite you to take a few moments to
+    reflect upon the decisions you take every day, including
+    the decision of whether to use this program or not, and
+    how to use it.
+  </p>
+  <p>
+    A wise man once said, <q>A man is but the product of his
+    thoughts. What he thinks, he becomes.</q>
+  </p>
+  <p>
+    May you act based on the voice from within your heart,
+    and seek to rise up, bringing the world around you
+    upwards with you.
   </p>
   <button id="Continue">Continue</button>
 </div>
 
 <div id="Main">
   <div id="MainDesc">
+    <h2>Image2Code</h2>
     <p>
       Choose an <em>Identifier</em>, and an image from your
       computer to convert into code.

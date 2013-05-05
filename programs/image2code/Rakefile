@@ -17,6 +17,7 @@ task :default => "out/#{PRG}.js"
 @deps = [
 	'../../lib/global-iface.js',
 	'doc/top-summary.md',
+	'src/background.js',
 	'src/app.js',
 	"#{PRG}.m4"
 ]

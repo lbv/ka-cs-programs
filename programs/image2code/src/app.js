@@ -68,10 +68,12 @@ App.checkForDownload = function() {
 };
 
 App.buildUI = function() {
-	$('body').css({	fontSize : '11px' });
+	$('body').css({	fontSize : '10px' });
 	$('input').addClass('ui-widget ui-corner-all');
 
 	$('#Frame').css({
+		backgroundColor : '#ffffff',
+		opacity : '0.9',
 		margin  : '0',
 		padding : '0',
 		width   : '400px',
@@ -86,7 +88,7 @@ App.buildUI = function() {
 	.css({
 		width     : '336px',
 		height    : '336px',
-		margin    : 0,
+		margin    : '12px 0 0 0',
 		padding   : '32px',
 		overflowY : 'auto'
 	});
@@ -99,7 +101,7 @@ App.buildUI = function() {
 	.css({
 		width     : '336px',
 		height    : '336px',
-		margin    : 0,
+		margin    : '12px 0 0 0',
 		padding   : '32px',
 		overflowY : 'auto'
 	});
@@ -113,6 +115,9 @@ App.buildUI = function() {
 };
 
 App.init = function() {
+	App.bg = getBackground();
+	frameRate(1);
+
 	App.fileOK = false;
 	App.idOK   = false;
 
@@ -124,3 +129,10 @@ App.init = function() {
 };
 
 App.init();
+
+draw = function() {
+	if (App.bg) {
+		background(255, 255, 255);
+		image(App.bg, 0, 0);
+	}
+};
