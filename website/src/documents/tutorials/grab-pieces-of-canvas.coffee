@@ -1,14 +1,19 @@
----
-title: Grabbing Pieces of the Canvas
-layout: default
-description: >
-  How to capture sections of the canvas as separate images.
-nav:
-  - name: Home
-    url:  /
-  - name: Tutorials
-  - name: Grabbing pieces of the canvas
----
+ka = require '../../lib/ka-cs'
+(require 'phi-teacup').dsl()
+
+meta =
+  title: 'Grabbing Pieces of the Canvas'
+  description: '''
+    How to capture sections of the canvas as separate images.
+  '''
+  nav: [
+    { name: 'Home', url: '/' }
+    { name: 'Tutorials', url: '/#tutorials' }
+    { name: 'Grabbing pieces of the canvas' }
+  ]
+
+template = ->
+  markdown """
 # Grabbing Pieces of the Canvas #
 
 ## Summary ##
@@ -29,13 +34,13 @@ you'd like to reuse it, drawing it one or more times all over the canvas.
 You could try replicating the sequence of instructions that created the
 original image, only changing the coordinates of your commands so the image
 is recreated in another location. Or you could use the *transformation*
-operations (like {{{pjsRef 'translate_'}}}) to help you with this. However,
+operations (like #{ka.pjs 'translate_'}) to help you with this. However,
 as you can imagine, this can quickly get out of hand, not to mention that
 your code is executing the same individual drawing operations over and over.
 
 This means that if you use a lot of basic shapes to compose you images, your
 program could start to feel sluggish, especially when you animate things,
-typically from the {{{pjsRef 'draw_'}}} function. Wouldn't it be nicer if
+typically from the #{ka.pjs 'draw_'} function. Wouldn't it be nicer if
 you could draw something once, and then *store* it somehow, and reuse it
 without having to render every component individually again? Well, it
 shouldn't be much of a surprise that this is indeed possible. But let's talk
@@ -65,8 +70,8 @@ and relatively recent element that is now part of modern web browsers: the
 This canvas is at the core of Processing.JS, and on top of that other
 components are built. This includes abstractions from the original
 Processing environment. As part of these abstractions, P.JS includes "data
-types" such as {{{pjsRef 'PShape'}}}, {{{pjsRef 'PImage'}}} and {{{pjsRef
-'PGraphics'}}}.
+types" such as #{ka.pjs 'PShape'}, #{ka.pjs 'PImage'} and
+#{ka.pjs 'PGraphics'}.
 
 Each of these data types has its purpose and uses, so it doesn't hurt to get
 familiar with them, although many of their internal details are not very
@@ -78,7 +83,7 @@ provide, so let's go briefly over them:
   provides the interface of a `PGraphics`, for example. You can do things
   like draw lines, ellipses, rectangles, etc. on a `PGraphics`. However,
   you're not limited to only one `PGraphics`, you can create your own (with
-  {{{pjsRef 'createGraphics_'}}}) and then draw stuff over it, without
+  #{ka.pjs 'createGraphics_'}) and then draw stuff over it, without
   showing it on the real canvas until the moment you choose to display it.
   This would be an example of what is called as an "off--screen" canvas.
 
@@ -108,7 +113,7 @@ which is really useful. Hopefully this will be clearer soon.
 Getting back to our original problem (how to capture pieces of the canvas),
 here's one way in which we can do this:
 
-* Start by creating a `PImage`, with {{{pjsRef 'createImage_'}}}.
+* Start by creating a `PImage`, with #{ka.pjs 'createImage_'}.
 * Obtain the internal HTML canvas from the `PImage`. This can be done
   through a property called `sourceImg` in the `PImage` object.
 * Grab the pixel information from a rectangular region of the real canvas.
@@ -121,10 +126,9 @@ here's one way in which we can do this:
 
 Let's see how it works on a real example:
 
-{{{kaExample 'How to grab pieces of the canvas'
-'http://www.khanacademy.org/cs/example-how-to-grab-pieces-of-the-canvas/1480182631'}}}
+#{ka.example 'How to grab pieces of the canvas','http://www.khanacademy.org/cs/example-how-to-grab-pieces-of-the-canvas/1480182631'}
 
-``` javascript
+```javascript
 //
 // We'll create a matrix of 4x4 squares, and grab each
 // little square as a single image
@@ -222,3 +226,8 @@ var draw = function() {
 drawMainPicture();
 cutIntoPieces();
 ```
+"""
+
+module.exports =
+    template: useLayout('default', template, doc: meta)
+    meta: meta

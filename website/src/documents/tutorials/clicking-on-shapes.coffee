@@ -1,14 +1,19 @@
----
-title: Clicking on Shapes
-layout: default
-description: >
-  How to detect shapes through mouse clicks.
-nav:
-  - name: Home
-    url:  /
-  - name: Tutorials
-  - name: Clicking on Shapes
----
+ka = require '../../lib/ka-cs'
+(require 'phi-teacup').dsl()
+
+meta =
+  title: 'Clicking on Shapes'
+  description: '''
+    How to detect shapes through mouse clicks.
+  '''
+  nav: [
+    { name: 'Home', url: '/' }
+    { name: 'Tutorials', url: '/#tutorials' }
+    { name: 'Clicking on Shapes' }
+  ]
+
+template = ->
+  markdown """
 # Clicking on Shapes #
 
 ## Summary ##
@@ -51,8 +56,7 @@ radius, then the mouse is inside the circle.
 
 Let's see how all of this would look in an example:
 
-{{{kaExample 'Identifying figures based on their location and shape'
-'http://www.khanacademy.org/cs/example-detection-of-clicks-based-on-mouse-coordinates/1520783583'}}}
+#{ka.example 'Identifying figures based on their location and shape', 'http://www.khanacademy.org/cs/example-detection-of-clicks-based-on-mouse-coordinates/1520783583'}
 
 ``` javascript
 strokeWeight(2);
@@ -153,10 +157,9 @@ This tends to work really well in practice because usually shapes in a
 graphical environment are colourful and as long as you can easily and
 efficiently recognize something by its color alone, you're all set!
 
-For this we'll be using {{{pjsRef 'get_'}}}. Let's see an example...
+For this we'll be using #{ka.pjs 'get_'}. Let's see an example...
 
-{{{kaExample 'Identifying shapes by their color'
-'http://www.khanacademy.org/cs/example-detecting-clicks-using-pixel-color/1520899184'}}}
+#{ka.example 'Identifying shapes by their color', 'http://www.khanacademy.org/cs/example-detecting-clicks-using-pixel-color/1520899184'}
 
 ``` javascript
 // Use an "alias" for Processing.JS 'get'
@@ -203,3 +206,9 @@ var mouseClicked = function() {
 	}
 };
 ```
+
+"""
+
+module.exports =
+    template: useLayout('default', template, doc: meta)
+    meta: meta

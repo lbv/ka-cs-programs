@@ -42,6 +42,7 @@ module.exports = (grunt) ->
             doc = ""
             for src in file.src
                 tpl = require "./#{src}"
+                tpl = tpl.template unless typeof tpl is 'function'
                 doc += tpl layouts, site: opt.site
 
             grunt.log.writeln "Writing to #{file.dest}"

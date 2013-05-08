@@ -4,8 +4,22 @@ path = require 'path'
 yaml = require 'js-yaml'
 
 module.exports =
+    example: (title, url) ->
+        """
+          <p>
+            <strong>Example:</strong>
+            <a href="#{url}" title="See this example running!">#{title}</a>
+          </p>
+        """
+
+    getExamples: ->
+        dataFile = "#{process.cwd()}/data/examples.yml"
+        yml = fs.readFileSync dataFile, encoding: 'utf8'
+        data = yaml.load yml
+        []
+
     getPrograms: ->
-        dataPattern = "#{process.cwd()}/data/*.yml"
+        dataPattern = "#{process.cwd()}/data/programs/*.yml"
         prgs = []
         for file in glob.sync dataPattern
             id = path.basename file, '.yml'
@@ -18,3 +32,24 @@ module.exports =
                 description: json.description
             }
         prgs
+
+    getTutorials: ->
+        dataPattern = "#{process.cwd()}/src/documents/tutorials/*.coffee"
+        tutorials = []
+        for file in glob.sync dataPattern
+            id = path.basename file, '.coffee'
+            doc = require file
+            tutorials.push {
+                title: doc.meta.title
+                description: doc.meta.description
+                url: "/tutorials/#{id}.html"
+            }
+
+        tutorials
+
+    pjs: (id) ->
+        url   = "http://processingjs.org/reference/#{id}/"
+        name  = id.replace /_$/, ''
+        title = "Processing.JS reference for #{name}"
+        """<a href="#{url}" title="#{title}"><code>#{name}</code></a>"""
+

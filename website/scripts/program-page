@@ -38,7 +38,7 @@ data = """
     title: '''#{prg.title}'''
     nav: [
       { name: 'Home', url: '/' }
-      { name: 'Programs' }
+      { name: 'Programs', url: '/#programs' }
       { name: '''#{prg.title}''' }
     ]
 

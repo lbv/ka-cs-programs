@@ -38,17 +38,21 @@ template = (site) ->
         markdown prg.description
       div '.clear'
 
-###
-  section id: 'tutorials', class: 'grid-100', ->
+  section '#tutorials.grid-100', ->
     h1 'Short Tutorials'
-    for tut in @getCollection('html').
-    findAll({ relativeDirPath: 'tutorials' }).toJSON()
-      div class: 'grid-20 tutorial-title', ->
-        text @md """
-          [**#{tut.title}**](#{@getUrl tut.url})
+    for tut in ka.getTutorials()
+      div '.grid-20.tutorial-title', ->
+        markdown """
+          [**#{tut.title}**](#{tut.url})
         """
-      div class: 'grid-80', ->
-        text @md tut.description
-###
+      div '.grid-80', ->
+        markdown tut.description
+
+  section '#examples.grid-100', ->
+    h1 'Short Examples'
+    for ex in ka.getExamples()
+      div ->
+        markdown "[**#{ex.title}**](#{ex.url})"
+      div '.clear'
 
 module.exports = useLayout 'default', template, doc: meta
