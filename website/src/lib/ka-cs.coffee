@@ -15,8 +15,7 @@ module.exports =
     getExamples: ->
         dataFile = "#{process.cwd()}/data/examples.yml"
         yml = fs.readFileSync dataFile, encoding: 'utf8'
-        data = yaml.load yml
-        []
+        yaml.load yml
 
     getPrograms: ->
         dataPattern = "#{process.cwd()}/data/programs/*.yml"

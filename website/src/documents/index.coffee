@@ -50,9 +50,10 @@ template = (site) ->
 
   section '#examples.grid-100', ->
     h1 'Short Examples'
-    for ex in ka.getExamples()
-      div ->
-        markdown "[**#{ex.title}**](#{ex.url})"
-      div '.clear'
+    examples = ""
+    examples += "* [**#{ex.title}**](#{ex.url})\n" for ex in ka.getExamples()
+    div ->
+      markdown examples
+    div '.clear'
 
 module.exports = useLayout 'default', template, doc: meta
