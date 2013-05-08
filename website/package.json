@@ -12,6 +12,8 @@
     "grunt-contrib-copy": "~0.4.1",
     "grunt-contrib-watch": "~0.3.1",
     "grunt-contrib-less": "~0.5.1",
-    "grunt-express": "~0.3.3"
+    "grunt-express": "~0.3.3",
+    "glob": "~3.2.1",
+    "js-yaml": "~2.0.5"
   }
 }

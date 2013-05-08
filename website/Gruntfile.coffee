@@ -70,7 +70,7 @@ module.exports = (grunt) ->
                     bases: 'out'
 
         less:
-            production:
+            dev:
                 files: [
                     {
                         expand: true
@@ -118,4 +118,4 @@ module.exports = (grunt) ->
 
     grunt.registerMultiTask 'teacup', 'Render Teacup templates', teacupPlugin
 
-    grunt.registerTask 'default', [ 'copy', 'less', 'teacup' ]
+    grunt.registerTask 'default', [ 'copy', 'less:dev', 'teacup:dev' ]

@@ -1,3 +1,4 @@
+ka = require '../lib/ka-cs'
 (require 'phi-teacup').dsl()
 
 template = (site) ->
@@ -26,19 +27,18 @@ template = (site) ->
       }, ->
         img src: '/img/ka-leaf.png', alt: 'my K.A. profile'
 
-###
-
   section '#programs.grid-100', ->
     h1 'Programs'
-    for prg in @getPrograms()
+    for prg in ka.getPrograms()
       div ->
-        img class: 'program-list-thumb', src: (@getUrl prg.img)
-        text @md """
-          [**#{prg.title}**](#{@getUrl prg.url})
+        img '.program-list-thumb', src: prg.img
+        markdown """
+          [**#{prg.title}**](#{prg.url})
         """
-        text @md prg.description
-      div class: 'clear'
+        markdown prg.description
+      div '.clear'
 
+###
   section id: 'tutorials', class: 'grid-100', ->
     h1 'Short Tutorials'
     for tut in @getCollection('html').
