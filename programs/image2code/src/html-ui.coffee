@@ -41,8 +41,6 @@ htmlUI = """
       <strong>MyImage</strong> as the identifier, then the
       generated code will include a function called
       <code>getMyImage</code> which will return your image.
-      You should use only letters, numbers, or the underline
-      symbol (<code>_</code>) in the identifier.
     </p>
     <p>
       It is recommended that you use an image in JPG, PNG or
@@ -60,6 +58,10 @@ htmlUI = """
       <td><input type="file" id="FileInput" /></td>
     </tr>
   </table>
+  <div id="IdError">
+    You must use only letters, numbers, or the underline
+    symbol (<code>_</code>) in the identifier.
+  </div>
   <div id="DownloadDiv">
     <p>
       Your code for <span id="SpanId"></span> is ready.

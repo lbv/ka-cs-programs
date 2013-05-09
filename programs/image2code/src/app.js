@@ -49,10 +49,16 @@ App.onFileLoaded = function() {
 App.onImgIdChanged = function() {
 	if (this.value === '') {
 		App.idOK = false;
+		$('#IdError').fadeOut();
+	}
+	else if (/\W/.test(this.value)) {
+		App.idOK = false;
+		$('#IdError').fadeIn();
 	}
 	else {
 		App.idOK = true;
 		App.imgID = this.value;
+		$('#IdError').fadeOut();
 	}
 	App.checkForDownload();
 };
@@ -68,7 +74,7 @@ App.checkForDownload = function() {
 };
 
 App.buildUI = function() {
-	$('body').css({	fontSize : '10px' });
+	$('body').css({	fontSize : '11px' });
 	$('input').addClass('ui-widget ui-corner-all');
 
 	$('#Frame').css({
@@ -106,10 +112,21 @@ App.buildUI = function() {
 		overflowY : 'auto'
 	});
 
+	$('#Download').button().css({
+		margin  : '4px auto',
+		display : 'block'
+	});
+	$('#IdError').css({
+		padding   : '8px',
+		marginTop : '12px'
+	}).addClass(
+		'ui-widget ui-state-error ui-corner-all');
+
 	$('#ImgId').on('keyup', App.onImgIdChanged);
 	$('#FileInput').on('change', App.onFileChanged);
-	$('#Download').button().click(App.onDownload);
+	$('#Download').click(App.onDownload);
 
+	$('#IdError').hide();
 	$('#DownloadDiv').hide();
 	$('#Main').hide();
 };
