@@ -6,25 +6,30 @@ fs     = require 'fs'
 # Data taken from
 # https://github.com/diniska/chemistry/blob/master/PeriodicalTable/periodicTable.json
 
-puts "hi"
-puts __dirname
-
 json = fs.readFileSync "#{__dirname}/../data/periodicTable.json", encoding: 'utf8'
 table = JSON.parse json
 
 result = {}
 
-for period, periodIdx in table.table
-	for elem in period.elements
-		abb  = elem.small
-		result[abb] = [
-			elem.name,
-			elem.molar,
-			elem.number,
-			periodIdx + 1,
-			elem.position + 1,
-			elem.group
-		]
+readElement = (elem) ->
+    abb  = elem.small
+    result[abb] = [
+        elem.name,
+        elem.molar,
+        elem.number,
+        periodIdx + 1,
+        elem.position + 1,
+        elem.group
+    ]
+
+for section of table
+    # puts "Processing #{section}..."
+    for period, periodIdx in table[section]
+        if period.elements?
+            readElement elem for elem in period.elements
+        else
+            readElement period
+
 
 out = JSON.stringify result, null, "\t"
 puts "var Elements = #{out};"

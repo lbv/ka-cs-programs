@@ -454,9 +454,13 @@ App.buildUI = function() {
 	$('#PubChemRunning').hide();
 	$('#Tabs').tabs();
 
+	$('#HelpDialog').dialog('open');
+
 	App.updateStyles();
+
 	background(255, 255, 255);
 	image(App.bg, 0, 0);
+	loop();
 };
 
 App.init = function() {

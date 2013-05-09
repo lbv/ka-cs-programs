@@ -16,8 +16,14 @@ summary: |
   experience go a little smoother. Type in your chemical
   formulas, and receive useful information back!
 
-version: rev2
+version: rev3
 changelog: |
+  2013-05-09
+
+      * Added some missing elements.
+      * Display the help dialog when the program is started.
+      * Other small fixes.
+
   2013-05-03
 
       * Added background image.
