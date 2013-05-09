@@ -129,11 +129,14 @@ App.buildUI = function() {
 	$('#IdError').hide();
 	$('#DownloadDiv').hide();
 	$('#Main').hide();
+
+	background(255, 255, 255);
+	image(App.bg, 0, 0);
+	loop();
 };
 
 App.init = function() {
 	App.bg = getBackground();
-	frameRate(1);
 
 	App.fileOK = false;
 	App.idOK   = false;
@@ -146,10 +149,3 @@ App.init = function() {
 };
 
 App.init();
-
-this.draw = function() {
-	if (App.bg) {
-		background(255, 255, 255);
-		image(App.bg, 0, 0);
-	}
-};
