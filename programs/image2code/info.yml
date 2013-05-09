@@ -29,7 +29,7 @@ changelog: |
       * First version of this program.
 links:
   - desc : This program on Khan Academy
-    url  :
+    url  : https://www.khanacademy.org/cs/image2code/1626862725
   - desc : This program on GitHub
     url  :
 todo:

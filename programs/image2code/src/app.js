@@ -147,7 +147,7 @@ App.init = function() {
 
 App.init();
 
-draw = function() {
+this.draw = function() {
 	if (App.bg) {
 		background(255, 255, 255);
 		image(App.bg, 0, 0);
