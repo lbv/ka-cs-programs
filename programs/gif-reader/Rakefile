@@ -1,52 +1,46 @@
 require 'rake/clean'
 
-CLEAN.include('photo.coffee', 'logo.coffee', 'pointer.coffee')
+PRG = 'gif-reader'
 
-CLOBBER.include('gif-reader-prg.js', 'photo.js', 'logo.js', 'pointer.js')
+CLOBBER.include("out/#{PRG}.js")
+CLEAN.include('doc/top-summary.md')
 
-task :default => 'gif-reader-prg.js'
+tool_doc_top = "../../tools/doc-top"
 
-@deps = [
-	'../lib/base64.js',
-	'../lib/gif-reader.js',
-	'photo.js',
-	'pointer.js',
-	'logo.js',
-	'gif-reader-main.js',
-	'gif-reader.m4'
+task :default => "out/#{PRG}.js"
+
+@coffeeImg = [
+	'photo',
+	'pointer',
+	'logo'
 ]
 
-file 'photo.coffee' => [ 'photo.gif' ] do
-	sh "echo 'photoData = \"' > photo.coffee"
-	sh "recode data..b64 < photo.gif >> photo.coffee"
-	sh "echo '\"' >> photo.coffee"
+@deps = [
+	'../../lib/base64.js',
+	'../../lib/gif-reader.js',
+	'doc/top-summary.md',
+	'src/app.js',
+	"#{PRG}.m4"
+]
+
+
+@coffeeImg.each do |id|
+	@deps.push "gen/#{id}.js"
+	file "gen/#{id}.coffee" => [ "img/#{id}.gif" ] do
+		sh "echo '#{id}Data = \"' > gen/#{id}.coffee"
+		sh "recode data..b64 < img/#{id}.gif >> gen/#{id}.coffee"
+		sh "echo '\"' >> gen/#{id}.coffee"
+	end
+
+	file "gen/#{id}.js" => [ "gen/#{id}.coffee" ] do
+		sh "coffee -b -o gen/ gen/#{id}.coffee"
+	end
 end
 
-file 'pointer.coffee' => [ 'pointer.gif' ] do
-	sh "echo 'pointerData = \"' > pointer.coffee"
-	sh "recode data..b64 < pointer.gif >> pointer.coffee"
-	sh "echo '\"' >> pointer.coffee"
+file 'doc/top-summary.md' => [ 'info.yml' ] do
+	sh tool_doc_top
 end
 
-file 'logo.coffee' => [ 'logo.gif' ] do
-	sh "echo 'logoData = \"' > logo.coffee"
-	sh "recode data..b64 < logo.gif >> logo.coffee"
-	sh "echo '\"' >> logo.coffee"
-end
-
-
-file 'photo.js' => [ 'photo.coffee' ] do
-	sh "coffee -b -c photo.coffee"
-end
-
-file 'pointer.js' => [ 'pointer.coffee' ] do
-	sh "coffee -b -c pointer.coffee"
-end
-
-file 'logo.js' => [ 'logo.coffee' ] do
-	sh "coffee -b -c logo.coffee"
-end
-
-file 'gif-reader-prg.js' => @deps do
-	sh "m4 -I ../lib -P gif-reader.m4 > gif-reader-prg.js"
+file "out/#{PRG}.js" => @deps do
+	sh "m4 -I ../../lib -P #{PRG}.m4 > out/#{PRG}.js"
 end

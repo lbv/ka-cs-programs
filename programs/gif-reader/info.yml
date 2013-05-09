@@ -1,0 +1,80 @@
+title: Gif Reader
+description: >
+  A decoder for images in the GIF format.
+tags: images, gif, decoder, base64
+summary: |
+  This is just an experiment to see if it was feasible to
+  implement a GIF decoder entirely in javascript, taking the
+  opportunity to learn about the internal details of the
+  format, and the LZW algorithm used in GIF files to compress
+  data. Turns out it *is* quite feasible :).
+
+  It's not really necessary to implement a GIF decoder just to
+  show custom raster data in a Processing.JS/Khan Academy
+  program, but this was written purely for the fun of doing
+  it.
+
+  This program demos the GIF reader on three different images:
+  the hand pointer thingy, which has transparency, the K.A.
+  logo, which also has transparency and is interlaced, and the
+  main photo, which is just as large an image as I could test.
+
+  As you can see, the results are not very sharp, mostly
+  because of problems with the GIF format itself, which is not
+  very good for anything other than simple images like
+  diagrams and the like. For example, for the main photo, I
+  had to reduce the palette of colors to just 64; it still
+  looks kinda nice, though.
+
+  If you want to use your own images, you just need to replace
+  the contents of the "fooData" variables (see the code). This
+  data is encoded in Base64, which is a simple mechanism to
+  store binary data in a readable format.
+
+  However, if you're just interested in displaying a
+  particular image in your program, from any image format used
+  in web pages, like JPG, PNG or GIF, you may want to check
+  out the `Image2Code` program. You can find a link to it
+  below.
+
+  If you want to learn about the internal details of the GIF
+  format, you might enjoy the following two documents:
+
+     http://www.cs.cmu.edu/~cil/lzw.and.gif.txt
+     http://www.w3.org/Graphics/GIF/spec-gif89a.txt
+
+  - - -
+  
+  This program was partly inspired by the "Mona Lisa" program,
+  by Peter Collingridge, which produces a very nice picture
+  using purely basic drawing primitives. Check it out!
+
+version: rev4
+changelog: |
+  2013-05-09
+
+      * Upgraded components. Added link to Image2Code program.
+
+  2013-03-12
+
+      * Reduced size by using regular Coffeescript strings and
+        not block strings. Replaced the pointer GIF. Increased
+        the number of colors in the photo to 70.
+
+  2013-03-11
+      * Updated code to fit in 60 columns, fixed minor
+        problems.
+
+  2013-03-10
+      * First version of this program.
+links:
+  - desc : This program on Khan Academy
+    url  : https://www.khanacademy.org/cs/gif-reader/1449958817
+  - desc : This program on GitHub
+    url  : https://github.com/lbv/ka-cs-programs/tree/master/programs/gif-reader
+  - desc : The Image2Code program
+    url  : https://www.khanacademy.org/cs/image2code/1626862725
+  - desc : The Mona Lisa program
+    url  : http://www.khanacademy.org/cs/mona-lisa/1153732313
+todo:
+
