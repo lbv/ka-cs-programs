@@ -21,6 +21,7 @@ template = (content, data) ->
 
       footer '.grid-container', ->
         div '.grid-100.site-footer', ->
+          lastUpdate()
           license()
 
 module.exports = renderable template

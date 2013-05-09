@@ -1,0 +1,38 @@
+title: Image2Code
+description: >
+  A simple utility to turn images into JavaScript code that
+  you can integrate into your programs.
+tags: images, jqueryui
+summary: |
+  This is a very visual environment by its very nature, and
+  yet incorporating custom images in a simple, direct fashion
+  is not currently possible.
+
+  This is just an attempt to simplify a process that
+  has been of great interest to many coders in the Khan
+  Academy, and has resulted in a number of elaborate (albeit
+  creative) solutions in the past.
+
+  You may wonder about the practical implications of releasing
+  a tool of this type, when it's somewhat clear that conscious
+  efforts have been made before to try to remove this kind of
+  functionality from most programs. I do wonder about this
+  too, and in case you're interested, you may read more about
+  my opinion on the matter here:
+
+    http://lbv.github.io/ka-cs-programs/other/sandbox.html
+
+version: rev1
+changelog: |
+  2013-05-09
+
+      * First version of this program.
+links:
+  - desc : This program on Khan Academy
+    url  : https://www.khanacademy.org/cs/image2code/1626862725
+  - desc : This program on GitHub
+    url  : https://github.com/lbv/ka-cs-programs/tree/master/programs/image2code
+  - desc : Background image from the Tango "Mimetypes" icons
+    url  : http://commons.wikimedia.org/wiki/Tango_icons
+todo:
+

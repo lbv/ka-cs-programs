@@ -24,7 +24,8 @@ links = ''
 links += "* [#{lnk.desc}](#{lnk.url})\n" for lnk in prg.links
 
 todo = ''
-todo += "* #{td}\n" for td in prg.todo
+if prg.todo?
+    todo += "* #{td}\n" for td in prg.todo
 
 outFile = "src/documents/programs/#{id}.coffee"
 data = """

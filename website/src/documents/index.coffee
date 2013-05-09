@@ -67,4 +67,4 @@ template = (site) ->
         markdown stuff.description
 
 
-module.exports = useLayout 'default', template, doc: meta
+module.exports = useLayout 'index', template, doc: meta
