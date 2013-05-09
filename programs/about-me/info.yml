@@ -5,8 +5,7 @@ description: >
 tags: jqueryui
 summary: |
   I'd just like to share a short paragraph, written by one of
-  my heroes, Ernesto Sabato (please excuse my rough
-  translation from spanish):
+  my heroes (please excuse my rough translation from spanish):
 
     (..)
     I propose to you then, with the solemnity of life's final
@@ -15,10 +14,14 @@ summary: |
     another, let us hope, along with those who open their
     arms, for a new wave of history that lifts us upwards.
 
-      -- from "Antes del fin".
+      -- Ernesto Sabato, from "Antes del fin".
 
-version: rev2
+version: rev3
 changelog: |
+  2013-05-09
+
+      * Minor fixes.
+
   2013-05-03
 
       * Added background image

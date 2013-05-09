@@ -29,19 +29,20 @@ htmlUI = """
     </p>
     <p>
       I like music, and I play the bass guitar in a rock
-      band with a few friends... Good times.
+      band with a few friends. Good times&hellip;
     </p>
     <p>
       I like sports. I love football (the kind where you
       kick a round ball, but I also enjoy watching the other
-      kind from time to time). I've developed an addiction
-      to watching football matches from European leagues
-      (Spain, England, Portugal, and right now I'm wishing
-      they start broadcasting the Bundesliga where I live).
+      kind from time to time). One of my favourite hobbies
+      right now is watching football matches from European
+      leagues (Spain, England, Portugal, and right now I'm
+      waiting for the day they start broadcasting the
+      Bundesliga where I live).
     </p>
     <p>
       That's all I can think of right now. I know it's not
-      much, but it's a start :).
+      much, but hopefully it's a little informative :).
     </p>
   </div>
 
