@@ -83,6 +83,10 @@ module.exports = (grunt) ->
                         ext: '.css'
                     }
                 ]
+            production:
+                options:
+                    yuicompress: true
+                files: '<%= less.dev.files %>'
 
         teacup:
             dev:
@@ -122,3 +126,6 @@ module.exports = (grunt) ->
     grunt.registerMultiTask 'teacup', 'Render Teacup templates', teacupPlugin
 
     grunt.registerTask 'default', [ 'copy', 'less:dev', 'teacup:dev' ]
+
+    grunt.registerTask 'production', [
+        'copy', 'less:production', 'teacup:production' ]
