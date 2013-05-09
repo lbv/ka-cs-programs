@@ -17,6 +17,20 @@ module.exports =
         yml = fs.readFileSync dataFile, encoding: 'utf8'
         yaml.load yml
 
+    getOther: ->
+        dataPattern = "#{process.cwd()}/src/documents/other/*.coffee"
+        stuff = []
+        for file in glob.sync dataPattern
+            id = path.basename file, '.coffee'
+            doc = require file
+            stuff.push {
+                title: doc.meta.title
+                description: doc.meta.description
+                url: "/other/#{id}.html"
+            }
+
+        stuff
+
     getPrograms: ->
         dataPattern = "#{process.cwd()}/data/programs/*.yml"
         prgs = []

@@ -41,11 +41,11 @@ template = (site) ->
   section '#tutorials.grid-100', ->
     h1 'Short Tutorials'
     for tut in ka.getTutorials()
-      div '.grid-20.tutorial-title', ->
+      div '.grid-30.tutorial-title', ->
         markdown """
           [**#{tut.title}**](#{tut.url})
         """
-      div '.grid-80', ->
+      div '.grid-70', ->
         markdown tut.description
 
   section '#examples.grid-100', ->
@@ -55,5 +55,16 @@ template = (site) ->
     div ->
       markdown examples
     div '.clear'
+
+  section '#other.grid-100', ->
+    h1 'Other Resources'
+    for stuff in ka.getOther()
+      div '.grid-30.tutorial-title', ->
+        markdown """
+          [**#{stuff.title}**](#{stuff.url})
+        """
+      div '.grid-70', ->
+        markdown stuff.description
+
 
 module.exports = useLayout 'default', template, doc: meta

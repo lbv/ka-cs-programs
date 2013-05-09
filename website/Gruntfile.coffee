@@ -45,6 +45,8 @@ module.exports = (grunt) ->
                 tpl = tpl.template unless typeof tpl is 'function'
                 doc += tpl layouts, site: opt.site
 
+            dir = path.dirname file.dest
+            grunt.file.mkdir dir
             grunt.log.writeln "Writing to #{file.dest}"
             grunt.file.write file.dest, doc
 
@@ -104,7 +106,7 @@ module.exports = (grunt) ->
         watch:
             coffeeFiles:
                 files: 'src/documents/**/*.coffee'
-                tasks: [ 'coffeecup' ]
+                tasks: [ 'teacup:dev' ]
             staticFiles:
                 files: 'src/files/**',
                 tasks: [ 'copy' ]
