@@ -7,8 +7,8 @@ meta =
       provided by the Khan Academy to learn about computer science.
     '''
     nav: [
-        { name: 'Home', url: '/' }
-        { name: 'Other', url: '/#other' }
+        { name: 'Home', url: '' }
+        { name: 'Other', url: '#other' }
         { name: 'The Khan Academy CS Sandbox' }
     ]
 

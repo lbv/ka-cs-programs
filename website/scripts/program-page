@@ -37,14 +37,14 @@ data = """
   meta =
     title: '''#{prg.title}'''
     nav: [
-      { name: 'Home', url: '/' }
-      { name: 'Programs', url: '/#programs' }
+      { name: 'Home', url: '' }
+      { name: 'Programs', url: '#programs' }
       { name: '''#{prg.title}''' }
     ]
 
   template = ->
     section '.grid-100.program', ->
-      img '.program-thumb', src: '/img/programs/#{id}.png'
+      img '.program-thumb', src: 'img/programs/#{id}.png'
       h1 '''#{prg.title}'''
       markdown '''#{prg.description}'''
       markdown '''**Tags**: #{prg.tags}'''

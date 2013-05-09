@@ -7,8 +7,8 @@ meta =
     How to capture sections of the canvas as separate images.
   '''
   nav: [
-    { name: 'Home', url: '/' }
-    { name: 'Tutorials', url: '/#tutorials' }
+    { name: 'Home', url: '' }
+    { name: 'Tutorials', url: '#tutorials' }
     { name: 'Grabbing pieces of the canvas' }
   ]
 

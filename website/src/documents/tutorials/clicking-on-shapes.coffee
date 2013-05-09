@@ -7,8 +7,8 @@ meta =
     How to detect shapes through mouse clicks.
   '''
   nav: [
-    { name: 'Home', url: '/' }
-    { name: 'Tutorials', url: '/#tutorials' }
+    { name: 'Home', url: '' }
+    { name: 'Tutorials', url: '#tutorials' }
     { name: 'Clicking on Shapes' }
   ]
 

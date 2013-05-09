@@ -1,12 +1,13 @@
 path = require 'path'
 
 siteDev =
+    base: 'http://localhost:11235/'
     title: 'KA CS'
     styles: [
-        '/css/vendor/normalize.css'
-        '/css/vendor/unsemantic.css'
-        '/css/vendor/zenburn.css'
-        '/css/global.css'
+        'css/vendor/normalize.css'
+        'css/vendor/unsemantic.css'
+        'css/vendor/zenburn.css'
+        'css/global.css'
     ]
     scripts: []
 
@@ -18,10 +19,10 @@ siteProduction =
         platform.
     """
     styles: [
-        '/css/vendor/normalize.css'
-        '/css/vendor/unsemantic.css'
-        '/css/vendor/zenburn.css'
-        '/css/global.css'
+        'css/vendor/normalize.css'
+        'css/vendor/unsemantic.css'
+        'css/vendor/zenburn.css'
+        'css/global.css'
     ]
     scripts: []
 

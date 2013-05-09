@@ -26,7 +26,7 @@ module.exports =
             stuff.push {
                 title: doc.meta.title
                 description: doc.meta.description
-                url: "/other/#{id}.html"
+                url: "other/#{id}.html"
             }
 
         stuff
@@ -39,8 +39,8 @@ module.exports =
             yml = fs.readFileSync file, encoding: 'utf8'
             json = yaml.load yml
             prgs.push {
-                img : "/img/programs/#{id}.png"
-                url : "/programs/#{id}.html"
+                img : "img/programs/#{id}.png"
+                url : "programs/#{id}.html"
                 title: json.title
                 description: json.description
             }
@@ -55,7 +55,7 @@ module.exports =
             tutorials.push {
                 title: doc.meta.title
                 description: doc.meta.description
-                url: "/tutorials/#{id}.html"
+                url: "tutorials/#{id}.html"
             }
 
         tutorials

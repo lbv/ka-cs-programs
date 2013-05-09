@@ -25,7 +25,7 @@ template = (site) ->
         title: 'my K.A. profile',
         href: 'https://www.khanacademy.org/profile/lbv0112358/'
       }, ->
-        img src: '/img/ka-leaf.png', alt: 'my K.A. profile'
+        img src: 'img/ka-leaf.png', alt: 'my K.A. profile'
 
   section '#programs.grid-100', ->
     h1 'Programs'
