@@ -1,0 +1,48 @@
+title: Ken
+description: >
+  A demo for creating animations from GIF sprites.
+tags: images, gif, animation, decoder, base64
+summary: |
+  Street Fighter II came out when I was a kid, and I vividly
+  remember the discussions with my friends about this game,
+  and our dreams of one day creating something like that. This
+  small and silly program was a lot of fun to create,
+  particularly because of the nostalgia.
+
+  This is not even close to being a "playable" game, but it
+  could be used as the basis for an engine of some kind.
+  Still, I hope to extend it with more interesting features in
+  the future.
+
+  This program uses the GIF Reader code, to decode the
+  individual frames from a single GIF data stream.
+
+  - - -
+
+  "Street Fighter II" and related media is copyright 1991,
+  Capcom. This is, of course, a non-commercial program with
+  the purpose of illustrating programming techniques, made in
+  good faith and with the principles of fair use in mind.
+
+  I sincerely hope I don't offend anyone by using these
+  sprites in a public program.
+
+version: rev2
+changelog: |
+  2013-05-10
+
+      * Updated components.
+
+  2013-03-13
+
+      * First version of this program.
+links:
+  - desc : This program on Khan Academy
+    url  : http://www.khanacademy.org/cs/ken/1458582372
+  - desc : This program on GitHub
+    url  : https://github.com/lbv/ka-cs-programs/tree/master/programs/ken
+  - desc : The GIF Reader program
+    url  : http://www.khanacademy.org/cs/gif-reader/1449958817
+todo:
+  - Add more moves.
+  - Add the floor and a background.

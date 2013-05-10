@@ -1,31 +1,48 @@
 require 'rake/clean'
 
-CLEAN.include('ken-anim.coffee')
-CLOBBER.include('ken.js', 'ken-anim.js')
+PRG = 'ken'
 
-task :default => 'ken.js'
+CLOBBER.include("out/#{PRG}.js")
+CLEAN.include('doc/top-summary.md')
 
-@deps = [
-	'../lib/base64.js',
-	'../lib/gif-reader.js',
-	'../lib/keys-indicator.js',
-	'../lib/key-event-handler.js',
-	'player.js',
-	'ken-anim.js',
-	'ken-main.js',
-	'ken.m4'
+tool_doc_top = "../../tools/doc-top"
+
+task :default => "out/#{PRG}.js"
+
+@coffeeImg = [
+	'kenAnim'
 ]
 
-file 'ken-anim.coffee' => [ 'ken-anim.gif' ] do
-	sh "echo 'kenData = \"' > ken-anim.coffee"
-	sh "recode data..b64 < ken-anim.gif >> ken-anim.coffee"
-	sh "echo '\"' >> ken-anim.coffee"
+@deps = [
+	'../../lib/base64.js',
+	'../../lib/gif-reader.js',
+	'../../lib/canvas-wrapper.js',
+	'../../lib/keys-indicator.js',
+	'../../lib/key-event-handler.js',
+	'doc/top-summary.md',
+	'src/player.js',
+	'src/app.js',
+	"#{PRG}.m4"
+]
+
+
+@coffeeImg.each do |id|
+	@deps.push "gen/#{id}.js"
+	file "gen/#{id}.coffee" => [ "img/#{id}.gif" ] do
+		sh "echo '#{id}Data = \"' > gen/#{id}.coffee"
+		sh "recode data..b64 < img/#{id}.gif >> gen/#{id}.coffee"
+		sh "echo '\"' >> gen/#{id}.coffee"
+	end
+
+	file "gen/#{id}.js" => [ "gen/#{id}.coffee" ] do
+		sh "coffee -b -o gen/ gen/#{id}.coffee"
+	end
 end
 
-file 'ken-anim.js' => [ 'ken-anim.coffee' ] do
-	sh "coffee -b -c ken-anim.coffee"
+file 'doc/top-summary.md' => [ 'info.yml' ] do
+	sh tool_doc_top
 end
 
-file 'ken.js' => @deps do
-	sh "m4 -I ../lib -P ken.m4 > ken.js"
+file "out/#{PRG}.js" => @deps do
+	sh "m4 -I ../../lib -P #{PRG}.m4 > out/#{PRG}.js"
 end
