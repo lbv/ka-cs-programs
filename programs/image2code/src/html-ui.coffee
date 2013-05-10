@@ -35,12 +35,12 @@ htmlUI = """
       computer to convert into code.
     </p>
     <p>
-      The identifier is a string that will be used
-      in the generated code to refer to a function that
-      will give you your image. For example, if you use
+      The identifier is a string that will be used in the
+      generated code, as part of the name of a function that
+      will load your image. For example, if you use
       <strong>MyImage</strong> as the identifier, then the
       generated code will include a function called
-      <code>getMyImage</code> which will return your image.
+      <code>loadMyImage</code>.
     </p>
     <p>
       It is recommended that you use an image in JPG, PNG or
