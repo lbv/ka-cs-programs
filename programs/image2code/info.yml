@@ -20,10 +20,20 @@ summary: |
   too, and in case you're interested, you may read more about
   my opinion on the matter here:
 
-    http://lbv.github.io/ka-cs-programs/other/sandbox.html
+  * http://lbv.github.io/ka-cs-programs/other/sandbox.html
 
-version: rev1
+version: rev2
 changelog: |
+  2013-05-10
+
+      * Fixed an important bug. Now the generated code works
+        asynchronously, so the image can be loaded and used
+        reliably.
+      * For browsers that don't fully support the `download`
+        attribute, it tries to open the code in a new window
+        or tab.
+      * Changed theme of the UI.
+
   2013-05-09
 
       * First version of this program.

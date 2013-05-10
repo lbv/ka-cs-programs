@@ -66,6 +66,19 @@ htmlUI = """
     <p>
       Your code for <span id="SpanId"></span> is ready.
     </p>
+    <p id="HasSupportDownload">
+      Press the button below to download it, and then open
+      it with a text editor.
+    </p>
+    <p id="NoSupportDownload">
+      Press the button below, and the code should show up in
+      a <span>n</span>ew window or tab in your browser. You can then
+      select it and copy it.
+    </p>
+    <p>
+      You'll find the generated function and a short
+      explanation on how to use it towards the end.
+    </p>
     <button id="Download">Download Code</button>
   </div>
 </div>

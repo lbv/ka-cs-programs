@@ -3,7 +3,8 @@ var App = {};
 App.Templates = {
 	imgcode : _.template(imgCodeTemplate),
 	aDownload : _.template(
-		'<a download="<%= filename %>"></a>')
+		'<a target="_blank" ' +
+		'download="<%= filename %>"></a>')
 };
 
 App.onContinue = function() {
@@ -74,7 +75,10 @@ App.checkForDownload = function() {
 };
 
 App.buildUI = function() {
-	$('body').css({	fontSize : '11px' });
+	$('body').css({
+		fontSize  : '11px',
+		textAlign : 'justify'
+	});
 	$('input').addClass('ui-widget ui-corner-all');
 
 	$('#Frame').css({
@@ -112,6 +116,10 @@ App.buildUI = function() {
 		overflowY : 'auto'
 	});
 
+	$('#SpanId').css({
+		fontFamily : 'monospace',
+		fontWeight : 'bold'
+	});
 	$('#Download').button().css({
 		margin  : '4px auto',
 		display : 'block'
@@ -126,26 +134,36 @@ App.buildUI = function() {
 	$('#FileInput').on('change', App.onFileChanged);
 	$('#Download').click(App.onDownload);
 
+	if (App.supportsDownload) {
+		$('#NoSupportDownload').hide(); }
+	else {
+		$('#HasSupportDownload').hide(); }
+
 	$('#IdError').hide();
 	$('#DownloadDiv').hide();
 	$('#Main').hide();
+};
 
+App.onBackgroundReady = function(bg) {
 	background(255, 255, 255);
-	image(App.bg, 0, 0);
-	loop();
+	image(bg, 0, 0);
 };
 
 App.init = function() {
-	App.bg = getBackground();
+	loadBackground(App.onBackgroundReady);
 
 	App.fileOK = false;
 	App.idOK   = false;
+
+	var testTag = $('<a></a>');
+	App.supportsDownload = (
+		testTag[0].download !== undefined);
 
 	App.fileReader = new ($G.get('FileReader'))();
 	App.fileReader.onload = App.onFileLoaded;
 
 	$G.insertHtml(htmlUI);
-	$G.loadJQueryUI(App.buildUI);
+	$G.loadJQueryUI(App.buildUI, 'redmond');
 };
 
 App.init();
