@@ -22,14 +22,15 @@ App.buildUI = function() {
 		at : 'left top+12',
 		of : '#Frame'
 	});
+};
 
+App.onBackgroundReady = function(bg) {
 	background(255, 255, 255);
-	image(App.bg, 0, 0);
-	loop();
+	image(bg, 0, 0);
 };
 
 App.init = function() {
-	App.bg = getBackground();
+	loadBackground(App.onBackgroundReady);
 
 	$G.insertHtml(htmlUI);
 	$G.loadJQueryUI(App.buildUI);
