@@ -62,24 +62,36 @@ htmlUI = """
     You must use only letters, numbers, or the underline
     symbol (<code>_</code>) in the identifier.
   </div>
-  <div id="DownloadDiv">
+
+  <div id="FileReady">
     <p>
       Your code for <span id="SpanId"></span> is ready.
     </p>
-    <p id="HasSupportDownload">
-      Press the button below to download it, and then open
-      it with a text editor.
-    </p>
-    <p id="NoSupportDownload">
-      Press the button below, and the code should show up in
-      a <span>n</span>ew window or tab in your browser. You can then
-      select it and copy it.
-    </p>
+
+    <div id="DownloadDiv">
+      <p>
+        You may press the button below to download it, and
+        then open it with a text editor.
+      </p>
+      <button id="Download">Download Code</button>
+      <p>
+        Or&hellip;
+      </p>
+    </div>
+
+    <div>
+      <p>
+        You may press the button below, and the code should
+        show up in a <span>n</span>ew window or tab in your
+        browser. You can then select it and copy it.
+      </p>
+      <button id="Open">Open Code</button>
+    </div>
+
     <p>
       You'll find the generated function and a short
       explanation on how to use it towards the end.
     </p>
-    <button id="Download">Download Code</button>
   </div>
 </div>
 

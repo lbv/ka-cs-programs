@@ -1,18 +1,26 @@
 var App = {};
 
+
 App.Templates = {
 	imgcode : _.template(imgCodeTemplate),
 	aDownload : _.template(
-		'<a target="_blank" ' +
-		'download="<%= filename %>"></a>')
+		'<a download="<%= filename %>"></a>'),
+	aOpen : _.template(
+		'<a target="_blank"></a>')
 };
 
-App.onContinue = function() {
-	$('#Intro').hide();
-	$('#Main').fadeIn();
+
+App.checkForDownload = function() {
+	if (App.fileOK && App.idOK) {
+		$('#SpanId').html(_.escape(App.imgID));
+		$('#FileReady').fadeIn();
+	}
+	else {
+		$('#FileReady').fadeOut();
+	}
 };
 
-App.onDownload = function() {
+App.downloadLink = function(linkHTML) {
 	var code = App.Templates.imgcode({
 		id   : App.imgID,
 		data : App.fileBase64
@@ -21,15 +29,23 @@ App.onDownload = function() {
 	var blob = new ($G.get('Blob'))(
 		[ code ], { type : 'application/javascript'});
 
-	var aHtml = App.Templates.aDownload({
-		filename : App.imgID + ".js"
-	});
-	var a = $(aHtml);
+	var a = $(linkHTML);
 	var url = ($G.get('URL')).createObjectURL(blob);
-	$G.log('url is', url);
 	a[0].href = url;
 	$('body').append(a);
 	a[0].click();
+};
+
+App.onContinue = function() {
+	$('#Intro').hide();
+	$('#Main').fadeIn();
+};
+
+App.onDownload = function() {
+	var html = App.Templates.aDownload({
+		filename : App.imgID + ".js"
+	});
+	App.downloadLink(html);
 };
 
 App.onFileChanged = function() {
@@ -64,14 +80,9 @@ App.onImgIdChanged = function() {
 	App.checkForDownload();
 };
 
-App.checkForDownload = function() {
-	if (App.fileOK && App.idOK) {
-		$('#SpanId').html(_.escape(App.imgID));
-		$('#DownloadDiv').fadeIn();
-	}
-	else {
-		$('#DownloadDiv').fadeOut();
-	}
+App.onOpen = function() {
+	var html = App.Templates.aOpen();
+	App.downloadLink(html);
 };
 
 App.buildUI = function() {
@@ -124,6 +135,10 @@ App.buildUI = function() {
 		margin  : '4px auto',
 		display : 'block'
 	});
+	$('#Open').button().css({
+		margin  : '4px auto',
+		display : 'block'
+	});
 	$('#IdError').css({
 		padding   : '8px',
 		marginTop : '12px'
@@ -133,14 +148,13 @@ App.buildUI = function() {
 	$('#ImgId').on('keyup', App.onImgIdChanged);
 	$('#FileInput').on('change', App.onFileChanged);
 	$('#Download').click(App.onDownload);
+	$('#Open').click(App.onOpen);
 
-	if (App.supportsDownload) {
-		$('#NoSupportDownload').hide(); }
-	else {
-		$('#HasSupportDownload').hide(); }
+	if (! App.supportsDownload) {
+		$('#DownloadDiv').hide(); }
 
 	$('#IdError').hide();
-	$('#DownloadDiv').hide();
+	$('#FileReady').hide();
 	$('#Main').hide();
 };
 
