@@ -51,7 +51,8 @@ data = """
       markdown '''**Tags**: #{prg.tags}'''
 
       h2 'Summary'
-      markdown '''#{prg.summary}'''
+      markdown '''
+  #{prg.summary}'''
 
       h2 'Links'
       markdown '''#{links}'''

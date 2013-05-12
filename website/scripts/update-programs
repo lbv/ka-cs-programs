@@ -1,0 +1,39 @@
+#! /usr/bin/env perl
+
+use strict;
+use warnings;
+
+use Cwd 'abs_path';
+
+
+my $path = abs_path($0);
+$path =~ s#[^/]*$##;
+
+sub get_programs {
+    my $dir = $path . '../..';
+    my $output = `cd $dir && git ls-tree -r --name-only master`;
+    my @lines = split /\n/, $output;
+    my @programs;
+    foreach my $line (@lines) {
+        next unless $line =~ m#([^/]*)\/info\.yml$#;
+        push @programs, $1;
+    }
+    @programs;
+}
+
+sub copy_metadata {
+    my @programs = get_programs();
+    foreach my $prg (@programs) {
+        my $out = "${path}../data/programs/$prg.yml";
+
+        print "Copying $prg metadata\n";
+        my $cmd = "git show master:programs/$prg/info.yml > $out";
+        system $cmd;
+
+        print "Regenerating doc\n";
+        $cmd = "${path}program-page $out";
+        system $cmd;
+    }
+}
+
+copy_metadata();

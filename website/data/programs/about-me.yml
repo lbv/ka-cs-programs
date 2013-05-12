@@ -2,7 +2,7 @@ title: About Me
 description: >
   Some info about who I am, and my programs for the Khan
   Academy CS platform.
-tags: jqueryui
+tags: about, jqueryui
 summary: |
   I'd just like to share a short paragraph, written by one of
   my heroes (please excuse my rough translation from spanish):
@@ -14,10 +14,14 @@ summary: |
     another, let us hope, along with those who open their
     arms, for a new wave of history that lifts us upwards.
 
-      -- Ernesto Sabato, from "Antes del fin".
+    -- Ernesto Sabato, from "Antes del fin".
 
-version: rev3
+version: rev4
 changelog: |
+  2013-05-12
+
+      * Fixed background.
+
   2013-05-09
 
       * Minor fixes.
