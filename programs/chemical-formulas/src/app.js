@@ -445,9 +445,13 @@ App.buildUI = function() {
 		textAlign  : 'center',
 		fontWeight : 'bold',
 		width      : '120px',
-		padding    : '16px'
+		padding    : '16px',
+		margin     : '0 auto'
 	}).
 	addClass('ui-widget ui-state-highlight ui-corner-all');
+	$('#SpinnerImg').css({
+		verticalAlign: 'middle'
+	});
 
 	$('#ElementsContent').hide();
 	$('#PubChemActivateDiv').hide();
@@ -457,14 +461,15 @@ App.buildUI = function() {
 	$('#HelpDialog').dialog('open');
 
 	App.updateStyles();
+};
 
+App.onBackgroundReady = function(bg) {
 	background(255, 255, 255);
-	image(App.bg, 0, 0);
-	loop();
+	image(bg, 0, 0);
 };
 
 App.init = function() {
-	App.bg = getBackground();
+	loadBackground(App.onBackgroundReady);
 
 	App.formula     = null;
 	App.formulaStr  = '';

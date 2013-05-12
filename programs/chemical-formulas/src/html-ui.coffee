@@ -56,7 +56,11 @@ htmlUI = """
       </div>
     </div>
     <div id="PubChemRunning">
-      Running ...
+      <p>
+        Running
+        <img id="SpinnerImg"
+         src="//googledrive.com/host/0BzcEQMWUa0znRE1wQU9KUGR2R2s/img/util/spinner.gif" />
+      </p>
     </div>
     <div id="PubChemResults">
     </div>

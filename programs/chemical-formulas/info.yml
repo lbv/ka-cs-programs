@@ -16,8 +16,13 @@ summary: |
   experience go a little smoother. Type in your chemical
   formulas, and receive useful information back!
 
-version: rev3
+version: rev4
 changelog: |
+  2013-05-12
+
+      * Fixed background.
+      * Added spinner image for the "Running" message.
+
   2013-05-09
 
       * Added some missing elements.
