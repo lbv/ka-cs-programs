@@ -20,12 +20,12 @@ var draw = function() {
 
 var keyPressed = function() {
 	App.keyEv.onKeyPressed(key, keyCode);
-	App.ki.onKeyPressed(key, keyCode);
+	App.ki.onKeyPressed();
 };
 
 var keyReleased = function() {
 	App.keyEv.onKeyReleased(key, keyCode);
-	App.ki.onKeyReleased(key, keyCode);
+	App.ki.onKeyReleased();
 };
 
 App.init();
