@@ -17,10 +17,11 @@ task :default => "out/#{PRG}.js"
 	'../../lib/base64.js',
 	'../../lib/gif-reader.js',
 	'../../lib/canvas-wrapper.js',
+	'../../lib/util-key.js',
 	'../../lib/keys-indicator.js',
-	'../../lib/key-event-handler.js',
 	'doc/top-summary.md',
-	'src/player.js',
+	'src/move-handler.js',
+	'src/ken.js',
 	'src/app.js',
 	"#{PRG}.m4"
 ]
