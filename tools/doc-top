@@ -5,7 +5,7 @@ yaml = require 'js-yaml'
 ww   = (require 'wordwrap') 4, 56
 
 INPUT  = 'info.yml'
-OUTPUT = './doc/top-summary.md'
+OUTPUT = './gen/top-summary.md'
 
 makeTitle = (title, c = '=') ->
     str = "#{title}\n"
