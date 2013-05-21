@@ -1,0 +1,7 @@
+PRG = 'mam-demo'
+
+@deps = [
+	'src/app.js'
+]
+
+import "#{File.dirname(__FILE__)}/../../tools/rake-common.rb"
