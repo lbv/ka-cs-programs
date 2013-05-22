@@ -20,7 +20,7 @@ links:
   - desc : This program on Khan Academy
     url  : https://www.khanacademy.org/cs/mam-demo/1663711308
   - desc : This program on GitHub
-    url  : 
+    url  : https://github.com/lbv/ka-cs-programs/tree/master/programs/mam-demo
   - desc : >
       Artwork by Guillaume Lecollinet, made for the BrowserQuest
       game and released under the CC-BY-SA 3.0 license.

@@ -4,11 +4,13 @@
 // below.
 //
 var _pjs=this, mamLoad=function(cfg, cb, fn) {
-	if (mamLoad.flag) { return; }
-	(function(){var g=this;this.$.getScript(
+	mamLoad.f = true; (function(){
+	var g=this, z=function(){g.MAM2(g._mam, cb, fn, _pjs);};
+	g.setTimeout(function() { if (mamLoad.f) {
+	if (g._mam) { z(); } else { g.$.getScript(
 	'//googledrive.com/host/0BzcEQMWUa0znRE1wQU9KUGR2R2s'+
 	'/mam/mam-pre1-min.js').done(function() {
-	mamLoad.flag=true; g.MAM(cfg, cb, fn, _pjs); }); })();
+	g._mam=g.MAM(cfg, _pjs);z(); }); }}}, 0); })();
 };
 
 
