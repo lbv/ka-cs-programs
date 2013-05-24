@@ -3,103 +3,17 @@
 // as-is. It provides the `mamLoad` function, called further
 // below.
 //
-var _pjs=this, mamLoad=function(cfg, cb, fn) {
-	mamLoad.f = true; (function(){
-	var g=this, z=function(){g.MAM2(g._mam, cb, fn, _pjs);};
-	g.setTimeout(function() { if (mamLoad.f) {
-	if (g._mam) { z(); } else { g.$.getScript(
-	'//googledrive.com/host/0BzcEQMWUa0znRE1wQU9KUGR2R2s'+
-	'/mam/mam-pre1-min.js').done(function() {
-	g._mam=g.MAM(cfg, _pjs);z(); }); }}}, 0); })();
-};
-
-
-
-//
-// The main configuration object. It specifies all the media
-// assets that will be loaded for this program.
-//
-var baseUrl = 'http://localhost:3333/assets';
-var config = {
-	images: {
-		tiles: baseUrl + '/img/tiles.png',
-		guy: baseUrl + '/img/guy.png'
-	},
-
-	sprites: {
-		grass: {
-			sheet: 'tiles',
-			x: 0, y: 0,
-			width: 32, height: 32
-		},
-		rock0: {
-			sheet: 'tiles',
-			x: 32, y: 0,
-			width: 32, height: 32
-		},
-		rock1: {
-			sheet: 'tiles',
-			x: 64, y: 0,
-			width: 32, height: 32
-		},
-		rock2: {
-			sheet: 'tiles',
-			x: 96, y: 0,
-			width: 32, height: 32
-		},
-		house: {
-			sheet: 'tiles',
-			x: 0, y: 32,
-			width: 120, height: 148
-		},
-		tree: {
-			sheet: 'tiles',
-			x: 0, y: 180,
-			width: 64, height: 88
-		},
-		well: {
-			sheet: 'tiles',
-			x: 64, y: 180,
-			width: 40, height: 64
-		},
-		walkingDown: {
-			sheet: 'guy',
-			x: 0, y: 32,
-			width: 32, height: 32,
-			frames: 4
-		},
-		walkingUp: {
-			sheet: 'guy',
-			x: 0, y: 0,
-			width: 32, height: 32,
-			frames: 4
-		}
-	},
-
-	audio: {
-		theme: baseUrl + '/snd/theme.ogg',
-		boom: baseUrl + '/snd/boom.ogg'
-	},
-
-	fonts: [
-		'Special Elite',
-		'Tangerine',
-		'Average Sans'
-	]
-};
+var _pjs=this; var mamLoad = function(a){ mamLoad.f=true;(
+function(){ var m=this; var t=function(){if(mamLoad.f){if(
+!m._mamScript){m.$.ajaxSetup({cache:true});m._mamScript=m.
+$.getScript("//googledrive.com/host/0BzcEQMWUa0znRE1wQU9"+
+"KUGR2R2s/mam/mam-pre2-min.js");}m._mamScript.done(
+function(){ if(!m._mam){ m._mam=new m.MAM(a,_pjs);}m._mam.
+run();});}};m.setTimeout(t,0);})();};
 
 
 // Global variable to reference all the imported assets
 var media;
-
-
-//
-// This function will be called when the loading of assets
-// is complete. It simply sets the global `media` variable.
-//
-var onMediaReady = function(loadedMedia) {
-	media = loadedMedia;
-};
 
 
 // Data for a simple animation of a little guy walking
@@ -264,12 +178,92 @@ var drawScene = function() {
 
 
 //
-// Starts the loading of assets defined inside `config`.
-// Once all of them have been loaded, it replaces the
-// regular `draw` function with `drawScene`, and it calls
-// `onMediaReady` one time.
+// The main configuration object. It specifies all the media
+// assets that will be loaded for this program.
 //
-mamLoad(config, onMediaReady, drawScene);
+var baseUrl = 'http://localhost:3333/assets';
+var config = {
+	images: {
+		tiles: baseUrl + '/img/tiles.png',
+		guy: baseUrl + '/img/guy.png'
+	},
+
+	sprites: {
+		grass: {
+			sheet: 'tiles',
+			x: 0, y: 0,
+			width: 32, height: 32
+		},
+		rock0: {
+			sheet: 'tiles',
+			x: 32, y: 0,
+			width: 32, height: 32
+		},
+		rock1: {
+			sheet: 'tiles',
+			x: 64, y: 0,
+			width: 32, height: 32
+		},
+		rock2: {
+			sheet: 'tiles',
+			x: 96, y: 0,
+			width: 32, height: 32
+		},
+		house: {
+			sheet: 'tiles',
+			x: 0, y: 32,
+			width: 120, height: 148
+		},
+		tree: {
+			sheet: 'tiles',
+			x: 0, y: 180,
+			width: 64, height: 88
+		},
+		well: {
+			sheet: 'tiles',
+			x: 64, y: 180,
+			width: 40, height: 64
+		},
+		walkingDown: {
+			sheet: 'guy',
+			x: 0, y: 32,
+			width: 32, height: 32,
+			frames: 4
+		},
+		walkingUp: {
+			sheet: 'guy',
+			x: 0, y: 0,
+			width: 32, height: 32,
+			frames: 4
+		}
+	},
+
+	audio: {
+		theme: baseUrl + '/snd/theme.ogg',
+		boom: baseUrl + '/snd/boom.ogg'
+	},
+
+	fonts: [
+		'Special Elite',
+		'Tangerine',
+		'Average Sans'
+	],
+
+	onReady: function(loadedMedia) {
+		media = loadedMedia;
+	},
+
+	draw: drawScene
+};
+
+
+//
+// Starts the loading of assets defined inside `config`.
+// Once all of them have been loaded, it calls
+// `config.onReady` one time, and replaces the regular
+// `draw` function with `config.draw`.
+//
+mamLoad(config);
 
 
 //
