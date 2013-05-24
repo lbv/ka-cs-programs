@@ -1,0 +1,61 @@
+<!DOCTYPE html><html><head><base href="http://lbv.github.io/ka-cs-programs/" /><meta name="description" content="Collection of assets created for the Khan Academy computer science
+platform." /><meta charset="utf-8" /><link rel="stylesheet" href="css/vendor/normalize.css" /><link rel="stylesheet" href="css/vendor/unsemantic.css" /><link rel="stylesheet" href="css/vendor/zenburn.css" /><link rel="stylesheet" href="css/global.css" /><title>Gif Reader | KA CS</title><link href="//fonts.googleapis.com/css?family=Roboto:700" rel="stylesheet" type="text/css" /></head><body><header class="grid-container site-header"><div class="grid-100"><span class="ka">KA</span><span class="cs">CS</span></div><div class="grid-100 tagline"><span>Coding for the Khan Academy computer science platform</span></div><nav class="grid-100"><a href="">Home</a><span> &#8883; </span><a href="#programs">Programs</a><span> &#8883; </span><span>Gif Reader</span></nav></header><section class="grid-container site-body"><section class="grid-100 program"><img class="program-thumb" src="img/programs/gif-reader.png" /><h1>Gif Reader</h1><p>A decoder for images in the <span class="caps">GIF</span>&nbsp;format.</p>
+<p><strong>Tags</strong>: images, gif, decoder,&nbsp;base64</p>
+<h2>Summary</h2><p>This is just an experiment to see if it was feasible to
+implement a <span class="caps">GIF</span> decoder entirely in javascript, taking the
+opportunity to learn about the internal details of the
+format, and the LZW algorithm used in GIF files to compress
+data. Turns out it <em>is</em> quite feasible&nbsp;:).</p>
+<p>It&#8217;s not really necessary to implement a <span class="caps">GIF</span> decoder just to
+show custom raster data in a Processing.JS/Khan Academy
+program, but this was written purely for the fun of doing&nbsp;it.</p>
+<p>This program demos the <span class="caps">GIF</span> reader on three different images:
+the hand pointer thingy, which has transparency, the K.A.
+logo, which also has transparency and is interlaced, and the
+main photo, which is just as large an image as I could&nbsp;test.</p>
+<p>As you can see, the results are not very sharp, mostly
+because of problems with the <span class="caps">GIF</span> format itself, which is not
+very good for anything other than simple images like
+diagrams and the like. For example, for the main photo, I
+had to reduce the palette of colors to just 64; it still
+looks kinda nice,&nbsp;though.</p>
+<p>If you want to use your own images, you just need to replace
+the contents of the &#8220;fooData&#8221; variables (see the code). This
+data is encoded in Base64, which is a simple mechanism to
+store binary data in a readable&nbsp;format.</p>
+<p>However, if you&#8217;re just interested in displaying a
+particular image in your program, from any image format used
+in web pages, like <span class="caps">JPG</span>, PNG or GIF, you may want to check
+out the <code>Image2Code</code> program. You can find a link to it&nbsp;below.</p>
+<p>If you want to learn about the internal details of the <span class="caps">GIF</span>
+format, you might enjoy the following two&nbsp;documents:</p>
+<p>   <a href="http://www.cs.cmu.edu/~cil/lzw.and.gif.txt">http://www.cs.cmu.edu/~cil/lzw.and.gif.txt</a>
+   <a href="http://www.w3.org/Graphics/GIF/spec-gif89a.txt">http://www.w3.org/Graphics/<span class="caps">GIF</span>/spec-gif89a.txt</a></p>
+<hr>
+<p>This program was partly inspired by the &#8220;Mona Lisa&#8221; program,
+by Peter Collingridge, which produces a very nice picture
+using purely basic drawing primitives. Check it&nbsp;out!</p>
+<h2>Links</h2><ul>
+<li><a href="https://www.khanacademy.org/cs/gif-reader/1449958817">This program on Khan&nbsp;Academy</a></li>
+<li><a href="https://github.com/lbv/ka-cs-programs/tree/master/programs/gif-reader">This program on&nbsp;GitHub</a></li>
+<li><a href="https://www.khanacademy.org/cs/image2code/1626862725">The Image2Code&nbsp;program</a></li>
+<li><a href="http://www.khanacademy.org/cs/mona-lisa/1153732313">The Mona Lisa&nbsp;program</a></li>
+</ul>
+<h2>ChangeLog</h2><p><strong>Current revision</strong>:&nbsp;rev4</p>
+<pre><code>2013-05-09
+
+    * Upgraded components. Added link to Image2Code program.
+
+2013-03-12
+
+    * Reduced size by using regular Coffeescript strings and
+      not block strings. Replaced the pointer GIF. Increased
+      the number of colors in the photo to 70.
+
+2013-03-11
+    * Updated code to fit in 60 columns, fixed minor
+      problems.
+
+2013-03-10
+    * First version of this program.</code></pre>
+<h2>To Do</h2></section></section><footer class="grid-container"><div class="grid-100 site-footer"><p><a href="http://creativecommons.org/publicdomain/zero/1.0/">No rights reserved</a></p></div></footer></body></html>

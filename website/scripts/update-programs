@@ -6,34 +6,70 @@ use warnings;
 use Cwd 'abs_path';
 
 
+my $dry_run = 0;
+my $verbose = 0;
+
+
 my $path = abs_path($0);
 $path =~ s#[^/]*$##;
 
-sub get_programs {
-    my $dir = $path . '../..';
-    my $output = `cd $dir && git ls-tree -r --name-only master`;
-    my @lines = split /\n/, $output;
-    my @programs;
-    foreach my $line (@lines) {
-        next unless $line =~ m#([^/]*)\/info\.yml$#;
-        push @programs, $1;
-    }
-    @programs;
+sub dsystem($) {
+    my $cmd = shift;
+    print "Running: $cmd\n" if $verbose;
+    system $cmd unless $dry_run;
 }
 
-sub copy_metadata {
-    my @programs = get_programs();
-    foreach my $prg (@programs) {
+sub get_data {
+    my $dir = $path . '../..';
+    my $output = `cd $dir && git ls-tree -r --name-only master programs`;
+    my @lines = split /\n/, $output;
+
+	my $data = {
+        programs => [],
+        assets => {}
+	};
+
+    foreach my $line (@lines) {
+        if ($line =~ m#([^/]*)\/info\.yml$#) {
+            push @{$data->{programs}}, $1;
+	    }
+        if ($line =~ m#([^/]*)/assets/(img|snd)/([^/]+)$#) {
+            my $prg  = $1;
+            my $type = $2;
+            my $file = $3;
+
+            $data->{assets}{$prg} ||= [];
+            push @{$data->{assets}{$prg}}, { type => $type, file => $file };
+        }
+    }
+
+    $data;
+}
+
+sub copy_master_data {
+    my $data = get_data();
+    foreach my $prg (@{$data->{programs}}) {
         my $out = "${path}../data/programs/$prg.yml";
 
-        print "Copying $prg metadata\n";
-        my $cmd = "git show master:programs/$prg/info.yml > $out";
-        system $cmd;
+        print "Copying metadata for $prg ..";
+        dsystem "git show master:programs/$prg/info.yml > $out";
+        dsystem "${path}program-page $out";
+        print " OK\n";
+    }
+    while (my ($prg, $v) = each %{$data->{assets}}) {
+        print "Copying media assets for $prg..";
+        foreach my $asset (@$v) {
+            my $type = $asset->{type};
+            my $file = $asset->{file};
 
-        print "Regenerating doc\n";
-        $cmd = "${path}program-page $out";
-        system $cmd;
+            my $outdir = "out/assets/$prg/$type";
+            my $from   = "master:programs/$prg/assets/$type/$file";
+
+            dsystem "mkdir -p $outdir";
+            dsystem "git show $from > $outdir/$file";
+        }
+        print " OK\n";
     }
 }
 
-copy_metadata();
+copy_master_data();

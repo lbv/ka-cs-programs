@@ -1,0 +1,48 @@
+title: MAM Demo
+description: >
+  Demo for the Media Assets Manager.
+tags: media, assets, include, loading
+summary: |
+  The Media Assets Manager (MAM) is a small JavaScript library
+  created to simplify the inclusion of media assets inside
+  programs for the Khan Academy environment. More
+  specifically, the inclusion of images, sounds and fonts.
+
+  For more details, please refer to the documentation, at:
+  http://lbv.github.io/mam/
+
+version: rev2
+changelog: |
+  2013-05-24
+
+      * Updated to mam-pre2.
+      * Added "well" sprite and optimized media assets.
+      * Use 'S' and 'M' instead of SHIFT and CONTROL to
+        manipulate sounds.
+      * Don't play sounds on the intro screen.
+
+  2013-05-21
+
+      * First version of this program.
+links:
+  - desc : This program on Khan Academy
+    url  : https://www.khanacademy.org/cs/mam-demo/1663711308
+  - desc : This program on GitHub
+    url  : https://github.com/lbv/ka-cs-programs/tree/master/programs/mam-demo
+  - desc : >
+      Artwork by Guillaume Lecollinet, made for the BrowserQuest
+      game and released under the CC-BY-SA 3.0 license.
+    url  : http://opengameart.org/content/browserquest-sprites-and-tiles
+  - desc : >
+      Music by Yubatake, taken from his JRPG collection,
+      released under the CC-BY 3.0 license.
+    url  : http://opengameart.org/content/jrpg-collection
+  - desc : >
+      Boom sound effect by dklon, released under the
+      CC-BY 3.0 license.
+    url  : http://opengameart.org/content/boom-pack-1
+  - desc : Fonts supplied by Google Web Fonts
+    url  : http://www.google.com/fonts/
+todo:
+  - Add progress info in the loading screen
+  - Add greater control to font inclusion

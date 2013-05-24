@@ -1,0 +1,179 @@
+<!DOCTYPE html><html><head><base href="http://lbv.github.io/ka-cs-programs/" /><meta name="description" content="Collection of assets created for the Khan Academy computer science
+platform." /><meta charset="utf-8" /><link rel="stylesheet" href="css/vendor/normalize.css" /><link rel="stylesheet" href="css/vendor/unsemantic.css" /><link rel="stylesheet" href="css/vendor/zenburn.css" /><link rel="stylesheet" href="css/global.css" /><title>Clicking on Shapes | KA CS</title><link href="//fonts.googleapis.com/css?family=Roboto:700" rel="stylesheet" type="text/css" /></head><body><header class="grid-container site-header"><div class="grid-100"><span class="ka">KA</span><span class="cs">CS</span></div><div class="grid-100 tagline"><span>Coding for the Khan Academy computer science platform</span></div><nav class="grid-100"><a href="">Home</a><span> &#8883; </span><a href="#tutorials">Tutorials</a><span> &#8883; </span><span>Clicking on Shapes</span></nav></header><section class="grid-container site-body"><h1>Clicking on&nbsp;Shapes</h1>
+<h2>Summary</h2>
+<p>Making interactive programs involves a number of challenges. One of them is
+this: when someone clicks on a shape from my program, how do I detect&nbsp;it?</p>
+<p>As is usual in programming, there is more than one way to do it, and what is
+most appropriate on any given situation depends a lot on the specific
+circumstances. Nevertheless, we&#8217;ll explore a couple of approaches to this
+problem: detection based on the coordinates of the mouse alone, and
+detection based on the color of the pixel pointed at by the&nbsp;mouse.</p>
+<h2>Method 1: Detection based on mouse&nbsp;coordinates</h2>
+<p>The idea behind this is to simply use the exact coordinates of the mouse at
+the time of the click to determine if they lie inside a certain figure. This
+method is probably the most intuitive one, yet it can be tricky because it
+depends on the location, dimensions and general shape of the figure you&#8217;re
+trying to recognize as a &#8220;clickable&#8221;&nbsp;object.</p>
+<p>The two shapes most commonly used for this method are the rectangle and the
+circle, simply because they&#8217;re the easiest to detect through simple
+mathematical&nbsp;expressions.</p>
+<p>For example, for a rectangle, you can confidently determine if a given point
+is inside of it if its <em>X</em> coordinate is between the <em>left</em> and <em>right</em>
+sides of the rectangle, and its <em>Y</em> coordinate is between the <em>top</em> and
+<em>bottom</em> of the rectangle. Don&#8217;t forget that the coordinate system used in
+computer graphics makes the <em>Y</em> axis point downwards, so higher <em>Y</em>
+coordinates means lower locations on the&nbsp;screen.</p>
+<p>For the case of a circle, there is a simple method based on the
+<a href="https://www.khanacademy.org/math/geometry/right_triangles_topic/pyth_theor/v/the-pythagorean-theorem">pythagorean
+theorem</a>
+and some basic geometry. Knowing the exact location of the mouse, and the
+center of the circle, you can easily determine the distance between those
+two points. And if that distance is less than or equal to the circle&#8217;s
+radius, then the mouse is inside the&nbsp;circle.</p>
+<p>Let&#8217;s see how all of this would look in an&nbsp;example:</p>
+<p>
+  <strong>Example:</strong>
+  <a href="http://www.khanacademy.org/cs/example-detection-of-clicks-based-on-mouse-coordinates/1520783583" title="See this example running!">Identifying figures based on their location and&nbsp;shape</a>
+</p>
+
+<pre><code class="lang-javascript">strokeWeight(<span class="number">2</span>);
+
+<span class="comment">//</span>
+<span class="comment">// Drawing a red rectangle</span>
+<span class="comment">//</span>
+<span class="keyword">var</span> rectX = <span class="number">75</span>;
+<span class="keyword">var</span> rectY = <span class="number">175</span>;
+
+<span class="keyword">var</span> rectWidth  = <span class="number">50</span>;
+<span class="keyword">var</span> rectHeight = <span class="number">50</span>;
+
+
+stroke(<span class="number">164</span>, <span class="number">0</span>, <span class="number">0</span>);
+fill(<span class="number">239</span>, <span class="number">41</span>, <span class="number">41</span>);
+rect(rectX, rectY, rectWidth, rectHeight);
+
+<span class="comment">//</span>
+<span class="comment">// Drawing a blue circle</span>
+<span class="comment">//</span>
+<span class="keyword">var</span> circX = <span class="number">300</span>;
+<span class="keyword">var</span> circY = <span class="number">200</span>;
+
+<span class="keyword">var</span> circDiameter  = <span class="number">50</span>;
+
+stroke(<span class="number">32</span>, <span class="number">74</span>, <span class="number">135</span>);
+fill(<span class="number">114</span>, <span class="number">159</span>, <span class="number">207</span>);
+
+ellipse(circX, circY, circDiameter, circDiameter);
+
+
+<span class="comment">//</span>
+<span class="comment">// Returns true if the user clicked on the rectangle</span>
+<span class="comment">//</span>
+<span class="keyword">var</span> detectRectangle = <span class="keyword">function</span>() {
+    <span class="keyword">if</span> (mouseX &gt;= rectX &amp;&amp; mouseX &lt;= rectX + rectWidth &amp;&amp;
+        mouseY &gt;= rectY &amp;&amp; mouseY &lt;= rectY + rectHeight) {
+
+        <span class="keyword">return</span> <span class="literal">true</span>;
+
+    }
+    <span class="keyword">else</span> {
+        <span class="keyword">return</span> <span class="literal">false</span>;
+    }
+};
+
+
+<span class="comment">//</span>
+<span class="comment">// Returns true if the user clicked on the circle</span>
+<span class="comment">//</span>
+<span class="keyword">var</span> detectCircle = <span class="keyword">function</span>() {
+    <span class="keyword">var</span> dx = mouseX - circX;
+    <span class="keyword">var</span> dy = mouseY - circY;
+
+    <span class="comment">// Square of the distance between the mouse, and the</span>
+    <span class="comment">// center of the circle</span>
+    <span class="keyword">var</span> sqDist = dx*dx + dy*dy;
+
+    <span class="comment">// Square of the circle's radius</span>
+    <span class="keyword">var</span> radius   = circDiameter / <span class="number">2</span>;
+    <span class="keyword">var</span> sqRadius = radius * radius;
+
+    <span class="keyword">if</span> (sqDist &lt;= sqRadius) {
+        <span class="keyword">return</span> <span class="literal">true</span>;
+    }
+    <span class="keyword">else</span> {
+        <span class="keyword">return</span> <span class="literal">false</span>;
+    }
+};
+
+<span class="keyword">var</span> mouseClicked = <span class="keyword">function</span>() {
+    <span class="keyword">if</span> (detectRectangle()) {
+        println(<span class="string">"You clicked on the rectangle.. yay!"</span>);
+    }
+    <span class="keyword">else</span> <span class="keyword">if</span> (detectCircle()) {
+        println(<span class="string">"You clicked on the circle... wooo!"</span>);
+    }
+    <span class="keyword">else</span> {
+        println(<span class="string">"You clicked on empty space..."</span>);
+    }
+};</code></pre>
+<h2>Method 2: Detection based on pixel&nbsp;color</h2>
+<p>The previous method, as simple as it is, has its limitations. For example,
+what if you want to detect shapes that are <em>not</em> rectangles and circles,
+like stars or ellipses? Perhaps you could try approximating the general
+shape of your figure by combining different rectangles and circles, but
+sooner or later this could turn into a big problem that is not easy to&nbsp;maintain.</p>
+<p>Fortunately, there is another simple method, which is using the color of the
+pixel that the mouse is pointing at when the user clicked on the screen.
+This tends to work really well in practice because usually shapes in a
+graphical environment are colourful and as long as you can easily and
+efficiently recognize something by its color alone, you&#8217;re all&nbsp;set!</p>
+<p>For this we&#8217;ll be using <a href="http://processingjs.org/reference/get_/" title="Processing.JS reference for get"><code>get</code></a>. Let&#8217;s see an&nbsp;example&#8230;</p>
+<p>
+  <strong>Example:</strong>
+  <a href="http://www.khanacademy.org/cs/example-detecting-clicks-using-pixel-color/1520899184" title="See this example running!">Identifying shapes by their&nbsp;color</a>
+</p>
+
+<pre><code class="lang-javascript"><span class="comment">// Use an "alias" for Processing.<span class="caps">JS</span> 'get'</span>
+<span class="keyword">var</span> getColor = <span class="keyword">this</span>.get;
+
+noStroke();
+
+<span class="comment">//</span>
+<span class="comment">// Drawing a star</span>
+<span class="comment">//</span>
+<span class="keyword">var</span> starColor = color(<span class="number">252</span>, <span class="number">233</span>, <span class="number">79</span>);
+
+fill(starColor);
+
+beginShape();
+vertex(<span class="number">100</span>, <span class="number">10</span>);
+vertex(<span class="number">40</span>, <span class="number">180</span>);
+vertex(<span class="number">190</span>, <span class="number">60</span>);
+vertex(<span class="number">10</span>, <span class="number">60</span>);
+vertex(<span class="number">160</span>, <span class="number">180</span>);
+endShape();
+
+<span class="comment">//</span>
+<span class="comment">// Drawing an ellipse</span>
+<span class="comment">//</span>
+<span class="keyword">var</span> ellipColor = color(<span class="number">115</span>, <span class="number">210</span>, <span class="number">22</span>);
+
+fill(ellipColor);
+
+ellipse(<span class="number">300</span>, <span class="number">300</span>, <span class="number">50</span>, <span class="number">180</span>);
+
+
+<span class="keyword">var</span> mouseClicked = <span class="keyword">function</span>() {
+    <span class="keyword">var</span> pixelColor = getColor(mouseX, mouseY);
+
+    <span class="keyword">if</span> (pixelColor === starColor) {
+        println(<span class="string">"You clicked on the star... good job!"</span>);
+    }
+    <span class="keyword">else</span> <span class="keyword">if</span> (pixelColor === ellipColor) {
+        println(<span class="string">"You clicked on the ellipse... nice!"</span>);
+    }
+    <span class="keyword">else</span> {
+        println(<span class="string">"You clicked on empty space..."</span>);
+    }
+};</code></pre>
+</section><footer class="grid-container"><div class="grid-100 site-footer"><p><a href="http://creativecommons.org/publicdomain/zero/1.0/">No rights reserved</a></p></div></footer></body></html>

@@ -1,0 +1,255 @@
+<!DOCTYPE html><html><head><base href="http://lbv.github.io/ka-cs-programs/" /><meta name="description" content="Collection of assets created for the Khan Academy computer science
+platform." /><meta charset="utf-8" /><link rel="stylesheet" href="css/vendor/normalize.css" /><link rel="stylesheet" href="css/vendor/unsemantic.css" /><link rel="stylesheet" href="css/vendor/zenburn.css" /><link rel="stylesheet" href="css/global.css" /><title>The Khan Academy C.S. Sandbox | KA CS</title><link href="//fonts.googleapis.com/css?family=Roboto:700" rel="stylesheet" type="text/css" /></head><body><header class="grid-container site-header"><div class="grid-100"><span class="ka">KA</span><span class="cs">CS</span></div><div class="grid-100 tagline"><span>Coding for the Khan Academy computer science platform</span></div><nav class="grid-100"><a href="">Home</a><span> &#8883; </span><a href="#other">Other</a><span> &#8883; </span><span>The Khan Academy CS Sandbox</span></nav></header><section class="grid-container site-body"><h1>The Khan Academy C.S.&nbsp;Sandbox</h1>
+<p>The Khan Adacemy&#8217;s <a href="https://www.khanacademy.org/cs">Computer Science</a>
+section is a very interesting place to learn, explore, discuss and basically
+<em>play</em> with ideas related to computer programming. It provides a nice,
+visual environment where you as a programmer can receive almost immediate
+feedback as you type and edit your code. At least to me, <span class="caps">KA</span>-CS has proved to
+be a compelling alternative for learning the basics of CS. I particularly
+appreciate the way this community has been carefully nurtured and guided by
+a group of &#8220;guardians&#8221; and natural leaders that have stepped up from the
+active community itself. It has truly set an example from which many
+valuable lessons can be&nbsp;learned.</p>
+<p>I think it&#8217;s accurate to say that this environment (I&#8217;ll refer to it as
+<em><span class="caps">KA</span>-CS</em> &#8212;short for Khan Academy&#8217;s computer science environment&#8212; from
+here on for brevity) was designed with a strong emphasis on beginners (many
+of them young boys and girls) in mind. This has resulted in a number of
+implementation details that, deliberately or not, end up imposing certain
+restrictions to what can or cannot be done in the&nbsp;enviroment.</p>
+<p>My intention with this document is just to explore some of the things I&#8217;ve
+discovered as I&#8217;ve been using <span class="caps">KA</span>-CS, and some of the questions, of both
+technical and social nature, that I&#8217;ve been pondering about as a result.
+Basically, having played with KA-CS for a little while, a recurrent question
+that comes to my mind is, &#8220;how much better could this be if some of the
+technical and social aspects behind it were tweaked a little&nbsp;bit?&#8221;.</p>
+<h2><span class="caps">KA</span>&#8211;CS&#8217;s Design&nbsp;Goals</h2>
+<p>So I&#8217;ve mentioned my &#8220;experience&#8221; with <span class="caps">KA</span>-CS, which isn&#8217;t actually very
+extensive.  I&#8217;ve been a user of the Khan Academy for a little more than 2
+years, but I haven&#8217;t been truly active during this entire time. I only
+learned about KA-CS earlier this year, after reading an <a href="http://interviews.slashdot.org/story/13/02/25/1417249/interviews-khan-academy-lead-developer-ben-kamens-answers-your-questions">interview with Ben
+Kamens</a>,
+one of the <span class="caps">KA</span>&#8217;s engineers, where he briefly touched upon the subject of this
+platform, and mentioned &#8220;John Resig and his team&#8221;. As luck would have it, it
+was around that time that I started learning JavaScript &#8220;seriously&#8221; as I
+wanted to play with this <em>node.js</em> thing I kept hearing about. Even if I
+wasn&#8217;t fully aware of who John Resig was at that point, I recognized his
+name as one of the key persons involved in the <span class="caps">JS</span> community, and decided to
+take the time to explore this new C.S. section from the KA and see how it&nbsp;felt.</p>
+<p>Maybe I should mention, I truly, deeply love both computer science and
+education. My undergraduate thesis was in the area of computer engineering
+applied to education. The idea of exploring a new approach to interactive
+environments to teach and learn computer science fascinates me, and I&#8217;ve
+gotten my hands dirty with many of these experiments in the past (from many
+of the <em>Logo</em> flavours, to <em>Scratch</em>, <em>Hackety&#8211;Hack</em>, the <em>Java Task
+Force</em>, to interactive books <em>à la</em> &#8220;Learn <em>Foo</em> the Hard Way&#8221;,&nbsp;etc.)</p>
+<p>Anyway, back to the subject, learning of <span class="caps">KA</span>-CS was quite a pleasant
+experience for me. The main thing I want to point out is that I found that
+my personal views on teaching/learning C.S. seem to be very much in
+alignment with those of KA-CS architects. John Resig has a very nice
+<a href="http://ejohn.org/blog/introducing-khan-cs/">introduction writeup</a> and a
+<a href="http://ejohn.org/blog/talk-khan-academy-computer-science/">talk</a> which
+should give you a rough overview of how the platform works and, most
+importantly, the design principles behind&nbsp;it.</p>
+<p>Perhaps the best part of all this for me was coming across Bret Victor&#8217;s
+<a href="http://vimeo.com/36579366"><em>Inventing on Principle</em></a> talk, mentioned in
+John Resig&#8217;s document above. If the idea of &#8220;changing the world&#8221; appeals to
+you in some way, and you haven&#8217;t watched this talk yet, all I can say is,
+you owe it to yourself to set aside some time and watch it&nbsp;attentively.</p>
+<p>It is easy to notice how Bret Victor&#8217;s message has permeated <span class="caps">KA</span>-CS&#8217;s design.
+The &#8220;instant feedback&#8221; principle is perhaps the most noticeable element that
+just jumps at you when you play with KA-CS, but there are other interesting
+things that are worth some consideration, even if they are perhaps not
+executed to their fullest potential yet. I particuarly like the way the
+KA-CS has been gradually taking shape, with different &#8220;interactive
+tutorials&#8221; being created and providing a natural path that can be followed
+by a complete beginner, to learn about the basics of programming (and
+drawing simple computer graphics) gradually, in a nice, rewarding&nbsp;enviroment.</p>
+<p>Now, I think a case can be made for <span class="caps">KA</span>-CS&#8217;s simplicity as an intentional
+design principle as well. KA-CS provides you with a very simple interface,
+where you type your programs in a little frame, and you see your program
+running in &#8220;real time&#8221; in another little frame right next to your code.
+From a programming point&#8211;of&#8211;view, things are kept small and simple as
+well. You use JavaScript, and you have a framework for <em>visual</em> programming
+at your disposal, courtesy of <a href="http://processingjs.org/">Processing.js</a>. You
+don&#8217;t have to worry about <span class="caps">HTML</span> or the HTML5 canvas, <code>script</code> tags or the
+object&#8211;oriented interface to Processing. You just type your code, and all
+the relevant components are available for you, right there on the main&nbsp;scope.</p>
+<p>However, as it&#8217;s usually the case with any technology, this rose is not
+without its thorns. In fact, <span class="caps">KA</span>-CS being a big project with a tremendously
+large audience, it would be surprising if it did <em>not</em> have its quirks and
+rough&nbsp;edges.</p>
+<h2>The Technical&nbsp;Aspect</h2>
+<p>A question that is often asked in <span class="caps">KA</span>-CS&#8217;s <a href="https://www.khanacademy.org/cs/d">community
+questions</a> area is &#8220;what programming
+language is this?&#8221;, and this usually results in answers that basically come
+down to &#8220;well, it&#8217;s JavaScript, but <em>not really</em>.&#8221; Now, JavaScript <em>is</em>
+really the language that you use to create programs in <span class="caps">KA</span>-CS, but
+it comes with its set of idiosyncracies and peculiarities that you should be
+aware of, or it can surprise you when you least expect&nbsp;it.</p>
+<p>This has been a known source of confusion for many enthusiastic
+self&#8211;learners who, after reading that the language used in <span class="caps">KA</span>-CS is
+JavaScript, say &#8220;okay, so I need to learn JavaScript,&#8221; and go look for JS
+resources on the web. They are then surprised when they go back to KA-CS and
+find that things like <code>new Date</code> don&#8217;t work, or a little green fellow tells
+them &#8220;hey, you typed <code>==</code> but I though you were going to type <code>===</code>.&#8221;</p>
+<p>I can see how some of the &#8220;quirks&#8221; in <span class="caps">KA</span>-CS&#8217;s platform probably come from
+conscious decisions made by people from the KA team. Some of these things
+(like allowing or forbidding the <code>==</code> operator) are the kind of small
+details that could fuel endless debates among people who care about coding
+conventions and such. It&#8217;s not my intention to argue either way about things
+of this nature, but I do think there is value in considering how a tool like
+<span class="caps">KA</span>-CS evolves with time, and the scope of things it can provide, given the
+way people use&nbsp;it.</p>
+<p>In John Resig&#8217;s introduction you can read how he was quite impressed when he
+personally witnessed kids from a <em>Discovery Lab</em> use <span class="caps">KA</span>-CS to create
+programs that went above and beyond what he would have imagined.  His
+conclusion was, &#8220;[&#8230;]to say that I&#8217;m excited to see how people are going to
+use this platform is an understatement.&#8221; That was written in August, 2012.
+I&#8217;m writing this on May, 2013, and right now if you visit KA-CS, and take
+the time to explore some of the programs built by the community, you can
+find a wide range of little projects, with various degrees of
+sophistication. And certainly, some of them are pretty much gems; little
+works of art that showcase some of the power and flexibility you get from a
+small JavaScript environment, sprinkled with some drawing&nbsp;directives.</p>
+<p>Some of the things created by the community have shown that, although the
+goals of <span class="caps">KA</span>-CS may be humble, in reality this environment is truly quite
+powerful. Choosing JavaScript and modern web browsers as the basis for KA-CS
+has a lot to do with this.  The technologies involved with the WWW have done
+nothing but grow and improve at a dramatic rate since their inception.
+JavaScript right now is pretty much ubiquitous, and the range of things
+that you can do with just a web browser and JS gets wider and more
+fascinating each&nbsp;day.</p>
+<p>To take an example from the context of <span class="caps">KA</span>-CS, you often come across
+interesting programs where a lot of emphasis is placed in the input/output
+mechanisms.  Things like presenting text in an organised manner, and
+receiving input from the user, using controls like text area fields,
+checkboxes, slider controls&#8230; that sort of thing. If you&#8217;re somewhat
+familiar with web development, it&#8217;s easy to see that this use case is pretty
+much perfect for HTML, along with a little bit of JavaScript if necessary.
+At least this is basically what I thought when I wanted to create my own
+programs with their own input/output components. However, using things like
+HTML in KA-CS is not very straightforward at the moment, mainly because the
+scope your programs reside in is stripped down of many useful things, like
+references to the global <code>window</code> object &#8212;and even more surprisingly,
+globals like <code>String</code>, <code>Date</code> and so&nbsp;on.</p>
+<p>You <em>could</em> try to implement things like text fields in a canvas (even if
+it&#8217;s only through a layer like Processing.js&#8217; <span class="caps">API</span>).  However, when you
+consider that you&#8217;re working in an environment that is running inside a web
+browser, it just seems a little silly to be forced to give up the simplicity
+of HTML to implement a basic form, and take the long and winding road of
+implementing your own UI controls on top of the&nbsp;canvas.</p>
+<p>I can imagine how security has to play an important role in <span class="caps">KA</span>-CS&#8217;
+usability. In this respect, I&#8217;ve noticed that most of the appropriate
+technical measures are already in place &#8212;things like running the
+code from a different frame that runs on a different domain, <em>linting</em> the
+source code with tools like JSHint, etc. Beyond that, modern JavaScript
+implementations are built upon years of experience with web security;
+problems like cross&#8211;site vulnerabilities that could lead to some type of
+virus, worm, etc. can be solved without too much effort. We can see an
+interesting example in <a href="http://jsfiddle.net/">jsFiddle</a>, where
+users are free to create and share their programs, with access to a <em>very</em>
+wide range of external tools built on top of&nbsp;<span class="caps">JS</span>.</p>
+<p>The thing I find somewhat surprising in <span class="caps">KA</span>-CS is that most global objects
+are stripped from the main scope, and certain bare words like
+<code>ownerDocument</code> are forbidden as property names when using the dot notation.
+These things do not have much to do with security, and just seem like
+capricious restrictions. Given that ultimately the programs do run using the
+client&#8217;s browser <span class="caps">JS</span> engine, and in JavaScript it&#8217;s just not possible to
+completely forbid access to the global scope or to properties with certain
+names (at least not without seriously breaking everything else, or
+effectively using a JavaScript variant with different scoping rules), it
+seems fairly strange that the aforementioned quirks would be deliberately
+included in the environment. Why do it at all?  Moreover, globals like
+<code>String</code>, <code>Array</code> or <code>Error</code> are very commonly used in examples from books,
+articles, tutorials, and so on, so not having direct access to them in <span class="caps">KA</span>-CS
+introduces some amount of cognitive&nbsp;dissonance.</p>
+<p>In my opinion, <span class="caps">KA</span>-CS could take advantage of the entire stack of
+technologies it&#8217;s built upon: HTML5, JavaScript (without the ineffective
+restrictions), Processing.JS, and even the <a href="http://jquery.com/">jQuery</a> and
+<a href="http://documentcloud.github.io/underscore/">Underscore.js</a> libraries that
+are extensively used in <span class="caps">KA</span>&#8217;s website. Given John Resig&#8217;s own involvement
+with many of these technologies, it seems to me that he may be one to
+appreciate how there&#8217;s a great opportunity here that is not being explored.
+If young programmers can impress us with just a few geometric shapes and
+simple JS functions, imagine what would be possible from some responsible
+use of things like HTML5&#8217;s <em>media</em> elements and manipulating web content
+with something like <a href="http://jqueryui.com/">jQuery <span class="caps">UI</span></a>.</p>
+<p>All of these things are already there. They are just not being exposed to
+the programmers in a convenient way, while at the same time there are some
+arbitrary limitations that do not seem to be serving any useful&nbsp;purpose.</p>
+<h2>The Social&nbsp;Aspect</h2>
+<p>Of course, there is more to a tool like <span class="caps">KA</span>-CS than the technical side of it.
+The people behind an environment such as this have to always be vigilant
+of how it&#8217;s actually being used, and this is especially important
+considering that its audience has a large proportion of young boys and&nbsp;girls.</p>
+<p>I&#8217;ll say that it&#8217;s been a growing concern of mine that there seems to be a
+little bit of &#8220;grey area&#8221; as to what is &#8220;allowed&#8221; or not by the community
+guardians &#8212;a group of people I&#8217;ve read much about, but have never
+encountered myself, as of yet (is there a way to have some direct
+interaction with them? I don&#8217;t&nbsp;know).</p>
+<p>Case in point, the situation with images in programs. From what I have read,
+it seems like some time ago (before I started using <span class="caps">KA</span>-CS), it was possible
+to use Processing.js&#8217; mechanism to import images into a sketch. Apparently,
+due to abuse or just a policy change, this functionality was removed, or at
+least restricted in a way that basically makes it out of reach for the
+majority of programmers. KA-CS being a visual environment and all, this
+measure seems a little counter&#8211;intuitive. However, it&#8217;s not hard to imagine
+how it could lead to abuse, so I don&#8217;t think anyone could really object to
+the idea of some sort of regulation. It&#8217;s just a little surprising that a
+drastic measure like trying to completely remove the functionality would be
+taken. And, as far as I can tell, there are no clear guidelines regarding
+what is or should be allowed and what should&nbsp;not.</p>
+<p>In any case, this hasn&#8217;t deterred some tenacious programmers, who have
+discovered new and creative ways to step around the restriction, and import
+images in their programs in various ways. I&#8217;ve seen many programs do some
+charming things that clearly go beyond <span class="caps">KA</span>-CS&#8217; basic goals discussed above,
+and I&#8217;ve seen some of them get deleted without notice, while some similar
+programs are left alone, suggesting that the actions of the guardians are to
+some extent arbitrary or at least&nbsp;uncoordinated.</p>
+<p>Just to make myself clear, it&#8217;s not my intention to gratuitously criticize
+the guardians, people who clearly do an important and difficult job.  I&#8217;m
+aware of the enormous complexity of moderating online communities and the
+social and technical challenges involved. I do want to point out, however,
+that as a community grows in size and their members evolve, it&#8217;s important
+to make sure the moderation mechanisms are kept up to par. I see there&#8217;s an
+opportunity to at least increase the communication between the guardians and
+the community, which can increase the quality and efectiveness of the
+moderation efforts being done. I don&#8217;t think anything too complicated is
+necessary. Just having a simple venue where any member of the community can
+find at least some of the guidelines followed by the guardians could go a
+long&nbsp;way.</p>
+<p>I have hope that this can only get better with time, and it&#8217;s within the
+reach of every member of the community to help make this a better experience
+for everyone. It seems that a big challenge for maintaining any sort of
+online community is dealing with the so&#8211;called <a href="http://users.rider.edu/~suler/psycyber/disinhibit.html">online disinhibition
+effect</a>, which can
+result in annoying or potentially dangerous behaviour from people who
+reinforce certain patterns of conduct until they reach unhealthy&nbsp;extremes.</p>
+<p>Now, as I see it, the <span class="caps">KA</span> has been successful with its own measures to keep
+this sort of problem under control. Granted, I can only talk from my
+experience with the site, but it seems like the mechanisms that are
+currently in place to moderate and flag content have been working nicely,
+and coupled with the effort from the guardians, I can attest to the fact
+that participating in the discussions and browsing through the KA-CS
+programs &#8220;feels&#8221; like a good dynamic, where toxic behaviour is quickly dealt
+with and people&#8217;s altruistic side emerge naturally in most&nbsp;situations.</p>
+<p>I think this has a lot to do with the people behind the <span class="caps">KA</span>, and the example
+they set. I mean, when you see one of Salman&#8217;s talks (take one of his
+<a href="https://www.khanacademy.org/talks-and-interviews/thoughts-on-education/v/mit-2012-commencement-address">commencement
+speeches</a>,
+for example), you can&#8217;t help but feel uplifted and covered in this nice warm
+feeling that makes you look at the people around you with a different
+perspective&#8230; with a certain sense of <em>oneness</em>. This naturally translates
+into everything around the <span class="caps">KA</span> and its&nbsp;community.</p>
+<p>I don&#8217;t have much else to add, other than saying that I&#8217;d like to invite
+everyone to take the time to pause in our daily routines, and think
+about this: every little thing you do, everything you say affects the world
+around you. Let&#8217;s try to bring our best, and let&#8217;s do it together, let&#8217;s
+help each other keep our smiles in our faces, and grow and learn&nbsp;together.</p>
+<hr>
+<p>On that note, I think I will wrap this up now. If you want to further
+discuss any of these points, feel free to get in&nbsp;touch.</p>
+<p>To everyone in the <span class="caps">KA</span> community (users, developers, programmers, teachers,
+etc.), I just want to add that I have nothing but respect and love for all
+your work.&nbsp;Cheers.</p>
+</section><footer class="grid-container"><div class="grid-100 site-footer"><p><a href="http://creativecommons.org/publicdomain/zero/1.0/">No rights reserved</a></p></div></footer></body></html>
