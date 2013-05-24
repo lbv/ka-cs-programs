@@ -19,57 +19,66 @@ var _pjs=this, mamLoad=function(cfg, cb, fn) {
 // The main configuration object. It specifies all the media
 // assets that will be loaded for this program.
 //
-var baseUrl = '//googledrive.com/host/' +
-	'0BzcEQMWUa0znRE1wQU9KUGR2R2s/mam/demo/';
+var baseUrl = 'http://localhost:3333/assets';
 var config = {
 	images: {
-		tiles: baseUrl + 'tilesheet.png',
-		guy: baseUrl + 'clotharmor.png'
+		tiles: baseUrl + '/img/tiles.png',
+		guy: baseUrl + '/img/guy.png'
 	},
 
 	sprites: {
 		grass: {
 			sheet: 'tiles',
-			x: 288, y: 128,
+			x: 0, y: 0,
+			width: 32, height: 32
+		},
+		rock0: {
+			sheet: 'tiles',
+			x: 32, y: 0,
 			width: 32, height: 32
 		},
 		rock1: {
 			sheet: 'tiles',
-			x: 256, y: 192,
+			x: 64, y: 0,
 			width: 32, height: 32
 		},
 		rock2: {
 			sheet: 'tiles',
-			x: 288, y: 192,
+			x: 96, y: 0,
 			width: 32, height: 32
-		},
-		tree: {
-			sheet: 'tiles',
-			x: 190, y: 162,
-			width: 64, height: 80
 		},
 		house: {
 			sheet: 'tiles',
-			x: 50, y: 160,
-			width: 112, height: 146
+			x: 0, y: 32,
+			width: 120, height: 148
+		},
+		tree: {
+			sheet: 'tiles',
+			x: 0, y: 180,
+			width: 64, height: 88
+		},
+		well: {
+			sheet: 'tiles',
+			x: 64, y: 180,
+			width: 40, height: 64
 		},
 		walkingDown: {
 			sheet: 'guy',
-			x: 0, y: 224,
+			x: 0, y: 32,
 			width: 32, height: 32,
 			frames: 4
 		},
 		walkingUp: {
 			sheet: 'guy',
-			x: 0, y: 128,
+			x: 0, y: 0,
 			width: 32, height: 32,
 			frames: 4
 		}
 	},
 
 	audio: {
-		theme: baseUrl + 'JRPG_royalCourt_loop.ogg',
-		boom: baseUrl + 'boom1.wav'
+		theme: baseUrl + '/snd/theme.ogg',
+		boom: baseUrl + '/snd/boom.ogg'
 	},
 
 	fonts: [
@@ -95,7 +104,7 @@ var onMediaReady = function(loadedMedia) {
 
 // Data for a simple animation of a little guy walking
 var animation = {
-	x: 120, y:60,
+	x: 120, y: 60,
 	frame: 0,
 	next: 0,
 	period: 60,
@@ -140,14 +149,18 @@ var drawIntro = function() {
 // Key-press handler
 //
 var keyPressed = function() {
-	if (keyCode === CONTROL) {
-		toggleMusic();
+	if (showIntro) {
+		if (keyCode === 32) {  // Space
+			showIntro = false;
+		}
 	}
-	else if (keyCode === SHIFT) {
-		media.audio.boom.play();
-	}
-	else if (keyCode === 32) {
-		showIntro = false;
+	else {
+		if (keyCode === 77) {  // M
+			toggleMusic();
+		}
+		else if (keyCode === 83) {  // S
+			media.audio.boom.play();
+		}
 	}
 };
 
@@ -172,14 +185,22 @@ var drawScene = function() {
 
 	// sprinkle some rocks in the scene
 	image(media.sprites.rock1, 64, 128);
-	image(media.sprites.rock1, 256, 320);
+	image(media.sprites.rock1, 160, 200);
 	image(media.sprites.rock2, 192, 16);
 	image(media.sprites.rock2, 32, 352);
 
-	// a tree
+	// a tree and a well
 	image(media.sprites.tree, 290, 40);
+	image(media.sprites.well, 64, 230);
 
-	// a house
+	// a house, with a rocky entrance
+	pushMatrix();
+	translate(278, 288);
+	image(media.sprites.rock0, 0, 0);
+	image(media.sprites.rock0, 0, 32);
+	image(media.sprites.rock0, 32, 0);
+	image(media.sprites.rock0, 32, 32);
+	popMatrix();
 	image(media.sprites.house, 250, 140);
 
 	// animated guy
@@ -232,13 +253,13 @@ var drawScene = function() {
 	fill(255, 255, 255);
 	var msg;
 	if (musicPlaying) {
-		msg = "Music is playing, press CONTROL to pause it";
+		msg = "Music is playing, press M to pause it";
 	}
 	else {
-		msg = "Music is paused, press CONTROL to play";
+		msg = "Music is paused, press M to play";
 	}
 	text(msg, 392, 392);
-	text("Press SHIFT to play a sound effect", 392, 374);
+	text("Press S to play a sound effect", 392, 374);
 };
 
 

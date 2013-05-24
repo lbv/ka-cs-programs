@@ -9,10 +9,18 @@ summary: |
   specifically, the inclusion of images, sounds and fonts.
 
   For more details, please refer to the documentation, at:
-  http://goo.gl/wqIjE
+  http://lbv.github.io/mam/
 
-version: rev1
+version: rev2
 changelog: |
+  2013-05-24
+
+      * Updated to mam-pre2.
+      * Added "well" sprite and optimized media assets.
+      * Use 'S' and 'M' instead of SHIFT and CONTROL to
+        manipulate sounds.
+      * Don't play sounds on the intro screen.
+
   2013-05-21
 
       * First version of this program.
@@ -36,4 +44,5 @@ links:
   - desc : Fonts supplied by Google Web Fonts
     url  : http://www.google.com/fonts/
 todo:
-
+  - Add progress info in the loading screen
+  - Add greater control to font inclusion
