@@ -1,0 +1,45 @@
+<!DOCTYPE html><html><head><base href="http://lbv.github.io/ka-cs-programs/" /><meta name="description" content="Collection of assets created for the Khan Academy computer science
+platform." /><meta charset="utf-8" /><link rel="stylesheet" href="css/vendor/normalize.css" /><link rel="stylesheet" href="css/vendor/unsemantic.css" /><link rel="stylesheet" href="css/vendor/zenburn.css" /><link rel="stylesheet" href="css/global.css" /><title>SVGLite Demo | KA CS</title><link href="//fonts.googleapis.com/css?family=Roboto:700" rel="stylesheet" type="text/css" /></head><body><header class="grid-container site-header"><div class="grid-100"><span class="ka">KA</span><span class="cs">CS</span></div><div class="grid-100 tagline"><span>Coding for the Khan Academy computer science platform</span></div><nav class="grid-100"><a href="">Home</a><span> &#8883; </span><a href="#programs">Programs</a><span> &#8883; </span><span>SVGLite Demo</span></nav></header><section class="grid-container site-body"><section class="grid-100 program"><img class="program-thumb" src="img/programs/svglite-demo.png" /><h1>SVGLite Demo</h1><p>A demonstration program for SVGLite, a JavaScript implementation for a small subset of <span class="caps">SVG</span>, a standard format for describing vector&nbsp;graphics.</p>
+<p><strong>Tags</strong>: svg, demo, graphics, html,&nbsp;canvas</p>
+<h2>Summary</h2><p>Ideally, something like this should not be necessary at all,
+because there are mechanisms that, at least in theory, are
+meant to be straightforward ways of rendering <span class="caps">SVG</span> data on a
+HTML canvas. These include the browser&#8217;s own ability to
+render SVG images and then draw them on a canvas using the
+<code>drawImage</code> call, as well as some basic support for <span class="caps">SVG</span>
+shapes in Processing.JS via the <code>PShape</code> type.</p>
+<p>Unfortunately, both of these methods have their limitations.
+The standard <span class="caps">HTML</span> approach doesn&#8217;t work too well in Google
+Chrome, for example, due to a strange bug that taints the
+canvas when rendering data from a dynamically generated
+<code>HTMLImage</code> element. On the other hand, using the <code>PShape</code>
+type from P.<span class="caps">JS</span> is unreliable, as some basic things (like
+e.g. the <code>fill-rule</code> attribute) are not supported; in
+addition, PShapes can&#8217;t be rendered to an off-screen&nbsp;canvas.</p>
+<p>Because of this, I decided to simply implement the subset of
+the <span class="caps">SVG</span> standard that I was interested in, supporting the
+few things that I wanted in order to properly render some
+simple SVG files. Hence, SVGLite was&nbsp;created.</p>
+<p>It&#8217;s very limited, as you&#8217;d imagine, but at least it helped
+me scratch my own itch&nbsp;:).</p>
+<h2>Links</h2><ul>
+<li><a href="http://www.khanacademy.org/cs/svglite-demo/1507692267">This program on Khan&nbsp;Academy</a></li>
+<li><a href="https://github.com/lbv/ka-cs-programs/tree/master/svglite-demo">This program on&nbsp;GitHub</a></li>
+<li><a href="http://openclipart.org/detail/100699/dark-blue-snowflakes-by-gem">Snowflake&nbsp;art</a></li>
+<li><a href="http://openclipart.org/detail/176312/peace-dove-by-worker-176312">White dove&nbsp;art</a></li>
+<li><a href="http://openclipart.org/detail/174372/jimi-by-caw-174372">Jimi Hendrix&nbsp;art</a></li>
+</ul>
+<h2>ChangeLog</h2><p><strong>Current revision</strong>:&nbsp;rev1</p>
+<pre><code>2013-03-31
+
+    * First version of this program. Includes three
+      graphics, testing different aspects of the SVG
+      rendering: a snowflake, with transparency and
+      'evenodd' fill-rule, a white dove over a blue circle,
+      and the portrait of a famous musical genius.</code></pre>
+<h2>To Do</h2><ul>
+<li>Implement gradients, to be able to render some <span class="caps">SVG</span>&nbsp;icons.</li>
+<li>Add widgets to control the&nbsp;demo.</li>
+<li>Implement <span class="caps">XML</span>&nbsp;parsing.</li>
+</ul>
+</section></section><footer class="grid-container"><div class="grid-100 site-footer"><p><a href="http://creativecommons.org/publicdomain/zero/1.0/">No rights reserved</a></p></div></footer></body></html>

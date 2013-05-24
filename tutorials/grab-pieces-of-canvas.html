@@ -1,0 +1,199 @@
+<!DOCTYPE html><html><head><base href="http://lbv.github.io/ka-cs-programs/" /><meta name="description" content="Collection of assets created for the Khan Academy computer science
+platform." /><meta charset="utf-8" /><link rel="stylesheet" href="css/vendor/normalize.css" /><link rel="stylesheet" href="css/vendor/unsemantic.css" /><link rel="stylesheet" href="css/vendor/zenburn.css" /><link rel="stylesheet" href="css/global.css" /><title>Grabbing Pieces of the Canvas | KA CS</title><link href="//fonts.googleapis.com/css?family=Roboto:700" rel="stylesheet" type="text/css" /></head><body><header class="grid-container site-header"><div class="grid-100"><span class="ka">KA</span><span class="cs">CS</span></div><div class="grid-100 tagline"><span>Coding for the Khan Academy computer science platform</span></div><nav class="grid-100"><a href="">Home</a><span> &#8883; </span><a href="#tutorials">Tutorials</a><span> &#8883; </span><span>Grabbing pieces of the canvas</span></nav></header><section class="grid-container site-body"><h1>Grabbing Pieces of the&nbsp;Canvas</h1>
+<h2>Summary</h2>
+<p>Describes a simple technique to <em>capture</em> rectangular portions of the
+<em>canvas</em> (the region where your program gets drawn), and then reuse them
+anytime you want, improving the overall efficiency of your program in the&nbsp;process.</p>
+<h2>The&nbsp;problem</h2>
+<p>Processing.<span class="caps">JS</span>, used in all Khan Academy programs, is a graphical
+environment, which means that whatever is being displayed on the canvas is
+quite important for a lot of&nbsp;programs.</p>
+<p>Imagine that you render a pretty drawing over some region of the canvas, and
+you&#8217;d like to reuse it, drawing it one or more times all over the canvas.
+You could try replicating the sequence of instructions that created the
+original image, only changing the coordinates of your commands so the image
+is recreated in another location. Or you could use the <em>transformation</em>
+operations (like <a href="http://processingjs.org/reference/translate_/" title="Processing.JS reference for translate"><code>translate</code></a>) to help you with this. However,
+as you can imagine, this can quickly get out of hand, not to mention that
+your code is executing the same individual drawing operations over and&nbsp;over.</p>
+<p>This means that if you use a lot of basic shapes to compose you images, your
+program could start to feel sluggish, especially when you animate things,
+typically from the <a href="http://processingjs.org/reference/draw_/" title="Processing.JS reference for draw"><code>draw</code></a> function. Wouldn&#8217;t it be nicer if
+you could draw something once, and then <em>store</em> it somehow, and reuse it
+without having to render every component individually again? Well, it
+shouldn&#8217;t be much of a surprise that this is indeed possible. But let&#8217;s talk
+about a couple of important concepts&nbsp;first.</p>
+<h2>Processing.<span class="caps">JS</span> and the HTML&nbsp;canvas</h2>
+<p>As you may already know, <a href="http://processingjs.org/">Processing.<span class="caps">JS</span></a> is a
+<em>spin-off</em> (so to speak), of a project called (unsurprisingly)
+<a href="http://processing.org/">Processing</a>. The original Processing environment
+was developed in Java, and runs on top of whatever graphics capabilities are
+available on a somewhat low&#8211;level of the system. That is, it provides a lot
+of power through its interaction with elements like accelerated 3D,
+different 2D renderers and more. Processing.<span class="caps">JS</span>, on the other hand, is an
+adaptation of the same environment, but specifically designed to run on top
+of web browsers. This is the reason, by the way, why P.JS has many
+limitations that are not present on the original Processing environment, and
+sometimes you find things in its documentation page that don&#8217;t seem to work
+as&nbsp;described.</p>
+<p>Anyway, if P.<span class="caps">JS</span> isn&#8217;t communicating directly with the components of the
+system that provide most of the graphical capabilities, then how does it
+work? The answer is that it does most of its work through a very powerful,
+and relatively recent element that is now part of modern web browsers: the
+<a href="http://en.wikipedia.org/wiki/Canvas_element"><span class="caps">HTML</span> canvas</a>.</p>
+<p>This canvas is at the core of Processing.<span class="caps">JS</span>, and on top of that other
+components are built. This includes abstractions from the original
+Processing environment. As part of these abstractions, P.JS includes &#8220;data
+types&#8221; such as <a href="http://processingjs.org/reference/PShape/" title="Processing.JS reference for PShape"><code>PShape</code></a>, <a href="http://processingjs.org/reference/PImage/" title="Processing.JS reference for PImage"><code>PImage</code></a> and
+<a href="http://processingjs.org/reference/PGraphics/" title="Processing.JS reference for PGraphics"><code>PGraphics</code></a>.</p>
+<p>Each of these data types has its purpose and uses, so it doesn&#8217;t hurt to get
+familiar with them, although many of their internal details are not very
+important. What is important is to have some intuition about what they
+provide, so let&#8217;s go briefly over&nbsp;them:</p>
+<ul>
+<li><p>Let&#8217;s start with <code>PGraphics</code>; this is simply an area where you can draw.
+The main Processing.<span class="caps">JS</span> canvas (not to be confused with the HTML canvas)
+provides the interface of a <code>PGraphics</code>, for example. You can do things
+like draw lines, ellipses, rectangles, etc. on a <code>PGraphics</code>. However,
+you&#8217;re not limited to only one <code>PGraphics</code>, you can create your own (with
+<a href="http://processingjs.org/reference/createGraphics_/" title="Processing.JS reference for createGraphics"><code>createGraphics</code></a>) and then draw stuff over it, without
+showing it on the real canvas until the moment you choose to display it.
+This would be an example of what is called as an &#8220;off&#8211;screen&#8221;&nbsp;canvas.</p>
+</li>
+<li><p>A <code>PImage</code> is much simpler. It just represents an area of pixels. You can
+interact with the individual pixels, put you can&#8217;t directly &#8220;draw&#8221; on top
+of them, as you can with a <code>PGraphics</code> object. Its main advantage is that,
+done correctly, operating on the raw pixels can be quite fast, and
+rendering a <code>PImage</code> is much more efficient that drawing basic shapes on
+top of a <code>PGraphics</code>.  If you have used the
+<a href="http://www.khanacademy.org/cs/imageimage-x-y/937672662"><code>getImage</code></a>
+function (only available as a Khan Academy&#8211;specific extension), then you
+have used a <code>PImage</code>.</p>
+</li>
+<li><p>A <code>PShape</code> is basically a mechanism provided by Processing.<span class="caps">JS</span> to render
+<a href="http://en.wikipedia.org/wiki/Scalable_Vector_Graphics"><span class="caps">SVG</span></a> images. It
+has its own set of quirks and limitations, though, so it doesn&#8217;t get much
+use in&nbsp;practice.</p>
+</li>
+</ul>
+<p>Anyway, something very useful to keep in mind, is that all of these things
+are really built on top of a <span class="caps">HTML</span> Canvas in P.JS. The main reason why this
+is useful is because once you get to that lower&#8211;level, you can use all the
+<a href="http://www.w3schools.com/tags/ref_canvas.asp"><span class="caps">API</span></a> from the <span class="caps">HTML</span> Canvas,
+which is really useful. Hopefully this will be clearer&nbsp;soon.</p>
+<h2>Putting it&nbsp;together</h2>
+<p>Getting back to our original problem (how to capture pieces of the canvas),
+here&#8217;s one way in which we can do&nbsp;this:</p>
+<ul>
+<li>Start by creating a <code>PImage</code>, with <a href="http://processingjs.org/reference/createImage_/" title="Processing.JS reference for createImage"><code>createImage</code></a>.</li>
+<li>Obtain the internal <span class="caps">HTML</span> canvas from the <code>PImage</code>. This can be done
+through a property called <code>sourceImg</code> in the <code>PImage</code> object.</li>
+<li>Grab the pixel information from a rectangular region of the real canvas.
+This can be done with a function called <code>toImageData</code> (not documented,&nbsp;apparently).</li>
+<li>Put that pixel data in our <code>PImage</code>, which will act as an off&#8211;screen&nbsp;buffer.</li>
+<li>That&#8217;s it. Now we can draw the <code>PImage</code> any time we want with the <code>image</code>
+function.</li>
+</ul>
+<p>Let&#8217;s see how it works on a real&nbsp;example:</p>
+<p>
+  <strong>Example:</strong>
+  <a href="http://www.khanacademy.org/cs/example-how-to-grab-pieces-of-the-canvas/1480182631" title="See this example running!">How to grab pieces of the&nbsp;canvas</a>
+</p>
+
+<pre><code class="lang-javascript"><span class="comment">//</span>
+<span class="comment">// We'll create a matrix of 4x4 squares, and grab each</span>
+<span class="comment">// little square as a single image</span>
+<span class="comment">//</span>
+
+<span class="comment">// length of one side from a little square</span>
+<span class="keyword">var</span> side = <span class="number">30</span>;
+
+<span class="comment">// location of the matrix of squares</span>
+<span class="keyword">var</span> top  = <span class="number">20</span>;
+<span class="keyword">var</span> left = <span class="number">140</span>;
+
+<span class="keyword">var</span> pieces  = [];
+<span class="keyword">var</span> nPieces = <span class="number">0</span>;
+
+<span class="comment">// variables to control animation</span>
+<span class="keyword">var</span> radius = <span class="number">70</span>;
+<span class="keyword">var</span> angle  = <span class="number">0</span>;
+
+<span class="comment">// Draws the main matrix</span>
+<span class="keyword">var</span> drawMainPicture = <span class="keyword">function</span>() {
+    stroke(<span class="number">173</span>, <span class="number">127</span>, <span class="number">168</span>);
+    strokeWeight(<span class="number">2</span>);
+
+    <span class="keyword">var</span> number = <span class="number">1</span>;
+
+    textAlign(<span class="caps">CENTER</span>, CENTER);
+    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; ++i) {
+        <span class="keyword">for</span> (<span class="keyword">var</span> j = <span class="number">0</span>; j &lt; <span class="number">4</span>; ++j) {
+            <span class="keyword">var</span> x = left + j * side;
+            <span class="keyword">var</span> y = top + i * side;
+            fill(<span class="number">92</span>, <span class="number">53</span>, <span class="number">102</span>);
+            rect(x, y, side, side);
+
+            <span class="keyword">var</span> nText = number.toString();
+
+            x = x + (side / <span class="number">2</span>);
+            y = y + (side / <span class="number">2</span>);
+            fill(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>);
+            text(nText, x, y);
+
+            ++number;
+        }
+    }
+};
+
+<span class="comment">// Grabs a rectangle from the canvas, and returns it as</span>
+<span class="comment">// a `PImage`</span>
+<span class="keyword">var</span> grabImage = <span class="keyword">function</span>(x, y, imgWidth, imgHeight) {
+    <span class="keyword">var</span> img = createImage(imgWidth, imgHeight, <span class="caps">ARGB</span>);
+    <span class="keyword">var</span> ctx = img.sourceImg.getContext(<span class="string">"2d"</span>);
+    <span class="keyword">var</span> data = toImageData(x, y, imgWidth, imgHeight);
+    ctx.putImageData(data, <span class="number">0</span>, <span class="number">0</span>);
+    <span class="keyword">return</span> img;
+};
+
+<span class="comment">// Grabs the 16 small squares, storing them on `pieces`</span>
+<span class="keyword">var</span> cutIntoPieces = <span class="keyword">function</span>() {
+    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; ++i) {
+        <span class="keyword">for</span> (<span class="keyword">var</span> j = <span class="number">0</span>; j &lt; <span class="number">4</span>; ++j) {
+            <span class="keyword">var</span> x = left + j * side;
+            <span class="keyword">var</span> y = top + i * side;
+
+            pieces[nPieces++] = grabImage(x, y, side, side);
+        }
+    }
+};
+
+<span class="comment">// Draws the animated portion</span>
+<span class="keyword">var</span> drawPieces = <span class="keyword">function</span>() {
+    <span class="keyword">var</span> angleDelta = <span class="number">360</span> / nPieces;
+
+    pushMatrix();
+    translate(<span class="number">200</span>, <span class="number">260</span>);
+
+    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; nPieces; ++i) {
+        pushMatrix();
+        rotate(angle + angleDelta * i);
+        translate(radius, <span class="number">0</span>);
+        image(pieces[i], <span class="number">0</span>, <span class="number">0</span>);
+
+        popMatrix();
+    }
+
+    popMatrix();
+    angle -= <span class="number">0.5</span>;
+};
+
+<span class="keyword">var</span> draw = <span class="keyword">function</span>() {
+    background(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>);
+    drawMainPicture();
+    drawPieces();
+};
+
+drawMainPicture();
+cutIntoPieces();</code></pre>
+</section><footer class="grid-container"><div class="grid-100 site-footer"><p><a href="http://creativecommons.org/publicdomain/zero/1.0/">No rights reserved</a></p></div></footer></body></html>
