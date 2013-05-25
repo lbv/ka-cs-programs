@@ -8,16 +8,12 @@ template = (site) ->
       Welcome. This is the place where I've collected some of the things
       I've created using the [Computer
       Science](http://www.khanacademy.org/cs) platform in the [Khan
-      Academy](http://www.khanacademy.org/).
-
-      Everything here (code, documentation, etc.) is released into the
-      public domain, and available on
-      [GitHub](https://github.com/lbv/ka-cs-programs).
+      Academy](http://www.khanacademy.org/). Everything here (code,
+      documentation, etc.) is released into the public domain, and available
+      on [GitHub](https://github.com/lbv/ka-cs-programs).
 
       If you want to get in touch with me, feel free to write a
-      question/comment on any of my programs.
-
-      Have fun...
+      question/comment on any of my programs. Have fun...
     """
     p '.sig', ->
       span '.name', 'Leonardo B'
@@ -29,13 +25,20 @@ template = (site) ->
 
   section '#programs.grid-100', ->
     h1 'Programs'
-    for prg in ka.getPrograms()
-      div ->
+    programs = ka.getPrograms()
+    n = programs.length
+    displayPrg = renderable (prg) ->
+      div '.grid-50', ->
         img '.program-list-thumb', src: prg.img
         markdown """
           [**#{prg.title}**](#{prg.url})
         """
         markdown prg.description
+
+    for i in [0...n] by 2
+      div ->
+        displayPrg programs[i]
+        displayPrg programs[i+1] if i+1 < n
       div '.clear'
 
   section '#tutorials.grid-100', ->

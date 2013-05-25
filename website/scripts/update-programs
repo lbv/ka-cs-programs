@@ -46,16 +46,9 @@ sub get_data {
     $data;
 }
 
-sub copy_master_data {
-    my $data = get_data();
-    foreach my $prg (@{$data->{programs}}) {
-        my $out = "${path}../data/programs/$prg.yml";
+sub copy_assets($) {
+    my $data = shift;
 
-        print "Copying metadata for $prg ..";
-        dsystem "git show master:programs/$prg/info.yml > $out";
-        dsystem "${path}program-page $out";
-        print " OK\n";
-    }
     while (my ($prg, $v) = each %{$data->{assets}}) {
         print "Copying media assets for $prg..";
         foreach my $asset (@$v) {
@@ -70,6 +63,19 @@ sub copy_master_data {
         }
         print " OK\n";
     }
+}
+
+sub copy_master_data {
+    my $data = get_data();
+    foreach my $prg (@{$data->{programs}}) {
+        my $out = "${path}../data/programs/$prg.yml";
+
+        print "Copying metadata for $prg ..";
+        dsystem "git show master:programs/$prg/info.yml > $out";
+        dsystem "${path}program-page $out";
+        print " OK\n";
+    }
+    # copy_assets($data);
 }
 
 copy_master_data();
