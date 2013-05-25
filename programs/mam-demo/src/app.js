@@ -3,13 +3,13 @@
 // as-is. It provides the `mamLoad` function, called further
 // below.
 //
-var _pjs=this; var mamLoad = function(a){ mamLoad.f=true;(
-function(){ var m=this; var t=function(){if(mamLoad.f){if(
-!m._mamScript){m.$.ajaxSetup({cache:true});m._mamScript=m.
+var mamLoad=function(m){return function(a){mamLoad.f=true;
+(function(){var t=this;var i=function(){if(mamLoad.f){if(
+!t._mamScript){t.$.ajaxSetup({cache:true});t._mamScript=t.
 $.getScript("//googledrive.com/host/0BzcEQMWUa0znRE1wQU9"+
-"KUGR2R2s/mam/mam-pre2-min.js");}m._mamScript.done(
-function(){ if(!m._mam){ m._mam=new m.MAM(a,_pjs);}m._mam.
-run();});}};m.setTimeout(t,0);})();};
+"KUGR2R2s/mam/mam-pre3-min.js");}t._mamScript.done(
+function(){if(!t._mam){t._mam=new (t.MAM)(a,m);}t._mam.
+run();});}};t.setTimeout(i,0);})();};}(this);
 
 
 // Global variable to reference all the imported assets
@@ -181,7 +181,9 @@ var drawScene = function() {
 // The main configuration object. It specifies all the media
 // assets that will be loaded for this program.
 //
-var baseUrl = 'http://localhost:3333/assets';
+var baseUrl = 'https://dl.dropboxusercontent.com/u/' +
+	'17178990/assets/mam-demo';
+
 var config = {
 	images: {
 		tiles: baseUrl + '/img/tiles.png',
