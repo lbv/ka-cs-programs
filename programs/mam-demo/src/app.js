@@ -52,7 +52,7 @@ var drawIntro = function() {
 	background(255, 255, 255);
 	fill(78, 154, 6);
 
-	textFont(media.fonts[2], 11);
+	textFont(media.fonts[2], 13);
 	textAlign(CENTER, BASELINE);
 	text("The media assets are ready\n" +
 		"Press the SPACE key to continue", 200, 200);
@@ -271,10 +271,9 @@ mamLoad(config);
 //
 // The main `draw` function. This will be used only while
 // the assets are being loaded (after that, it's replaced
-// with the function passed as the second parameter to
-// `mamLoad`. This means that this is probably a good place
-// to create any type of "Loading..." message/animation you
-// want for your program.
+// with the function declared as `config.draw`). This means
+// that this is probably a good place to create any type of
+// "Loading..." message/animation you want for your program.
 //
 var angle = 0;
 var angleMode = "radians";
