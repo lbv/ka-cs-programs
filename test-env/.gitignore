@@ -1,2 +1,4 @@
 node_modules
+/public/assets
+/public/ext
 /public/prg.js
