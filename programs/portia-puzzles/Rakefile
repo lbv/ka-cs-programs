@@ -1,0 +1,10 @@
+PRG = 'portia-puzzles'
+
+@deps = [
+	'../../lib/util-global.js',
+	'../../lib/lib-jqueryui.js',
+	'../../lib/lib-mam.js',
+	'src/app.js'
+]
+
+import "#{File.dirname(__FILE__)}/../../tools/rake-common.rb"

@@ -1,0 +1,66 @@
+title: The Portia Puzzles
+description: >
+  A collection of simple logic puzzles.
+tags: portia, puzzle, portraits
+summary: |
+  When I was growing up, one of my favourite books was a fun
+  text book that was given to me in a math class. It's filled
+  with funny commentary, drawings, stories, and it has an
+  entire chapter devoted to puzzles. Among all of them,
+  perhaps the ones I liked the most were the "Portia" puzzles,
+  which consist of finding out the location of some hidden
+  portraits, using logical reasoning.
+
+  I wanted to experiment a little with a program that had some
+  sort of narrative, and I thought that translating something
+  like those Portia puzzles could work well, so here's the
+  result.
+
+  I hope you find them fun.
+
+  - - -
+
+  Credits
+
+  * The concept of the Portia Puzzles is based on chapter 5.2.
+    of the book "MateBásica Mática" by Pedro Gómez.
+    http://ued.uniandes.edu.co/ued/servidor/ued/libros/matebasica.html
+
+  * Portraits of women were taken from paintings by John
+    William Godward. Pictures in the public domain, released
+    by Wikimedia Commons.
+    http://commons.wikimedia.org/wiki/John_William_Godward
+
+  * Background images for the intro screen and menus by
+    Heindal_Wesnoth, released under the CC-BY-SA 3.0 license.
+    http://opengameart.org/content/fantasyart-background
+
+  * Forest backgrounds for the puzzles backstories by ramtam,
+    released under the CC-BY-SA 3.0 license.
+    http://opengameart.org/content/forest-background-art
+
+  * Background image for the main room, by Midnight68,
+    released into the public domain.
+    http://opengameart.org/content/interior01
+
+  * Chests artwork by Celdecea, released under the CC-BY 3.0
+    license.
+    http://opengameart.org/content/colorful-treasure-chests
+
+  * Fonts supplied by Google Web Fonts.
+    http://www.google.com/fonts/
+
+version: rev1
+changelog: |
+  2013-05-27
+
+      * First version of this program.
+links:
+  - desc : This program on Khan Academy
+    url  : 
+  - desc : This program on GitHub
+    url  :
+  - desc : The Media Assets Manager library (MAM)
+    url  : http://lbv.github.io/mam/
+todo:
+
