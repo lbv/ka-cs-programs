@@ -26,6 +26,7 @@ m4_undivert(`lib-mam.js')
 
 m4_undivert(`src/graphics.js')
 m4_undivert(`src/app.js')
+m4_undivert(`src/states-warmup.js')
 m4_undivert(`src/states-menus.js')
 m4_undivert(`src/states-stories.js')
 m4_undivert(`src/states-rooms.js')

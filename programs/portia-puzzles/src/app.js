@@ -30,46 +30,30 @@ var App = {
 
 App.states.intro = {
 	setup: function() {
-		$('#-state-intro').css({
-			fontSize: '16px'
-		});
 		var introDialog = $('#-intro').dialog({
-			draggable: false,
 			maxHeight: 360,
-			buttons: [
-				{
-					text: 'Close',
-					click: function() {
-						$(this).dialog('close');
-					}
-				}
-			]
+			buttons: [ {
+				text: 'Close',
+				click: function() {$(this).dialog('close');}
+			} ]
 		});
 		introDialog.dialog('close');
 
-		$('.main-button').css({
-			display: 'block',
-			margin: '16px auto',
-			padding: '8px 0',
-			width: '120px'
-		});
-
-		$('#-button-intro').button({
-			icons: { secondary: 'ui-icon-info' }
-		}).click(function() {
+		$('#-button-intro').button().click(function() {
 			introDialog.dialog('open');
 		});
 
-		$('#-button-begin').button({
-			icons: { secondary: 'ui-icon-circle-arrow-e' }
-		}).click(function() {
+		$('#-button-go-warmup').button().click(function() {
+			App.setState('warmup');
+		});
+		$('#-button-go-portia').button().click(function() {
 			App.setState('menu');
 		});
 
 		$('#-intro-buttons').position({
-			my: 'center bottom',
-			at: 'center bottom-56',
-			of: '#-frame'
+			my: 'center center',
+			at: 'center center+100',
+			of: '#-state-intro'
 		});
 
 		$('#-state-intro').hide();
@@ -100,7 +84,7 @@ App.states.portia_1_epilogue = {
 	},
 
 	draw: function() {
-		image(App.media.sprites.bgs[0], 200, 200);
+		image(App.media.sprites.abstract[3], 200, 200);
 		image(App.media.images.frame, 50, 100, 84, 99);
 		image(App.media.sprites.portias[0],
 			50, 100, 62, 76);
@@ -132,7 +116,7 @@ App.states.portia_end = {
 	},
 
 	draw: function() {
-		image(App.media.sprites.bgs[1], 200, 200);
+		image(App.media.sprites.abstract[3], 200, 200);
 		image(App.media.images.frame, 50, 96, 84, 99);
 		image(App.media.sprites.portias[0],
 			50, 96, 62, 76);
@@ -168,7 +152,7 @@ App.states.portia_end_special = {
 	},
 
 	draw: function() {
-		image(App.media.images.special, 200, 200);
+		image(App.media.sprites.special, 200, 200);
 	},
 
 	onEnter: function() {
@@ -262,11 +246,18 @@ App.mainSetup = function() {
 		collision: 'none'
 	});
 
-	$('.casket-buttons button').button();
-	$('.menu-button').button();
+	$('button').button();
 
 	$('.backstory, .caskets, .room-info, label, select').
 		addClass('ui-widget');
+
+	$('.button-intro').button({
+		icons: { secondary: 'ui-icon-info' }
+	});
+
+	$('.button-go').button({
+		icons: { secondary: 'ui-icon-circle-arrow-e' }
+	});
 
 	$('.button-back').button({
 		icons: { secondary: 'ui-icon-arrowreturnthick-1-w' }
@@ -285,6 +276,21 @@ App.mainSetup = function() {
 	$('.button-continue').button({
 		icons: { secondary: 'ui-icon-arrowthick-1-e' }
 	});
+
+	$('.button-hint').button({
+		text: false,
+		icons: { primary: 'ui-icon-help' }
+	}).click(function() {
+		var id = '#' + $(this).val();
+		$(id).dialog('open');
+	});
+
+	$('.warmup-hint').dialog({
+		buttons: [ {
+			text: 'Close',
+			click: function() { $(this).dialog('close'); }
+		} ]
+	}).dialog('close');
 
 	$('.guess-bad').dialog({
 		close: function() {
@@ -676,52 +682,6 @@ App.setupRoomFinal = function(divID) {
 		on('change', App.onInputChange(divID));
 };
 
-App.styleButton = function(selector, key, isDefault) {
-	var button = $(selector);
-	var state = App.load(key);
-	var icon, enable;
-	if (state === 'done') {
-		icon = 'ui-icon-check';
-		enable = true;
-	}
-	else if (state === 'unlocked' || isDefault) {
-		icon = 'ui-icon-unlocked';
-		enable = true;
-	}
-	else {
-		icon = 'ui-icon-locked';
-		enable = false;
-	}
-
-	button.button('option', {
-		icons: { secondary: icon },
-		disabled: !enable
-	});
-};
-
-App.styleStateScreen = function(divID) {
-	$(divID + ' .menu-button-div').position({
-		my: 'center center',
-		at: 'center center',
-		of: divID,
-		collision: 'none'
-	});
-
-	$(divID + ' .button-back').position({
-		my: 'left bottom',
-		at: 'left+8 bottom-8',
-		of: divID,
-		collision: 'none'
-	});
-
-	$(divID + ' .button-continue').position({
-		my: 'right bottom',
-		at: 'right-8 bottom-8',
-		of: divID,
-		collision: 'none'
-	});
-};
-
 App.save = function(key, val) {
 	App.saveData[key] = val;
 	var data = App.json.stringify(App.saveData);
@@ -745,6 +705,60 @@ App.setState = function(next) {
 		else { gotoNext(); }
 	}
 	else { gotoNext(); }
+};
+
+App.styleButton = function(selector, key, isDefault) {
+	var button = $(selector);
+	var state = App.load(key);
+	var icon, enable;
+	if (state === 'done') {
+		icon = 'ui-icon-check';
+		enable = true;
+	}
+	else if (state === 'unlocked' || isDefault) {
+		icon = 'ui-icon-unlocked';
+		enable = true;
+	}
+	else {
+		icon = 'ui-icon-locked';
+		enable = false;
+	}
+
+	button.button('option', {
+		icons: { secondary: icon },
+		disabled: !enable
+	});
+};
+
+App.styleNavButtons = function(divID) {
+	$(divID + ' .button-back').position({
+		my: 'left bottom',
+		at: 'left+8 bottom-8',
+		of: divID,
+		collision: 'none'
+	});
+
+	$(divID + ' .button-continue').position({
+		my: 'right bottom',
+		at: 'right-8 bottom-8',
+		of: divID,
+		collision: 'none'
+	});
+};
+
+App.styleStateScreen = function(divID) {
+	$(divID + ' .menu-button-div').position({
+		my: 'center center',
+		at: 'center center',
+		of: divID,
+		collision: 'none'
+	});
+
+	App.styleNavButtons(divID);
+};
+
+App.styleWarmupScreen = function(divID) {
+	App.styleNavButtons(divID);
 };
 
 App.unlock = function(puzzle) {
@@ -778,37 +792,41 @@ App.init = function() {
 			chests: baseURL + '/img/chests.png',
 			dagger: baseURL + '/img/dagger.png',
 			frame: baseURL + '/img/frame.png',
-			portraits: baseURL + '/img/portraits.jpg',
-			special: baseURL + '/img/special.jpg'
+			portraits: baseURL + '/img/portraits.jpg'
 		},
 
 		sprites: {
-			bgs: {
+			abstract: {
 				sheet: 'backgrounds',
 				width: 400, height: 400,
-				x: 0, y: 0,
-				frames: 3
+				x: 0, y: 400,
+				frames: 4
 			},
 			intro: {
 				sheet: 'backgrounds',
 				width: 400, height: 400,
-				x: 400, y: 400
+				x: 400, y: 0
 			},
 			menu: {
 				sheet: 'backgrounds',
 				width: 400, height: 400,
-				x: 800, y: 400
+				x: 800, y: 0
+			},
+			room: {
+				sheet: 'backgrounds',
+				width: 400, height: 400,
+				x: 0, y: 0
+			},
+			special: {
+				sheet: 'backgrounds',
+				width: 400, height: 400,
+				x: 1200, y: 0
 			},
 			chests: {
 				sheet: 'chests',
 				width: 64, height: 64,
 				x: 0, y: 0,
 				frames: 6
-			},
-			room: {
-				sheet: 'backgrounds',
-				width: 400, height: 400,
-				x: 0, y: 400
 			},
 			portias: {
 				sheet: 'portraits',

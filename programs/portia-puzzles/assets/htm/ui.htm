@@ -3,10 +3,13 @@
   <div id="-state-intro" class="state">
     <div id="-intro-buttons">
       <div>
-        <button class="main-button" id="-button-intro">Intro</button>
+        <button class="button-intro" id="-button-intro">Intro</button>
       </div>
       <div>
-        <button class="main-button" id="-button-begin">Begin</button>
+        <button class="button-go" id="-button-go-warmup">Warm Up</button>
+      </div>
+      <div>
+        <button class="button-go" id="-button-go-portia">Portia Puzzles</button>
       </div>
     </div>
     <div id="-intro" title="Introduction">
@@ -15,21 +18,547 @@
         reading comprehension and logical reasoning.
       </p>
       <p>
+        You can start by visiting the <em>Warm–Up</em> area,
+        if you want a little practice first. Once you feel
+        ready, go ahead and tackle the main puzzles inside
+        the <em>Portia Puzzles</em> area.
+      </p>
+      <p>
         As long as you read the puzzles carefully, and take
-        your time to think about the choices presented on each
-        puzzle, you should be able to solve them without much
-        trouble. You could also solve them by “brute force”,
-        but that probably would not be very gratifying. There
-        may also be a special ending if you solve all the
-        puzzles without any wrong guesses.
+        your time to think before each answer, you should be
+        able to solve them without much trouble. You could
+        also solve them by “brute force”, but that probably
+        would not be very gratifying. There may be a
+        special ending if you solve all the puzzles without
+        any wrong guesses.
       </p>
       <p>
         There are only a few levels available, and you have to
-        solve them gradually (solving a puzzle unlocks the
-        next one). You might want to grab a pencil and a
-        notebook to help you in your deductions.
+        solve them gradually —solving a puzzle unlocks the
+        next one.
       </p>
       <p>Have fun!</p>
+    </div>
+  </div>
+
+  <div id="-state-warmup" class="state">
+    <div class="menu-title">
+      Warm Up
+    </div>
+    <div class="menu-button-div">
+      <div>
+        <button class="menu-button" id="-button-warmup-1">Basics</button>
+      </div>
+      <div>
+        <button class="menu-button" id="-button-warmup-2">Quantifiers</button>
+      </div>
+      <div>
+        <button class="menu-button" id="-button-warmup-3">Logic</button>
+      </div>
+    </div>
+    <div>
+      <button class="button-back">Back</button>
+    </div>
+  </div>
+
+  <div id="-state-warmup-1-story" class="state">
+    <div class="story-title">
+      Basics
+    </div>
+    <div class="warmup-story">
+      <p>
+        All the exercises presented in the Warm Up section
+        were made with a simple purpose: to prepare you for
+        the rest of the puzzles presented in this program
+        —as well as any other puzzle you might encounter
+        elsewhere.
+      </p>
+      <p>
+        These exercises will not be “evaluated”. All that is
+        expected from you is to read them attentively. In
+        fact, the intention behind this first group of
+        exercises is to increase your general awareness at
+        the moment of <em>reading</em> a puzzle.
+      </p>
+      <p>
+        By playing close attention to what every puzzle says,
+        you will probably get the hang of it pretty quickly.
+        There will be hints available in case you want them.
+      </p>
+    </div>
+    <div>
+      <button class="button-back">Back</button>
+      <button class="button-continue">Continue</button>
+    </div>
+  </div>
+
+  <div id="-state-warmup-1a" class="state">
+    <div class="warmup-title">
+      Read Carefully — 1 of 4
+    </div>
+    <div class="warmup-puzzle">
+      <p>
+        <strong>Banania</strong> and <strong>Catania</strong>
+        are two (fictitious) countries, and they are
+        geographically adjacent.
+      </p>
+      <p>
+        One day, a plane crashes, right over the common border
+        between Banania and Catania. In which country should
+        the survivors be buried?
+      </p>
+      <button title="hint" class="button-hint" value="-hint-1a"></button>
+    </div>
+    <div class="warmup-hint" id="-hint-1a" title="Hint">
+      <div>
+        Maybe the <em>survivors</em> would not be happy
+        about being buried alive?
+      </div>
+    </div>
+    <div>
+      <button class="button-back">Back</button>
+      <button class="button-continue">Continue</button>
+    </div>
+  </div>
+
+  <div id="-state-warmup-1b" class="state">
+    <div class="warmup-title">
+      Read Carefully — 2 of 4
+    </div>
+    <div class="warmup-puzzle">
+      <p>
+        42 years ago, what was the name of the Pope?
+      </p>
+      <button title="hint" class="button-hint" value="-hint-1b"></button>
+    </div>
+    <div class="warmup-hint" id="-hint-1b" title="Hint">
+      <div>
+        <p>
+          Regardless of your knowledge of the history of
+          Popes and their names, the question is, what Pope
+          do you think this question is about? The Pope that
+          was active 42 years ago, or the current Pope?
+        </p>
+        <p>
+          In every–day conversation, it’s pretty natural for
+          us to make certain assumptions according to the
+          context. However, in a puzzle, very often a big
+          part of the challenge is to consciously avoid
+          making <em>any</em> assumptions.
+        </p>
+      </div>
+    </div>
+    <div>
+      <button class="button-back">Back</button>
+      <button class="button-continue">Continue</button>
+    </div>
+  </div>
+
+  <div id="-state-warmup-1c" class="state">
+    <div class="warmup-title">
+      Read Carefully — 3 of 4
+    </div>
+    <div class="warmup-puzzle">
+      <p>
+        Two rabbits —one small and one big— are sunbathing by
+        a pond. The small rabbit is the big one’s son, but the
+        big one is not the small one’s dad. Why is that?
+      </p>
+      <button title="hint" class="button-hint" value="-hint-1c"></button>
+    </div>
+    <div class="warmup-hint" id="-hint-1c" title="Hint">
+      <div>
+        <p>
+          This example illustrates the importance of
+          considering the complete range of possibilities
+          that a puzzle allows.
+        </p>
+        <p>
+          All rabbits (as humans) have two parents: one is the
+          father, and the other one… well, is not the father.
+        </p>
+      </div>
+    </div>
+    <div>
+      <button class="button-back">Back</button>
+      <button class="button-continue">Continue</button>
+    </div>
+  </div>
+
+  <div id="-state-warmup-1d" class="state">
+    <div class="warmup-title">
+      Read Carefully — 4 of 4
+    </div>
+    <div class="warmup-puzzle">
+      <p>
+        To begin the construction of a tall building, a group
+        of workers had to dig a cubic hole on the ground.
+      </p>
+      <p>
+        If any of the sides on this cubic hole is 11 meters
+        (<code>11m</code>) long, and one cubic centimeter of
+        dirt weighs 2 grams
+        (<code>1cm<sup>3</sup></code> is <code>2g</code>),
+        what is the total weight of all the dirt in the hole?
+      </p>
+      <button title="hint" class="button-hint" value="-hint-1d"></button>
+    </div>
+    <div class="warmup-hint" id="-hint-1d" title="Hint">
+      <div>
+        <p>
+          Sometimes a puzzle gives you unnecessary information,
+          just to throw you off.
+        </p>
+        <p>
+          What can you find <em>inside</em> a hole?
+        </p>
+      </div>
+    </div>
+    <div>
+      <button class="button-back">Back</button>
+      <button class="button-continue">Continue</button>
+    </div>
+  </div>
+
+  <div id="-state-warmup-2-story" class="state">
+    <div class="story-title">
+      Quantifiers
+    </div>
+    <div class="warmup-story">
+      <p>
+        Now it’s time to brush up on the subject of
+        <em>quantifiers</em>.
+      </p>
+      <p>
+        It is important that you correctly understand the
+        meaning of terms like “at least”, “at most”, “any”,
+        etc.
+      </p>
+    </div>
+    <div>
+      <button class="button-back">Back</button>
+      <button class="button-continue">Continue</button>
+    </div>
+  </div>
+
+  <div id="-state-warmup-2a" class="state">
+    <div class="warmup-title">
+      Quantifiers — 1 of 3
+    </div>
+    <div class="warmup-puzzle">
+      <p>
+        If you have exactly three books…
+      </p>
+      <ul>
+        <li>Do you have <em>more</em> than two?</li>
+        <li>Do you have <em>more</em> than three?</li>
+        <li>Do you have <em>less</em> than three?</li>
+        <li>Do you have <em>less</em> than four?</li>
+        <li>Do you have <em>any</em> books?</li>
+        <li>Do you have <em>at least</em> one book?</li>
+        <li>Do you have <em>at least</em> two books?</li>
+      </ul>
+      <button title="hint" class="button-hint" value="-hint-2a"></button>
+    </div>
+    <div class="warmup-hint" id="-hint-2a" title="Hint">
+      <div>
+        The answer for two of the questions is <strong>no</strong>.
+        All the other answers are <strong>yes</strong>.
+      </div>
+    </div>
+    <div>
+      <button class="button-back">Back</button>
+      <button class="button-continue">Continue</button>
+    </div>
+  </div>
+
+  <div id="-state-warmup-2b" class="state">
+    <div class="warmup-title">
+      Quantifiers — 2 of 3
+    </div>
+    <div class="warmup-puzzle">
+      <p>
+        Given that you are a generous person, you lend two
+        of your books to a friend, and now you’re left with
+        only one book.
+      </p>
+      <ul>
+        <li>Do you have <em>any</em> books?</li>
+        <li>Do you have <em>at least</em> one book?</li>
+        <li>Do you have <em>at most</em> five books?</li>
+        <li>Do you have <em>more</em> books than before?</li>
+      </ul>
+      <button title="hint" class="button-hint" value="-hint-2b"></button>
+    </div>
+    <div class="warmup-hint" id="-hint-2b" title="Hint">
+      <div>
+        This time there is only one question for which the
+        answer is <strong>no</strong>. Easy to spot, isn’t it?
+      </div>
+    </div>
+    <div>
+      <button class="button-back">Back</button>
+      <button class="button-continue">Continue</button>
+    </div>
+  </div>
+
+  <div id="-state-warmup-2c" class="state">
+    <div class="warmup-title">
+      Quantifiers — 3 of 3
+    </div>
+    <div class="warmup-puzzle">
+      <ul>
+        <li>
+          <q>George has more than two thousand books</q>,
+          said John.
+        </li>
+        <li>
+          <q>That’s not true at all</q>, replied Paul,
+          <q>he has a lot less</q>.
+        </li>
+        <li>
+          <q>Well</q>, said Ringo in a conciliatory tone,
+          <q>he does have some books</q>.
+        </li>
+      </ul>
+      <p>
+        If only one of the three sentences is true, how many
+        books does George have?
+      </p>
+      <button title="hint" class="button-hint" value="-hint-2c"></button>
+    </div>
+    <div class="warmup-hint" id="-hint-2c" title="Hint">
+      <div>
+        <p>
+          Finally, we’re moving into the land of <em>deductive
+          reasoning</em>, which is one of the keys to solve
+          many logic puzzles.
+        </p>
+        <p>
+          If only one sentence is true, that means the other
+          two are false. Try assuming that the first sentence
+          is true, and see if all the conditions are consistent.
+          If not, assume that the second sentence is true, and so
+          on, until you reach a set of conditions that work. Can
+          you deduce the correct number of books then?
+        </p>
+      </div>
+    </div>
+    <div>
+      <button class="button-back">Back</button>
+      <button class="button-continue">Continue</button>
+    </div>
+  </div>
+
+  <div id="-state-warmup-3-story" class="state">
+    <div class="story-title">
+      Logic
+    </div>
+    <div class="warmup-story">
+      <p>
+        Now that we’ve covered some of the basics of how to
+        <em>read</em> a puzzle, let us briefly touch upon
+        the subject of deductive reasoning.
+      </p>
+      <p>
+        The last exercise from the previous section was an
+        example of this. Hopefully you found the answer
+        without too much effort. Some people find it easier
+        to solve this type of problems by drawing doodles
+        and diagrams on a piece of paper to help them along
+        the way.
+      </p>
+      <p>
+        A useful observation is that, with enough
+        patience, you can always solve logic puzzles by
+        “trial and error”. Assign <em>truth values</em> to each piece of
+        information; that is, take each statement or
+        <em>clause</em> in the puzzle and assume that it is
+        either <strong>true</strong> or <strong>false</strong>.
+        Try all combinations you can think of, and eventually
+        you should come across one that produces a
+        <em>valid</em> state: a situation in which all the
+        premises given in the puzzle and the assumptions you
+        make are consistent with each other.
+      </p>
+      <p>
+        How about a little practice with a few other 
+        examples of basic logic puzzles?
+      </p>
+    </div>
+    <div>
+      <button class="button-back">Back</button>
+      <button class="button-continue">Continue</button>
+    </div>
+  </div>
+
+  <div id="-state-warmup-3a" class="state">
+    <div class="warmup-title">
+      Logical Reasoning — 1 of 3
+    </div>
+    <div class="warmup-puzzle">
+      <p>
+        Magda comes home from the supermarket to find her
+        two sons, Anthony and Billy, who have been impatiently
+        waiting for her.
+      </p>
+      <p>
+        — <q>I’m hungry</q>, says Anthony.
+      </p>
+      <p>
+        — <q>I’m thirsty</q>, says Billy.
+      </p>
+      <p>
+        Magda takes out a bag of potato chips and a juice box,
+        when suddenly her motherly intuition (which is never
+        wrong) tells her that at least one of her sons is
+        lying.
+      </p>
+      <p>
+        Nonetheless, Magda decides to give them the goods
+        anyway. Who should get the chips, and who should get
+        the juice?
+      </p>
+      <button title="hint" class="button-hint" value="-hint-3a"></button>
+    </div>
+    <div class="warmup-hint" id="-hint-3a" title="Hint">
+      <div>
+        <p>
+          Consider the consequences of each statement being
+          either true or false.
+        </p>
+        <p>
+          When you say that you are hungry, and are telling
+          a lie, does that <em>imply</em> that you are
+          thirsty?
+        </p>
+      </div>
+    </div>
+    <div>
+      <button class="button-back">Back</button>
+      <button class="button-continue">Continue</button>
+    </div>
+  </div>
+
+  <div id="-state-warmup-3b" class="state">
+    <div class="warmup-title">
+      Logical Reasoning — 2 of 3
+    </div>
+    <div class="warmup-puzzle">
+      <p>
+        You are introduced to a couple of girls, named Mary
+        and Jane. You have never met them before, and you
+        notice right away that one of them has blonde hair
+        and the other one is brunette.
+      </p>
+      <p>
+        — <q>Hi, I’m Mary</q>, says the blonde.
+      </p>
+      <p>
+        — <q>And I’m Jane</q>, says the brunette.
+      </p>
+      <p>
+        Judging by a subtle grin you notice in their faces,
+        you’re absolutely sure that at least one of them
+        has lied.
+      </p>
+      <p>
+        What’s the name of the blonde? What’s the name of the
+        brunette?
+      </p>
+      <button title="hint" class="button-hint" value="-hint-3b"></button>
+    </div>
+    <div class="warmup-hint" id="-hint-3b" title="Hint">
+      <div>
+        <p>
+          This one is fairly straightforward once you start
+          from any assumption about who could be lying.
+        </p>
+        <p>
+          There are only two girls. Is it possible that
+          one of them lies while the other one remains true
+          about their names?
+        </p>
+      </div>
+    </div>
+    <div>
+      <button class="button-back">Back</button>
+      <button class="button-continue">Continue</button>
+    </div>
+  </div>
+
+  <div id="-state-warmup-3c" class="state">
+    <div class="warmup-title">
+      Logical Reasoning — 3 of 3
+    </div>
+    <div class="warmup-puzzle">
+      <p>
+        Here’s a situation that would be quite atypical in
+        real life, but is very common in puzzles:
+      </p>
+      <p>
+        Two men are behind a semi–transparent screen, such
+        that you can only see their silhouettes. You know
+        that one of them has blue eyes, and the other one
+        has green eyes. You also know that the person with
+        blue eyes always tells the truth, while the person
+        with green eyes always says lies.
+      </p>
+      <p>
+        You get the chance to ask two questions, in order to
+        identify them. You start by asking the person to
+        your left: <q>what color are you eyes?</q>
+      </p>
+      <p>
+        He replies, but unfortunately a cell phone near you
+        rings loudly right at that moment, and you can’t
+        hear his answer.
+      </p>
+      <p>
+        With a bit of frustation, you know that you have
+        only one question left, so you ask the second person
+        (the man on the right): <q>what did the first
+        person say?</q> The second person answers:
+        <q>he said that his eyes are blue</q>.
+      </p>
+      <p>
+        Your task now is, as you can imagine: identify who
+        has blue eyes, and who has green eyes.
+      </p>
+      <button title="hint" class="button-hint" value="-hint-3c"></button>
+    </div>
+    <div class="warmup-hint" id="-hint-3c" title="Hint">
+      <div>
+        <p>
+          There are no more hints available…
+        </p>
+        <p>
+          You have made it this far, you can solve this
+          without any help. I know it!
+        </p>
+      </div>
+    </div>
+    <div>
+      <button class="button-back">Back</button>
+      <button class="button-continue">Continue</button>
+    </div>
+  </div>
+
+  <div id="-state-warmup-end" class="state">
+    <div class="story-title">
+      Good Job
+    </div>
+    <div class="warmup-story">
+      <p>
+        You are done with the warm–up. Hopefully you have
+        learned a thing or two that could help you later on.
+      </p>
+      <p>
+        Best of luck!
+      </p>
+    </div>
+    <div>
+      <button class="button-continue">Continue</button>
     </div>
   </div>
 

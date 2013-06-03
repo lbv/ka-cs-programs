@@ -2,6 +2,16 @@
 @fontNarrow: 'Smythe', cursive;
 @fontSerif: 'PT serif', serif;
 
+.story-base {
+	background-color: rgba(32,  74, 135, 0.7);
+	border-radius: 6px;
+	color: #ffffff;
+	font-family: @fontSerif;
+	overflow-y: auto;
+	padding: 8px;
+	max-height: 296px;
+}
+
 body {
 	font-size: 12px;
 	text-align: justify;
@@ -25,19 +35,24 @@ body {
 	#-intro p {
 		font-family: @fontSerif;
 	}
+
+	#-state-intro {
+		font-size: 16px;
+
+		button {
+			display: block;
+			margin: 12px auto;
+			padding: 4px 0;
+			width: 180px;
+		}
+	}
 }
 
 .state {
 	.backstory {
-		background-color: rgba(46, 52, 54, 0.7);
-		border-radius: 6px;
-		color: #ffffff;
-		font-family: @fontSerif;
+		.story-base;
 		margin-top: 6px;
 		margin-left: 100px;
-		overflow-y: auto;
-		padding: 8px;
-		max-height: 296px;
 		width: 272px;
 	}
 
@@ -45,7 +60,7 @@ body {
 		width: 96px;
 	}
 
-	.button-small-back {
+	.button-small-back, .button-hint {
 		height: 16px;
 		width: 16px;
 	}
@@ -98,6 +113,7 @@ body {
 		font-family: @fontCursive;
 		font-size: 1.8em;
 		margin: 8px;
+		text-shadow: 2px 2px 3px #2e3436;
 	}
 
 	.question {
@@ -125,11 +141,28 @@ body {
 		}
 	}
 
-	.story-title {
+	.story-title, .warmup-title {
 		color: #ffffff;
 		font-family: @fontCursive;
 		font-size: 1.8em;
 		margin: 6px;
 		text-align: center;
+		text-shadow: 2px 2px 3px #2e3436;
+	}
+
+	.warmup-puzzle {
+		.story-base;
+		font-size: 1.2em;
+		max-height: 290px;
+		margin: 12px auto;
+		padding: 6px 12px;
+		width: 320px;
+	}
+
+	.warmup-story {
+		.story-base;
+		font-size: 1.2em;
+		margin: 6px auto;
+		width: 320px;
 	}
 }

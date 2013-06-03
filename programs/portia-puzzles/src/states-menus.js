@@ -3,7 +3,7 @@ App.states.menu = {
 		$('#-button-back-menu').button().click(function() {
 			App.setState('intro');
 		});
-	
+
 		$('#-button-portia-1').button().click(function() {
 			App.setState('menu_1');
 		});

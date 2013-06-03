@@ -14,7 +14,7 @@ App.states.portia_1_1_story = {
 	},
 
 	draw: function() {
-		image(App.media.sprites.bgs[0], 200, 200);
+		image(App.media.sprites.abstract[1], 200, 200);
 		image(App.media.images.frame, 50, 96, 84, 99);
 		image(App.media.sprites.portias[0],
 			50, 96, 62, 76);
@@ -49,7 +49,7 @@ App.states.portia_1_2_story = {
 	},
 
 	draw: function() {
-		image(App.media.sprites.bgs[0], 200, 200);
+		image(App.media.sprites.abstract[1], 200, 200);
 		image(App.media.images.frame, 50, 180, 84, 99);
 		image(App.media.sprites.portias[0],
 			50, 180, 62, 76);
@@ -81,7 +81,7 @@ App.states.portia_2_1_story = {
 	},
 
 	draw: function() {
-		image(App.media.sprites.bgs[1], 200, 200);
+		image(App.media.sprites.abstract[1], 200, 200);
 		image(App.media.images.frame, 50, 160, 84, 99);
 		image(App.media.sprites.portias[1],
 			50, 160, 62, 76);
@@ -113,7 +113,7 @@ App.states.portia_2_2_story = {
 	},
 
 	draw: function() {
-		image(App.media.sprites.bgs[1], 200, 200);
+		image(App.media.sprites.abstract[1], 200, 200);
 		image(App.media.images.frame, 50, 160, 84, 99);
 		image(App.media.sprites.portias[1],
 			50, 160, 62, 76);
@@ -145,10 +145,10 @@ App.states.portia_3_1_story = {
 	},
 
 	draw: function() {
-		image(App.media.sprites.bgs[2], 200, 200);
-		image(App.media.images.frame, 50, 96, 84, 99);
+		image(App.media.sprites.abstract[1], 200, 200);
+		image(App.media.images.frame, 50, 116, 84, 99);
 		image(App.media.sprites.portias[2],
-			50, 96, 62, 76);
+			50, 116, 62, 76);
 		image(App.media.images.dagger, 50, 250, 80, 56);
 	},
 
@@ -178,7 +178,7 @@ App.states.portia_3_2_story = {
 	},
 
 	draw: function() {
-		image(App.media.sprites.bgs[2], 200, 200);
+		image(App.media.sprites.abstract[1], 200, 200);
 		image(App.media.images.frame, 50, 96, 84, 99);
 		image(App.media.sprites.portias[2],
 			50, 96, 62, 76);
@@ -212,7 +212,7 @@ App.states.portia_3_3_story = {
 	},
 
 	draw: function() {
-		image(App.media.sprites.bgs[2], 200, 200);
+		image(App.media.sprites.abstract[1], 200, 200);
 		image(App.media.images.frame, 50, 96, 84, 99);
 		image(App.media.sprites.portias[2],
 			50, 96, 62, 76);

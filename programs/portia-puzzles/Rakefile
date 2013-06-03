@@ -7,6 +7,7 @@ PRG = 'portia-puzzles'
 	'../../lib/lib-mam.js',
 	'src/graphics.js',
 	'src/app.js',
+	'src/states-warmup.js',
 	'src/states-menus.js',
 	'src/states-stories.js',
 	'src/states-rooms.js'
