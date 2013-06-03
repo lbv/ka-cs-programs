@@ -5,7 +5,7 @@ CLEAN.include('gen/top-summary.md')
 
 tool_doc_top = "#{File.dirname(__FILE__)}/doc-top"
 
-task :default => "out/#{PRG}.js"
+defaultFiles = [ "out/#{PRG}.js" ]
 
 @coffeeGen ||= []
 
@@ -19,6 +19,13 @@ task :default => "out/#{PRG}.js"
 	end
 end
 
+@less.each do |from, to|
+	defaultFiles.push to
+	file to => [ from ] do
+		sh "lessc --yui-compress #{from} #{to}"
+	end
+end
+
 file 'gen/top-summary.md' => [ 'info.yml' ] do
 	sh tool_doc_top
 end
@@ -26,3 +33,5 @@ end
 file "out/#{PRG}.js" => @deps do
 	sh "m4 -I ../../lib -P #{PRG}.m4 > out/#{PRG}.js"
 end
+
+task :default => defaultFiles
