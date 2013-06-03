@@ -19,8 +19,13 @@ var URL_MAM = '//googledrive.com/host/0BzcEQMWUa0znRE1wQU'+
 	'9KUGR2R2s/mam/mam-pre3-min.js';
 */
 
+m4_undivert(`util-class.js')
 m4_undivert(`util-global.js')
 m4_undivert(`lib-jqueryui.js')
 m4_undivert(`lib-mam.js')
 
+m4_undivert(`src/graphics.js')
 m4_undivert(`src/app.js')
+m4_undivert(`src/states-menus.js')
+m4_undivert(`src/states-stories.js')
+m4_undivert(`src/states-rooms.js')

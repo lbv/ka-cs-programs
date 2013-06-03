@@ -16,6 +16,13 @@ var App = {
 		LEAD_ASSERT2:   8
 	},
 
+
+	casket0:  {},
+	casket1:  {},
+	casket2:  {},
+	dagger:   {},
+	portrait: {},
+
 	state:     null,
 	stateName: 'none',
 	states:    {}
@@ -27,7 +34,8 @@ App.states.intro = {
 			fontSize: '16px'
 		});
 		var introDialog = $('#-intro').dialog({
-			modal: true,
+			draggable: false,
+			maxHeight: 360,
 			buttons: [
 				{
 					text: 'Close',
@@ -68,7 +76,7 @@ App.states.intro = {
 	},
 
 	draw: function() {
-		image(App.media.images.intro, 0, 0);
+		image(App.media.sprites.intro, 200, 200);
 	},
 
 	onEnter: function() {
@@ -77,253 +85,6 @@ App.states.intro = {
 
 	onLeave: function() {
 		return $('#-state-intro').fadeOut().promise();
-	}
-};
-
-App.states.menu = {
-	setup: function() {
-		$('#-button-back-menu').button().click(function() {
-			App.setState('intro');
-		});
-	
-		$('#-button-portia-1').button().click(function() {
-			App.setState('menu_1');
-		});
-		$('#-button-portia-2').button().click(function() {
-			App.setState('menu_2');
-		});
-		$('#-button-portia-3').button().click(function() {
-			App.setState('menu_3');
-		});
-
-		App.styleStateScreen('#-state-menu');
-		$('#-state-menu').hide();
-	},
-
-	draw: function() {
-		image(App.media.images.menu, 0, 0);
-	},
-
-	onEnter: function() {
-		App.styleButton(
-			'#-button-portia-1', 'portia-1', true);
-		App.styleButton('#-button-portia-2', 'portia-2');
-		App.styleButton('#-button-portia-3', 'portia-3');
-
-		$('#-state-menu').fadeIn();
-	},
-
-	onLeave: function() {
-		return $('#-state-menu').fadeOut().promise();
-	}
-};
-
-App.states.menu_1 = {
-	setup: function() {
-		$('#-state-menu-1 .button-back').button().
-		click(function() {
-			App.setState('menu');
-		});
-
-		$('#-button-portia-1-1').button().click(function() {
-			App.setState('portia_1_1_story');
-		});
-		$('#-button-portia-1-2').button().click(function() {
-			App.setState('portia_1_2_story');
-		});
-
-		App.styleStateScreen('#-state-menu-1');
-		$('#-state-menu-1').hide();
-	},
-
-	draw: function() {
-		image(App.media.images.menu, 0, 0);
-	},
-
-	onEnter: function() {
-		App.styleButton(
-			'#-button-portia-1-1', 'portia-1-1', true);
-		App.styleButton(
-			'#-button-portia-1-2', 'portia-1-2');
-
-		$('#-state-menu-1').fadeIn();
-	},
-
-	onLeave: function() {
-		return $('#-state-menu-1').fadeOut().promise();
-	}
-};
-
-App.states.portia_1_1_story = {
-	setup: function() {
-		$('#-state-portia-1-1-story .button-back').button().
-		click(function() {
-			App.setState('menu_1');
-		});
-		$('#-state-portia-1-1-story .button-continue').
-		button().click(function() {
-			App.setState('portia_1_1_main');
-		});
-
-		App.styleStateScreen('#-state-portia-1-1-story');
-		$('#-state-portia-1-1-story').hide();
-	},
-
-	draw: function() {
-		image(App.media.sprites.bgs[0], 0, 0);
-		image(App.media.sprites.portias[0],
-			300, 50, 80, 80);
-	},
-
-	onEnter: function() {
-		$('#-state-portia-1-1-story').fadeIn();
-	},
-
-	onLeave: function() {
-		return $('#-state-portia-1-1-story').
-			fadeOut().promise();
-	}
-};
-
-App.states.portia_1_1_main = {
-	setup: function() {
-		App.setupRoom('#-state-portia-1-1-main');
-		$('#-state-portia-1-1-main .button-small-back').
-		button().click(function() {
-			App.setState('portia_1_1_story');
-		});
-
-		$('#-state-portia-1-1-main').hide();
-	},
-
-	draw: function() {
-		App.drawMainRoom();
-	},
-
-	onEnter: function() {
-		var v = App.booleanVars;
-		var rules = [
-			[
-				[ v.GOLD_SAYS_TRUTH, false ],
-				[ v.SILVER_SAYS_TRUTH, false ] ],
-			[
-				[ v.GOLD_SAYS_TRUTH, false ],
-				[ v.LEAD_SAYS_TRUTH, false ] ],
-			[
-				[ v.SILVER_SAYS_TRUTH, false ],
-				[ v.LEAD_SAYS_TRUTH, false ] ],
-			[
-				[ v.GOLD_SAYS_TRUTH, true ],
-				[ v.SILVER_SAYS_TRUTH, true ],
-				[ v.LEAD_SAYS_TRUTH, true ] ]
-		].concat(
-			App.doubleImplication(
-				v.GOLD_SAYS_TRUTH, true,
-				v.GOLD_HAS_IT, true),
-			App.doubleImplication(
-				v.SILVER_SAYS_TRUTH, true,
-				v.SILVER_HAS_IT, false),
-			App.doubleImplication(
-				v.LEAD_SAYS_TRUTH, true,
-				v.GOLD_HAS_IT, false) );
-
-		App.setRules(6, rules);
-		App.solvedCallback = function() {
-			App.save('portia-1-1', 'done');
-			App.unlock('portia-1-2');
-			App.setState('menu_1');
-		};
-		$('#-state-portia-1-1-main').fadeIn();
-	},
-
-	onLeave: function() {
-		return $('#-state-portia-1-1-main').
-			fadeOut().promise();
-	}
-};
-
-App.states.portia_1_2_story = {
-	setup: function() {
-		$('#-state-portia-1-2-story .button-back').button().
-		click(function() {
-			App.setState('menu_1');
-		});
-		$('#-state-portia-1-2-story .button-continue').
-		button().click(function() {
-			App.setState('portia_1_2_main');
-		});
-
-		App.styleStateScreen('#-state-portia-1-2-story');
-		$('#-state-portia-1-2-story').hide();
-	},
-
-	draw: function() {
-		image(App.media.sprites.bgs[0], 0, 0);
-		image(App.media.sprites.portias[0],
-			300, 50, 80, 80);
-	},
-
-	onEnter: function() {
-		$('#-state-portia-1-2-story').fadeIn();
-	},
-
-	onLeave: function() {
-		return $('#-state-portia-1-2-story').
-			fadeOut().promise();
-	}
-};
-
-App.states.portia_1_2_main = {
-	setup: function() {
-		App.setupRoom('#-state-portia-1-2-main');
-		$('#-state-portia-1-2-main .button-small-back').
-		button().click(function() {
-			App.setState('portia_1_2_story');
-		});
-
-		$('#-state-portia-1-2-main').hide();
-	},
-
-	draw: function() {
-		App.drawMainRoom();
-	},
-
-	onEnter: function() {
-		var v = App.booleanVars;
-		var rules = [
-			[
-				[ v.GOLD_SAYS_TRUTH, true ],
-				[ v.SILVER_SAYS_TRUTH, true ],
-				[ v.LEAD_SAYS_TRUTH, true ] ],
-			[
-				[ v.GOLD_SAYS_TRUTH, false ],
-				[ v.SILVER_SAYS_TRUTH, false ],
-				[ v.LEAD_SAYS_TRUTH, false ] ]
-
-		].concat(
-			App.doubleImplication(
-				v.GOLD_SAYS_TRUTH, true,
-				v.SILVER_HAS_IT, false),
-			App.doubleImplication(
-				v.SILVER_SAYS_TRUTH, true,
-				v.SILVER_HAS_IT, false),
-			App.doubleImplication(
-				v.LEAD_SAYS_TRUTH, true,
-				v.LEAD_HAS_IT, true) );
-
-		App.setRules(6, rules);
-		App.solvedCallback = function() {
-			App.save('portia-1-2', 'done');
-			App.save('portia-1', 'done');
-			App.unlock('portia-2');
-			App.setState('portia_1_epilogue');
-		};
-		$('#-state-portia-1-2-main').fadeIn();
-	},
-
-	onLeave: function() {
-		return $('#-state-portia-1-2-main').
-			fadeOut().promise();
 	}
 };
 
@@ -339,9 +100,10 @@ App.states.portia_1_epilogue = {
 	},
 
 	draw: function() {
-		image(App.media.sprites.bgs[0], 0, 0);
+		image(App.media.sprites.bgs[0], 200, 200);
+		image(App.media.images.frame, 50, 100, 84, 99);
 		image(App.media.sprites.portias[0],
-			300, 50, 80, 80);
+			50, 100, 62, 76);
 	},
 
 	onEnter: function() {
@@ -354,602 +116,15 @@ App.states.portia_1_epilogue = {
 	}
 };
 
-App.states.menu_2 = {
-	setup: function() {
-		$('#-state-menu-2 .button-back').button().
-		click(function() {
-			App.setState('menu');
-		});
-
-		$('#-button-portia-2-1').button().click(function() {
-			App.setState('portia_2_1_story');
-		});
-		$('#-button-portia-2-2').button().click(function() {
-			App.setState('portia_2_2_story');
-		});
-
-		App.styleStateScreen('#-state-menu-2');
-		$('#-state-menu-2').hide();
-	},
-
-	draw: function() {
-		image(App.media.images.menu, 0, 0);
-	},
-
-	onEnter: function() {
-		App.styleButton(
-			'#-button-portia-2-1', 'portia-2-1', true);
-		App.styleButton(
-			'#-button-portia-2-2', 'portia-2-2');
-
-		$('#-state-menu-2').fadeIn();
-	},
-
-	onLeave: function() {
-		return $('#-state-menu-2').fadeOut().promise();
-	}
-};
-
-App.states.portia_2_1_story = {
-	setup: function() {
-		$('#-state-portia-2-1-story .button-back').button().
-		click(function() {
-			App.setState('menu_2');
-		});
-		$('#-state-portia-2-1-story .button-continue').
-		button().click(function() {
-			App.setState('portia_2_1_main');
-		});
-
-		App.styleStateScreen('#-state-portia-2-1-story');
-		$('#-state-portia-2-1-story').hide();
-	},
-
-	draw: function() {
-		image(App.media.sprites.bgs[1], 0, 0);
-		image(App.media.sprites.portias[1],
-			300, 50, 80, 80);
-	},
-
-	onEnter: function() {
-		$('#-state-portia-2-1-story').fadeIn();
-	},
-
-	onLeave: function() {
-		return $('#-state-portia-2-1-story').
-			fadeOut().promise();
-	}
-};
-
-App.states.portia_2_1_main = {
-	setup: function() {
-		App.setupRoom('#-state-portia-2-1-main');
-		$('#-state-portia-2-1-main .button-small-back').
-		button().click(function() {
-			App.setState('portia_2_1_story');
-		});
-
-		$('#-state-portia-2-1-main').hide();
-	},
-
-	draw: function() {
-		App.drawMainRoom();
-	},
-
-	onEnter: function() {
-		var v = App.booleanVars;
-		var rules = [
-			[
-				[ v.GOLD_ASSERT1, true ],
-				[ v.GOLD_ASSERT2, true ] ],
-			[
-				[ v.SILVER_ASSERT1, true ],
-				[ v.SILVER_ASSERT2, true ] ],
-			[
-				[ v.LEAD_ASSERT1, true ],
-				[ v.LEAD_ASSERT2, true ] ]
-		].concat(
-			App.doubleImplication(
-				v.GOLD_ASSERT1, true,
-				v.GOLD_HAS_IT, false),
-			App.doubleImplication(
-				v.SILVER_ASSERT1, true,
-				v.GOLD_HAS_IT, false),
-			App.doubleImplication(
-				v.SILVER_ASSERT2, true,
-				v.LEAD_HAS_IT, true),
-			App.doubleImplication(
-				v.LEAD_ASSERT1, true,
-				v.LEAD_HAS_IT, false),
-			App.doubleImplication(
-				v.LEAD_ASSERT2, true,
-				v.GOLD_HAS_IT, true) );
-
-		App.setRules(9, rules);
-		App.solvedCallback = function() {
-			App.save('portia-2-1', 'done');
-			App.unlock('portia-2-2');
-			App.setState('menu_2');
-		};
-		$('#-state-portia-2-1-main').fadeIn();
-	},
-
-	onLeave: function() {
-		return $('#-state-portia-2-1-main').
-			fadeOut().promise();
-	}
-};
-
-App.states.portia_2_2_story = {
-	setup: function() {
-		$('#-state-portia-2-2-story .button-back').button().
-		click(function() {
-			App.setState('menu_2');
-		});
-		$('#-state-portia-2-2-story .button-continue').
-		button().click(function() {
-			App.setState('portia_2_2_main');
-		});
-
-		App.styleStateScreen('#-state-portia-2-2-story');
-		$('#-state-portia-2-2-story').hide();
-	},
-
-	draw: function() {
-		image(App.media.sprites.bgs[1], 0, 0);
-		image(App.media.sprites.portias[1],
-			300, 50, 80, 80);
-	},
-
-	onEnter: function() {
-		$('#-state-portia-2-2-story').fadeIn();
-	},
-
-	onLeave: function() {
-		return $('#-state-portia-2-2-story').
-			fadeOut().promise();
-	}
-};
-
-App.states.portia_2_2_main = {
-	setup: function() {
-		App.setupRoom('#-state-portia-2-2-main');
-		$('#-state-portia-2-2-main .button-small-back').
-		button().click(function() {
-			App.setState('portia_2_2_story');
-		});
-
-		$('#-state-portia-2-2-main').hide();
-	},
-
-	draw: function() {
-		App.drawMainRoom();
-	},
-
-	onEnter: function() {
-		var v = App.booleanVars;
-		var rules = [
-			[
-				[ v.GOLD_ASSERT1, false ],
-				[ v.GOLD_ASSERT2, false ],
-				[ v.SILVER_ASSERT1, false ],
-				[ v.SILVER_ASSERT2, false ] ],
-			[
-				[ v.GOLD_ASSERT1, false ],
-				[ v.GOLD_ASSERT2, false ],
-				[ v.LEAD_ASSERT1, false ],
-				[ v.LEAD_ASSERT2, false ] ],
-			[
-				[ v.LEAD_ASSERT1, false ],
-				[ v.LEAD_ASSERT2, false ],
-				[ v.SILVER_ASSERT1, false ],
-				[ v.SILVER_ASSERT2, false ] ],
-			[
-				[ v.GOLD_ASSERT1, true ],
-				[ v.GOLD_ASSERT2, true ],
-				[ v.SILVER_ASSERT1, true ],
-				[ v.SILVER_ASSERT2, true ] ],
-			[
-				[ v.GOLD_ASSERT1, true ],
-				[ v.GOLD_ASSERT2, true ],
-				[ v.LEAD_ASSERT1, true ],
-				[ v.LEAD_ASSERT2, true ] ],
-			[
-				[ v.LEAD_ASSERT1, true ],
-				[ v.LEAD_ASSERT2, true ],
-				[ v.SILVER_ASSERT1, true ],
-				[ v.SILVER_ASSERT2, true ] ],
-			// ---
-			[
-				[ v.GOLD_ASSERT1, true ],
-				[ v.SILVER_ASSERT1, true ],
-				[ v.LEAD_ASSERT1, true ] ],
-			[
-				[ v.GOLD_ASSERT1, true ],
-				[ v.SILVER_ASSERT1, true ],
-				[ v.LEAD_ASSERT2, true ] ],
-			[
-				[ v.GOLD_ASSERT1, true ],
-				[ v.SILVER_ASSERT2, true ],
-				[ v.LEAD_ASSERT1, true ] ],
-			[
-				[ v.GOLD_ASSERT1, true ],
-				[ v.SILVER_ASSERT2, true ],
-				[ v.LEAD_ASSERT2, true ] ],
-			[
-				[ v.GOLD_ASSERT2, true ],
-				[ v.SILVER_ASSERT1, true ],
-				[ v.LEAD_ASSERT1, true ] ],
-			[
-				[ v.GOLD_ASSERT2, true ],
-				[ v.SILVER_ASSERT1, true ],
-				[ v.LEAD_ASSERT2, true ] ],
-			[
-				[ v.GOLD_ASSERT2, true ],
-				[ v.SILVER_ASSERT2, true ],
-				[ v.LEAD_ASSERT1, true ] ],
-			[
-				[ v.GOLD_ASSERT2, true ],
-				[ v.SILVER_ASSERT2, true ],
-				[ v.LEAD_ASSERT2, true ] ],
-			// --
-			[
-				[ v.GOLD_ASSERT1, false ],
-				[ v.SILVER_ASSERT1, false ],
-				[ v.LEAD_ASSERT1, false ] ],
-			[
-				[ v.GOLD_ASSERT1, false ],
-				[ v.SILVER_ASSERT1, false ],
-				[ v.LEAD_ASSERT2, false ] ],
-			[
-				[ v.GOLD_ASSERT1, false ],
-				[ v.SILVER_ASSERT2, false ],
-				[ v.LEAD_ASSERT1, false ] ],
-			[
-				[ v.GOLD_ASSERT1, false ],
-				[ v.SILVER_ASSERT2, false ],
-				[ v.LEAD_ASSERT2, false ] ],
-			[
-				[ v.GOLD_ASSERT2, false ],
-				[ v.SILVER_ASSERT1, false ],
-				[ v.LEAD_ASSERT1, false ] ],
-			[
-				[ v.GOLD_ASSERT2, false ],
-				[ v.SILVER_ASSERT1, false ],
-				[ v.LEAD_ASSERT2, false ] ],
-			[
-				[ v.GOLD_ASSERT2, false ],
-				[ v.SILVER_ASSERT2, false ],
-				[ v.LEAD_ASSERT1, false ] ],
-			[
-				[ v.GOLD_ASSERT2, false ],
-				[ v.SILVER_ASSERT2, false ],
-				[ v.LEAD_ASSERT2, false ] ]
-		].concat(
-			App.doubleImplication(
-				v.GOLD_ASSERT1, true,
-				v.GOLD_HAS_IT, false),
-			App.doubleImplication(
-				v.GOLD_ASSERT2, true,
-				v.SILVER_HAS_IT, true),
-			App.doubleImplication(
-				v.SILVER_ASSERT1, true,
-				v.GOLD_HAS_IT, false),
-			App.doubleImplication(
-				v.SILVER_ASSERT2, true,
-				v.LEAD_HAS_IT, true),
-			App.doubleImplication(
-				v.LEAD_ASSERT1, true,
-				v.LEAD_HAS_IT, false),
-			App.doubleImplication(
-				v.LEAD_ASSERT2, true,
-				v.GOLD_HAS_IT, true) );
-
-		App.setRules(9, rules);
-		App.solvedCallback = function() {
-			App.save('portia-2-2', 'done');
-			App.save('portia-2', 'done');
-			App.unlock('portia-3');
-			App.setState('menu');
-		};
-		$('#-state-portia-2-2-main').fadeIn();
-	},
-
-	onLeave: function() {
-		return $('#-state-portia-2-2-main').
-			fadeOut().promise();
-	}
-};
-
-App.states.menu_3 = {
-	setup: function() {
-		$('#-state-menu-3 .button-back').button().
-		click(function() {
-			App.setState('menu');
-		});
-
-		$('#-button-portia-3-1').button().click(function() {
-			App.setState('portia_3_1_story');
-		});
-		$('#-button-portia-3-2').button().click(function() {
-			App.setState('portia_3_2_story');
-		});
-		$('#-button-portia-3-3').button().click(function() {
-			App.setState('portia_3_3_story');
-		});
-
-		App.styleStateScreen('#-state-menu-3');
-		$('#-state-menu-3').hide();
-	},
-
-	draw: function() {
-		image(App.media.images.menu, 0, 0);
-	},
-
-	onEnter: function() {
-		App.styleButton(
-			'#-button-portia-3-1', 'portia-3-1', true);
-		App.styleButton(
-			'#-button-portia-3-2', 'portia-3-2');
-		App.styleButton(
-			'#-button-portia-3-3', 'portia-3-3');
-
-		$('#-state-menu-3').fadeIn();
-	},
-
-	onLeave: function() {
-		return $('#-state-menu-3').fadeOut().promise();
-	}
-};
-
-App.states.portia_3_1_story = {
-	setup: function() {
-		$('#-state-portia-3-1-story .button-back').button().
-		click(function() {
-			App.setState('menu_3');
-		});
-		$('#-state-portia-3-1-story .button-continue').
-		button().click(function() {
-			App.setState('portia_3_1_main');
-		});
-
-		App.styleStateScreen('#-state-portia-3-1-story');
-		$('#-state-portia-3-1-story').hide();
-	},
-
-	draw: function() {
-		image(App.media.sprites.bgs[2], 0, 0);
-		image(App.media.sprites.portias[2],
-			300, 50, 80, 80);
-	},
-
-	onEnter: function() {
-		$('#-state-portia-3-1-story').fadeIn();
-	},
-
-	onLeave: function() {
-		return $('#-state-portia-3-1-story').
-			fadeOut().promise();
-	}
-};
-
-App.states.portia_3_1_main = {
-	setup: function() {
-		App.setupRoom('#-state-portia-3-1-main');
-		$('#-state-portia-3-1-main .button-small-back').
-		button().click(function() {
-			App.setState('portia_3_1_story');
-		});
-
-		$('#-state-portia-3-1-main').hide();
-	},
-
-	draw: function() {
-		App.drawMainRoom(true);
-	},
-
-	onEnter: function() {
-		var v = App.booleanVars;
-		var rules = [].concat(
-			App.doubleImplication(
-				v.GOLD_SAYS_TRUTH, true,
-				v.GOLD_HAS_IT, true),
-			App.doubleImplication(
-				v.SILVER_SAYS_TRUTH, true,
-				v.SILVER_HAS_IT, false),
-			App.doubleImplication(
-				v.LEAD_SAYS_TRUTH, true,
-				v.GOLD_SAYS_TRUTH, false),
-			App.doubleImplication(
-				v.LEAD_SAYS_TRUTH, true,
-				v.SILVER_SAYS_TRUTH, false) );
-
-		App.setRules(6, rules, true);
-		App.solvedCallback = function() {
-			App.save('portia-3-1', 'done');
-			App.unlock('portia-3-2');
-			App.setState('menu_3');
-		};
-		$('#-state-portia-3-1-main').fadeIn();
-	},
-
-	onLeave: function() {
-		return $('#-state-portia-3-1-main').
-			fadeOut().promise();
-	}
-};
-
-App.states.portia_3_2_story = {
-	setup: function() {
-		$('#-state-portia-3-2-story .button-back').button().
-		click(function() {
-			App.setState('menu_3');
-		});
-		$('#-state-portia-3-2-story .button-continue').
-		button().click(function() {
-			App.setState('portia_3_2_main');
-		});
-
-		App.styleStateScreen('#-state-portia-3-2-story');
-		$('#-state-portia-3-2-story').hide();
-	},
-
-	draw: function() {
-		image(App.media.sprites.bgs[2], 0, 0);
-		image(App.media.sprites.portias[2],
-			300, 50, 80, 80);
-	},
-
-	onEnter: function() {
-		$('#-state-portia-3-2-story').fadeIn();
-	},
-
-	onLeave: function() {
-		return $('#-state-portia-3-2-story').
-			fadeOut().promise();
-	}
-};
-
-App.states.portia_3_2_main = {
-	setup: function() {
-		App.setupRoom2('#-state-portia-3-2-main');
-		$('#-state-portia-3-2-main .button-small-back').
-		button().click(function() {
-			App.setState('portia_3_2_story');
-		});
-
-		$('#-state-portia-3-2-main').hide();
-	},
-
-	draw: function() {
-		App.drawMainRoom2();
-	},
-
-	onEnter: function() {
-		var v = App.booleanVars;
-		var rules = [
-			[ [ v.GOLD_SAYS_TRUTH, false ] ]
-		].concat(
-			App.doubleImplication(
-				v.GOLD_SAYS_TRUTH, true,
-				v.GOLD_HAS_IT, false) );
-
-		App.setRules(6, rules);
-		App.solvedCallback = function() {
-			App.save('portia-3-2', 'done');
-			App.unlock('portia-3-3');
-			App.setState('menu_3');
-		};
-		$('#-state-portia-3-2-main').fadeIn();
-	},
-
-	onLeave: function() {
-		return $('#-state-portia-3-2-main').
-			fadeOut().promise();
-	}
-};
-
-App.states.portia_3_3_story = {
-	setup: function() {
-		$('#-state-portia-3-3-story .button-back').button().
-		click(function() {
-			App.setState('menu_3');
-		});
-		$('#-state-portia-3-3-story .button-continue').
-		button().click(function() {
-			App.setState('portia_3_3_main');
-		});
-
-		App.styleStateScreen('#-state-portia-3-3-story');
-		$('#-state-portia-3-3-story').hide();
-	},
-
-	draw: function() {
-		image(App.media.sprites.bgs[2], 0, 0);
-		image(App.media.sprites.portias[2],
-			300, 50, 80, 80);
-	},
-
-	onEnter: function() {
-		$('#-state-portia-3-3-story').fadeIn();
-	},
-
-	onLeave: function() {
-		return $('#-state-portia-3-3-story').
-			fadeOut().promise();
-	}
-};
-
-App.states.portia_3_3_main = {
-	setup: function() {
-		App.setupRoom3('#-state-portia-3-3-main');
-		$('#-state-portia-3-3-main .button-small-back').
-		button().click(function() {
-			App.setState('portia_3_3_story');
-		});
-
-		$('#-state-portia-3-3-main').hide();
-	},
-
-	draw: function() {
-		App.drawMainRoom3();
-	},
-
-	onEnter: function() {
-		var v = App.booleanVars;
-		var rules = [
-			[
-				[ v.LEAD_SAYS_TRUTH, false ],
-				[ v.GOLD_SAYS_TRUTH, false ] ],
-			[
-				[ v.LEAD_SAYS_TRUTH, false ],
-				[ v.SILVER_SAYS_TRUTH, false ] ],
-			[
-				[ v.LEAD_SAYS_TRUTH, true ],
-				[ v.GOLD_SAYS_TRUTH, true ] ],
-			[
-				[ v.LEAD_SAYS_TRUTH, true ],
-				[ v.SILVER_SAYS_TRUTH, true ] ]
-		].concat(
-			App.doubleImplication(
-				v.GOLD_SAYS_TRUTH, true,
-				v.GOLD_HAS_IT, true),
-			App.doubleImplication(
-				v.SILVER_SAYS_TRUTH, true,
-				v.SILVER_HAS_IT, true) );
-
-		App.setRules(6, rules);
-		App.solvedCallback = function() {
-			App.save('portia-3-3', 'done');
-			App.save('portia-3', 'done');
-
-			var completed = App.load('portia-all');
-			if (! completed) {
-				App.save('portia-all', true);
-				var count = parseInt(
-					App.load('wrongCount'), 10);
-				App.save('portia-special-end', count === 0);
-			}
-			App.setState('portia_end');
-		};
-		$('#-state-portia-3-3-main').fadeIn();
-	},
-
-	onLeave: function() {
-		return $('#-state-portia-3-3-main').
-			fadeOut().promise();
-	}
-};
-
 App.states.portia_end = {
 	setup: function() {
-		$('#-state-portia-end .button-back').button().
+		$('#-state-portia-end .button-continue').button().
 		click(function() {
-			App.setState('intro');
-		});
-		$('#-state-portia-end .button-continue').
-		button().click(function() {
-			App.setState('portia_end_special');
+			var special = !!App.load('portia-special-end');
+			if (special) {
+				App.setState('portia_end_special'); }
+			else {
+				App.setState('intro'); }
 		});
 
 		App.styleStateScreen('#-state-portia-end');
@@ -957,23 +132,22 @@ App.states.portia_end = {
 	},
 
 	draw: function() {
-		image(App.media.sprites.bgs[0], 0, 0);
+		image(App.media.sprites.bgs[1], 200, 200);
+		image(App.media.images.frame, 50, 96, 84, 99);
 		image(App.media.sprites.portias[0],
-			300, 50, 80, 80);
+			50, 96, 62, 76);
+
+		image(App.media.images.frame, 50, 206, 84, 99);
+		image(App.media.sprites.portias[1],
+			50, 206, 62, 76);
+
+		image(App.media.images.frame, 50, 316, 84, 99);
+		image(App.media.sprites.portias[2],
+			50, 316, 62, 76);
 	},
 
 	onEnter: function() {
-		var special = App.load('portia-special-end');
-		if (special) {
-			$('#-state-portia-end .button-back').hide();
-			$('#-state-portia-end .button-continue').show();
-		}
-		else {
-			$('#-state-portia-end .button-back').show();
-			$('#-state-portia-end .button-continue').hide();
-		}
-
-		$('#-state-portia-end').fadeIn();
+		$('#-state-portia-end').fadeIn(1600);
 	},
 
 	onLeave: function() {
@@ -984,7 +158,7 @@ App.states.portia_end = {
 
 App.states.portia_end_special = {
 	setup: function() {
-		$('#-state-portia-end-special .button-back').
+		$('#-state-portia-end-special .button-continue').
 		button().click(function() {
 			App.setState('intro');
 		});
@@ -994,11 +168,14 @@ App.states.portia_end_special = {
 	},
 
 	draw: function() {
-		image(App.media.sprites.bgs[1], 0, 0);
+		image(App.media.images.special, 200, 200);
 	},
 
 	onEnter: function() {
-		$('#-state-portia-end-special').fadeIn();
+		$('#-state-portia-end-special').fadeIn().promise().
+		done(function() {
+			$('#-special-ending').dialog('open');
+		});
 	},
 
 	onLeave: function() {
@@ -1023,35 +200,15 @@ App.draw = function() {
 };
 
 App.drawMainRoom = function(hasDagger) {
-	hasDagger = hasDagger || false;
-	image(App.media.sprites.room, 0, 0);
-	image(App.media.sprites.chests[0], 64, 230);
-	image(App.media.sprites.chests[2], 176, 230);
-	image(App.media.sprites.chests[4], 288, 230);
-	fill(255, 255, 255);
-	if (hasDagger) {
-		text("Choose a casket\n" +
-			"but not the one with the dagger!", 200, 300); }
-	else {
-		text("Where is the portrait?", 200, 300); }
-};
-
-App.drawMainRoom2 = function() {
-	image(App.media.sprites.room, 0, 0);
-	image(App.media.sprites.chests[0], 101, 230);
-	image(App.media.sprites.chests[2], 250, 230);
-	fill(255, 255, 255);
-	text("Where is the portrait?", 200, 300);
-};
-
-App.drawMainRoom3 = function() {
-	image(App.media.sprites.room, 0, 0);
-	image(App.media.sprites.chests[0], 64, 230);
-	image(App.media.sprites.chests[2], 176, 230);
-	image(App.media.sprites.chests[4], 288, 230);
-	fill(255, 255, 255);
-	text("Where is the portrait?", 200, 292);
-	text("Who made each of the caskets?", 200, 332);
+	image(App.media.sprites.room, 200, 200);
+	App.casket0.draw();
+	App.casket1.draw();
+	if (_.isFunction(App.casket2.draw)) {
+		App.casket2.draw(); }
+	if (_.isFunction(App.portrait.draw)) {
+		App.portrait.draw(); }
+	if (_.isFunction(App.dagger.draw)) {
+		App.dagger.draw(); }
 };
 
 App.evaluateGuess = function(bitmask, val) {
@@ -1108,7 +265,7 @@ App.mainSetup = function() {
 	$('.casket-buttons button').button();
 	$('.menu-button').button();
 
-	$('.backstory, .caskets, .room-info, input, select').
+	$('.backstory, .caskets, .room-info, label, select').
 		addClass('ui-widget');
 
 	$('.button-back').button({
@@ -1116,6 +273,7 @@ App.mainSetup = function() {
 	});
 
 	$('.button-small-back').button({
+		text: false,
 		icons: { primary: 'ui-icon-arrowreturnthick-1-w' }
 	}).tooltip({
 		position: {
@@ -1129,31 +287,38 @@ App.mainSetup = function() {
 	});
 
 	$('.guess-bad').dialog({
-		modal: true,
-		buttons: [
-			{
-				text: 'Back',
-				click: function() {
-					$(this).dialog('close');
-				}
-			}
-		]
+		close: function() {
+			if (App.stateSelector) {
+				$(App.stateSelector).show(); }
+
+			App.dagger.state = '';
+			App.casket0.state = '';
+			App.casket1.state = '';
+			App.casket2.state = '';
+		},
+		buttons: [ {
+			text: 'Back',
+			click: function() { $(this).dialog('close'); }
+		} ]
 	});
 	$('.guess-bad').dialog('close');
 
 	$('.guess-good').dialog({
-		modal: true,
-		buttons: [
-			{
-				text: 'Continue',
-				click: function() {
-					$(this).dialog('close');
-					App.solvedCallback();
-				}
-			}
-		]
+		close: function() {
+			if (App.stateSelector) {
+				$(App.stateSelector).show(); }
+			if (_.isFunction(App.solvedCallback)) {
+				App.solvedCallback(); }
+			App.portrait.state = '';
+			
+		},
+		buttons: [ {
+			text: 'Continue',
+			click: function() { $(this).dialog('close'); }
+		} ]
 	});
 	$('.guess-good').dialog('close');
+	$('#-special-ending').dialog().dialog('close');
 
 	var name;
 	for (name in App.states) {
@@ -1163,8 +328,8 @@ App.mainSetup = function() {
 		}
 	}
 
-	App.setState('portia_3_3_story');
 	textAlign(CENTER, BASELINE);
+	App.setState('intro');
 };
 
 App.onCasketChosen = function() {
@@ -1174,6 +339,7 @@ App.onCasketChosen = function() {
 
 	var dialogYes = '#-guess-correct';
 	var dialogNo  = '#-guess-wrong';
+	var dialog;
 
 	if (App.logic.dagger) {
 		result = !result;
@@ -1182,17 +348,48 @@ App.onCasketChosen = function() {
 	}
 
 	if (result) {
-		$(dialogYes).dialog('open');
+		dialog = dialogYes;
 	}
 	else {
-		var count = parseInt(App.load('wrongCount'), 10);
+		dialog = dialogNo;
+		var count = parseInt(
+			App.load('wrongCount'), 10) || 0;
 		App.save('wrongCount', count + 1);
-		$(dialogNo).dialog('open');
 	}
+
+	var casket;
+	if (boolVar === 0)      { casket = App.casket0; }
+	else if (boolVar === 1) { casket = App.casket1; }
+	else if (boolVar === 2) { casket = App.casket2; }
+
+	var moveInfo = function() {
+		return $(App.stateSelector).hide('drop').promise();
+	};
+	var animateCasketClosed = function() {
+		return casket.animate('fadeOut');
+	};
+	var animateCasketOpen = function() {
+		return casket.animate('fadeIn');
+	};
+	var showPortrait = function() {
+		if (App.logic.dagger && ! result) {
+			return App.dagger.animate(); }
+		else if (! App.logic.dagger && result) {
+			return App.portrait.animate(); }
+	};
+	var openDialog = function() {
+		return $(dialog).dialog('open').promise();
+	};
+
+	moveInfo().
+		then(animateCasketClosed).
+		then(animateCasketOpen).
+		then(showPortrait).
+		then(openDialog);
 };
 
 App.onFinalSubmit = function() {
-	var id = '#-state-portia-3-3-main';
+	var id = App.stateSelector;
 	var casket = $(id +
 		' input:radio[name=casket]:checked').val();
 	var maker0 = $(id +
@@ -1211,16 +408,45 @@ App.onFinalSubmit = function() {
 	if (maker0 === 'true') { val |= 1 << 3; }
 	if (maker1 === 'true') { val |= 1 << 4; }
 	if (maker2 === 'true') { val |= 1 << 5; }
+
 	var result = App.evaluateGuess(bitmask, val);
+	var dialog;
+
+	if (casket === 0)      { casket = App.casket0; }
+	else if (casket === 1) { casket = App.casket1; }
+	else if (casket === 2) { casket = App.casket2; }
 
 	if (result) {
-		$('#-guess-final-correct').dialog('open');
+		dialog = '#-guess-final-correct';
 	}
 	else {
-		var count = parseInt(App.load('wrongCount'), 10);
+		dialog = '#-guess-final-wrong';
+		var count = parseInt(
+			App.load('wrongCount'), 10) || 0;
 		App.save('wrongCount', count + 1);
-		$('#-guess-final-wrong').dialog('open');
 	}
+
+	var moveInfo = function() {
+		return $(App.stateSelector).hide('drop').promise();
+	};
+	var animateCasketClosed = function() {
+		return casket.animate('fadeOut');
+	};
+	var animateCasketOpen = function() {
+		return casket.animate('fadeIn');
+	};
+	var showPortrait = function() {
+		if (result) { return App.portrait.animate(); }
+	};
+	var openDialog = function() {
+		return $(dialog).dialog('open').promise();
+	};
+
+	moveInfo().
+		then(animateCasketClosed).
+		then(animateCasketOpen).
+		then(showPortrait).
+		then(openDialog);
 };
 
 App.onInputChange = function(id) {
@@ -1271,39 +497,46 @@ App.setRules = function(nVars, rules, useDagger) {
 };
 
 App.setupRoom = function(divID) {
-	$(divID + ' h1,' + divID + ' h2').css({
-		textAlign: 'center'
-	});
-	$(divID + ' .button-gold').position({
-		my: 'center bottom',
-		at: 'left+88 bottom-25',
-		of: divID
-	});
-	$(divID + ' .button-silver').position({
-		my: 'center bottom',
-		at: 'left+200 bottom-25',
-		of: divID
-	});
-	$(divID + ' .button-lead').position({
-		my: 'center bottom',
-		at: 'right-88 bottom-25',
-		of: divID
-	});
-	$(divID + ' .gold').position({
-		my: 'left top',
-		at: 'left+16 top+128',
-		of: divID,
+	$(divID + ' .silver').position({
+		my: 'center top',
+		at: 'center bottom+8',
+		of: divID + ' .room-info',
 		collision: 'none'
 	});
-	$(divID + ' .silver').position({
-		my: 'left top',
-		at: 'left+144 top+128',
-		of: divID,
+	$(divID + ' .gold').position({
+		my: 'right top',
+		at: 'left-16 top',
+		of: divID + ' .silver',
 		collision: 'none'
 	});
 	$(divID + ' .lead').position({
 		my: 'left top',
-		at: 'left+272 top+128',
+		at: 'right+16 top',
+		of: divID + ' .silver',
+		collision: 'none'
+	});
+
+	$(divID + ' .question').position({
+		my: 'center center',
+		at: 'center bottom-100',
+		of: divID
+	});
+
+	$(divID + ' .button-gold').show().position({
+		my: 'center bottom',
+		at: 'left+88 bottom-25',
+		of: divID,
+		collision: 'none'
+	});
+	$(divID + ' .button-silver').show().position({
+		my: 'center bottom',
+		at: 'left+200 bottom-25',
+		of: divID,
+		collision: 'none'
+	});
+	$(divID + ' .button-lead').show().position({
+		my: 'center bottom',
+		at: 'right-88 bottom-25',
 		of: divID,
 		collision: 'none'
 	});
@@ -1320,9 +553,25 @@ App.setupRoom = function(divID) {
 };
 
 App.setupRoom2 = function(divID) {
-	$(divID + ' h1,' + divID + ' h2').css({
-		textAlign: 'center'
+	$(divID + ' .silver').position({
+		my: 'left top',
+		at: 'center+32 bottom+8',
+		of: divID + ' .room-info',
+		collision: 'none'
 	});
+	$(divID + ' .gold').position({
+		my: 'right top',
+		at: 'center-32 bottom+8',
+		of: divID + ' .room-info',
+		collision: 'none'
+	});
+
+	$(divID + ' .question').position({
+		my: 'center center',
+		at: 'center bottom-100',
+		of: divID
+	});
+
 	$(divID + ' .button-gold').position({
 		my: 'center bottom',
 		at: 'left+133 bottom-25',
@@ -1332,18 +581,6 @@ App.setupRoom2 = function(divID) {
 		my: 'center bottom',
 		at: 'left+266 bottom-25',
 		of: divID
-	});
-	$(divID + ' .gold').position({
-		my: 'left top',
-		at: 'left+58 top+128',
-		of: divID,
-		collision: 'none'
-	});
-	$(divID + ' .silver').position({
-		my: 'left top',
-		at: 'left+228 top+128',
-		of: divID,
-		collision: 'none'
 	});
 
 	$(divID + ' .casket-buttons button').button().
@@ -1357,55 +594,66 @@ App.setupRoom2 = function(divID) {
 	});
 };
 
-App.setupRoom3 = function(divID) {
-	$(divID + ' h1,' + divID + ' h2').css({
-		textAlign: 'center'
-	});
-	$(divID + ' .radio-gold').position({
-		my: 'center bottom',
-		at: 'left+88 bottom-80',
-		of: divID
-	});
-	$(divID + ' .radio-silver').position({
-		my: 'center bottom',
-		at: 'left+200 bottom-80',
-		of: divID
-	});
-	$(divID + ' .radio-lead').position({
-		my: 'center bottom',
-		at: 'right-88 bottom-80',
-		of: divID
-	});
-	$(divID + ' .select-gold').position({
-		my: 'center bottom',
-		at: 'left+88 bottom-36',
-		of: divID
-	});
-	$(divID + ' .select-silver').position({
-		my: 'center bottom',
-		at: 'left+200 bottom-36',
-		of: divID
-	});
-	$(divID + ' .select-lead').position({
-		my: 'center bottom',
-		at: 'right-88 bottom-36',
-		of: divID
-	});
-	$(divID + ' .gold').position({
-		my: 'left top',
-		at: 'left+16 top+128',
-		of: divID,
+App.setupRoomFinal = function(divID) {
+	$(divID + ' .silver').position({
+		my: 'center top',
+		at: 'center bottom+8',
+		of: divID + ' .room-info',
 		collision: 'none'
 	});
-	$(divID + ' .silver').position({
-		my: 'left top',
-		at: 'left+144 top+128',
-		of: divID,
+	$(divID + ' .gold').position({
+		my: 'right top',
+		at: 'left-16 top',
+		of: divID + ' .silver',
 		collision: 'none'
 	});
 	$(divID + ' .lead').position({
 		my: 'left top',
-		at: 'left+272 top+128',
+		at: 'right+16 top',
+		of: divID + ' .silver',
+		collision: 'none'
+	});
+
+	$(divID + ' .question-long').position({
+		my: 'center center',
+		at: 'center bottom-98',
+		of: divID
+	});
+
+	$(divID + ' .radio-gold').position({
+		my: 'center bottom',
+		at: 'left+88 bottom-48',
+		of: divID,
+		collision: 'none'
+	});
+	$(divID + ' .radio-silver').position({
+		my: 'center bottom',
+		at: 'left+200 bottom-48',
+		of: divID,
+		collision: 'none'
+	});
+	$(divID + ' .radio-lead').position({
+		my: 'center bottom',
+		at: 'right-88 bottom-48',
+		of: divID,
+		collision: 'none'
+	});
+
+	$(divID + ' .select-gold').position({
+		my: 'center bottom',
+		at: 'left+80 bottom-192',
+		of: divID,
+		collision: 'none'
+	});
+	$(divID + ' .select-silver').position({
+		my: 'center bottom',
+		at: 'center bottom-192',
+		of: divID,
+		collision: 'none'
+	});
+	$(divID + ' .select-lead').position({
+		my: 'center bottom',
+		at: 'right-80 bottom-192',
 		of: divID,
 		collision: 'none'
 	});
@@ -1413,7 +661,8 @@ App.setupRoom3 = function(divID) {
 	$(divID + ' .button-submit').position({
 		my: 'right bottom',
 		at: 'right-8 bottom-8',
-		of: divID
+		of: divID,
+		collision: 'none'
 	}).button({ disabled: true }).click(App.onFinalSubmit);
 
 	$(divID + ' .button-small-back').position({
@@ -1507,6 +756,7 @@ App.unlock = function(puzzle) {
 App.init = function() {
 	var baseURL = 'http://localhost:3333/assets';
 
+	imageMode(CENTER);
 	$global.addCSS(
 		'portia-styles', baseURL + '/css/portia.css');
 
@@ -1521,16 +771,15 @@ App.init = function() {
 	}
 	if (! _.isObject(App.saveData)) {
 		App.saveData = { active: true }; }
-	$global.log('saveData');
-	$global.cons.dir(App.saveData);
 
 	var mamConfig = {
 		images: {
 			backgrounds: baseURL + '/img/backgrounds.jpg',
 			chests: baseURL + '/img/chests.png',
-			intro: baseURL + '/img/intro.jpg',
-			menu: baseURL + '/img/menu.jpg',
-			portraits: baseURL + '/img/portraits.jpg'
+			dagger: baseURL + '/img/dagger.png',
+			frame: baseURL + '/img/frame.png',
+			portraits: baseURL + '/img/portraits.jpg',
+			special: baseURL + '/img/special.jpg'
 		},
 
 		sprites: {
@@ -1540,9 +789,19 @@ App.init = function() {
 				x: 0, y: 0,
 				frames: 3
 			},
+			intro: {
+				sheet: 'backgrounds',
+				width: 400, height: 400,
+				x: 400, y: 400
+			},
+			menu: {
+				sheet: 'backgrounds',
+				width: 400, height: 400,
+				x: 800, y: 400
+			},
 			chests: {
 				sheet: 'chests',
-				width: 48, height: 48,
+				width: 64, height: 64,
 				x: 0, y: 0,
 				frames: 6
 			},
@@ -1553,11 +812,13 @@ App.init = function() {
 			},
 			portias: {
 				sheet: 'portraits',
-				width: 160, height: 160,
+				width: 112, height: 138,
 				x: 0, y: 0,
 				frames: 3
 			}
 		},
+
+		//fonts: [ 'PT Serif', 'Dancing Script', 'Smythe' ],
 
 		onReady: function(media) { App.media = media; },
 		draw: App.draw
@@ -1577,6 +838,7 @@ App.init = function() {
 
 var draw = function() {
 	background(255, 255, 255);
+	fill(0, 0, 0);
 	textAlign(CENTER, CENTER);
 	text("loading", 200, 200);
 };

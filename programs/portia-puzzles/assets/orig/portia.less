@@ -1,0 +1,135 @@
+@fontCursive: 'Dancing Script', cursive;
+@fontNarrow: 'Smythe', cursive;
+@fontSerif: 'PT serif', serif;
+
+body {
+	font-size: 12px;
+	text-align: justify;
+	overflow: hidden;
+	height: 400px;
+	width: 400px;
+
+	#-frame {
+		margin: 0;
+		padding: 0;
+		height: 400px;
+		width: 400px;
+
+		.state {
+			height: 400px;
+			width: 400px;
+			overflow: hidden;
+		}
+	}
+
+	#-intro p {
+		font-family: @fontSerif;
+	}
+}
+
+.state {
+	.backstory {
+		background-color: rgba(46, 52, 54, 0.7);
+		border-radius: 6px;
+		color: #ffffff;
+		font-family: @fontSerif;
+		margin-top: 6px;
+		margin-left: 100px;
+		overflow-y: auto;
+		padding: 8px;
+		max-height: 296px;
+		width: 272px;
+	}
+
+	.button-back, .button-continue {
+		width: 96px;
+	}
+
+	.button-small-back {
+		height: 16px;
+		width: 16px;
+	}
+
+	.casket-buttons button {
+		font-size: 1.2em;
+		padding: 8px;
+		width: 100px;
+	}
+
+	.caskets div {
+		border-radius: 5px;
+		display: table-cell;
+		font-family: @fontNarrow;
+		font-size: 1.3em;
+		line-height: 0.9;
+		padding: 4px;
+		max-height: 72px;
+		width: 102px;
+		vertical-align: middle;
+
+		ol {
+			padding-left: 1em;
+			margin: 0;
+		}
+	}
+
+	.caskets .gold {
+		background-color: rgba(252, 233, 79, 0.6);
+		border: 1px solid #edd400;
+	}
+	.caskets .silver {
+		background-color: rgba(238, 238, 236, 0.6);
+		border: 1px solid #d3d7cf;
+	}
+	.caskets .lead {
+		background-color: rgba(186, 189, 182, 0.6);
+		border: 1px solid #888a85;
+	}
+
+	.menu-button-div .menu-button {
+		display: block;
+		margin: 16px auto;
+		padding: 4px 0;
+		width: 180px;
+	}
+
+	.menu-title {
+		color: #ffffff;
+		font-family: @fontCursive;
+		font-size: 1.8em;
+		margin: 8px;
+	}
+
+	.question {
+		font-family: @fontSerif;
+		font-size: 1.3em;
+		text-align: center;
+	}
+	.question-long {
+		font-family: @fontSerif;
+		font-size: 1.1em;
+		text-align: center;
+	}
+
+	.room-info {
+		 h1, h2 {
+			font-family: @fontCursive;
+			margin: 4px;
+			text-align: center;
+		}
+		h2 { margin-top: 2px; }
+
+		p {
+			font-family: @fontSerif;
+			margin: 12px 20px;
+		}
+	}
+
+	.story-title {
+		color: #ffffff;
+		font-family: @fontCursive;
+		font-size: 1.8em;
+		margin: 6px;
+		text-align: center;
+	}
+}

@@ -1,10 +1,19 @@
 PRG = 'portia-puzzles'
 
 @deps = [
+	'../../lib/util-class.js',
 	'../../lib/util-global.js',
 	'../../lib/lib-jqueryui.js',
 	'../../lib/lib-mam.js',
-	'src/app.js'
+	'src/graphics.js',
+	'src/app.js',
+	'src/states-menus.js',
+	'src/states-stories.js',
+	'src/states-rooms.js'
 ]
+
+@less = {
+	'assets/orig/portia.less' => 'assets/css/portia.css'
+}
 
 import "#{File.dirname(__FILE__)}/../../tools/rake-common.rb"

@@ -1,0 +1,682 @@
+<div id="-frame">
+
+  <div id="-state-intro" class="state">
+    <div id="-intro-buttons">
+      <div>
+        <button class="main-button" id="-button-intro">Intro</button>
+      </div>
+      <div>
+        <button class="main-button" id="-button-begin">Begin</button>
+      </div>
+    </div>
+    <div id="-intro" title="Introduction">
+      <p>
+        <em>The Portia Puzzles</em> are intended to test your
+        reading comprehension and logical reasoning.
+      </p>
+      <p>
+        As long as you read the puzzles carefully, and take
+        your time to think about the choices presented on each
+        puzzle, you should be able to solve them without much
+        trouble. You could also solve them by “brute force”,
+        but that probably would not be very gratifying. There
+        may also be a special ending if you solve all the
+        puzzles without any wrong guesses.
+      </p>
+      <p>
+        There are only a few levels available, and you have to
+        solve them gradually (solving a puzzle unlocks the
+        next one). You might want to grab a pencil and a
+        notebook to help you in your deductions.
+      </p>
+      <p>Have fun!</p>
+    </div>
+  </div>
+
+  <div id="-state-menu" class="state">
+    <div class="menu-title">
+      Portia Puzzles
+    </div>
+    <div class="menu-button-div">
+      <div>
+        <button class="menu-button" id="-button-portia-1">Portia I</button>
+      </div>
+      <div>
+        <button class="menu-button" id="-button-portia-2">Portia II</button>
+      </div>
+      <div>
+        <button class="menu-button" id="-button-portia-3">Portia III</button>
+      </div>
+    </div>
+    <div>
+      <button class="button-back" id="-button-back-menu">Back</button>
+    </div>
+  </div>
+
+  <div id="-state-menu-1" class="state">
+    <div class="menu-title">
+      Portia Puzzles — Portia I
+    </div>
+    <div class="menu-button-div">
+      <div>
+        <button class="menu-button" id="-button-portia-1-1">The Original Portia</button>
+      </div>
+      <div>
+        <button class="menu-button" id="-button-portia-1-2">Portia Returns</button>
+      </div>
+    </div>
+    <div>
+      <button class="button-back">Back</button>
+    </div>
+  </div>
+
+  <div id="-state-portia-1-1-story" class="state">
+    <div class="story-title">
+      The Original Portia
+    </div>
+    <div class="backstory">
+      <p>
+        One of the characters in the story of <em>The
+        Merchant of Venice</em>, by William Shakespeare, is
+        a beautiful and sagacious young woman named Portia.
+        She is about to get married, and she devises an
+        ingenious plan to choose her husband.
+      </p>
+      <p>
+        Portia has three caskets, one made of gold, one of
+        silver and one of lead. She hides away a portrait of
+        her in one of the caskets, and asks her potential
+        suitors to find it. He who chooses the casket with
+        Portia’s portrait, wins the right to marry her.
+      </p>
+      <p>
+        Since Portia wants to choose a husband because of his
+        virtue and intelligence, and not so much because of
+        his luck, she puts certain inscriptions on the
+        caskets, providing useful clues to someone astute
+        enough to understand them.
+      </p>
+      <p>
+        Now it’s your chance to face Portia’s challenge…
+        Follow the clues and find the casket with her
+        portrait.
+      </p>
+    </div>
+    <div>
+      <button class="button-back">Back</button>
+      <button class="button-continue">Continue</button>
+    </div>
+  </div>
+
+  <div id="-state-portia-1-1-main" class="state">
+    <div class="room-info">
+      <h1>Portia I</h1>
+      <h2>The Original</h2>
+      <p>
+        One, and only one statement is true.
+      </p>
+    </div>
+    <div class="caskets">
+      <div class="gold">
+        The portrait is in this casket
+      </div>
+      <div class="silver">
+        The portrait is not in this casket
+      </div>
+      <div class="lead">
+        The portrait is not in the gold casket
+      </div>
+    </div>
+    <div class="question">
+      What casket has the portrait?
+    </div>
+    <div class="casket-buttons">
+      <button class="button-gold" value="0">Gold</button>
+      <button class="button-silver" value="1">Silver</button>
+      <button class="button-lead" value="2">Lead</button>
+    </div>
+    <button class="button-small-back" title="Go back"></button>
+  </div>
+
+  <div id="-state-portia-1-2-story" class="state">
+    <div class="story-title">
+      Portia Returns
+    </div>
+    <div class="backstory">
+      <p>
+        One of Portia's suitors eventually solved her puzzle,
+        and they set a date for the wedding.
+      </p>
+      <p>
+        However, in the back of Portia's mind, she kept
+        thinking that maybe her original puzzle was too easy.
+        That, if only she had put a little more effort into
+        creating a better challenge, she could have ended up
+        with a better husband.
+      </p>
+      <p>
+        So she managed to secretly create new caskets for a
+        new puzzle, and continued receiving new suitors.
+      <p>
+        Her new plan was that, if someone did show up who could
+        solve her new puzzle, she would just think of an
+        excuse to get out of her previous engagement, and
+        marry the better prospect.
+      </p>
+    </div>
+    <div>
+      <button class="button-back">Back</button>
+      <button class="button-continue">Continue</button>
+    </div>
+  </div>
+
+  <div id="-state-portia-1-2-main" class="state">
+    <div class="room-info">
+      <h1>Portia I</h1>
+      <h2>Portia Returns</h2>
+      <p>
+        At least one statement is true. At least one
+        statement is false.
+      </p>
+    </div>
+    <div class="caskets">
+      <div class="gold">
+        The portrait is not in the silver casket
+      </div>
+      <div class="silver">
+        The portrait is not in this casket
+      </div>
+      <div class="lead">
+        The portrait is in this casket
+      </div>
+    </div>
+    <div class="question">
+      What casket has the portrait?
+    </div>
+    <div class="casket-buttons">
+      <button class="button-gold" value="0">Gold</button>
+      <button class="button-silver" value="1">Silver</button>
+      <button class="button-lead" value="2">Lead</button>
+    </div>
+    <button class="button-small-back" title="Go back"></button>
+  </div>
+
+  <div id="-state-portia-1-epilogue" class="state">
+    <div class="story-title">
+      Portia I — Epilogue
+    </div>
+    <div class="backstory">
+      <p>
+        Among the suitors that applied for Portia's new
+        challenge, there was a mysterious masked man. When it
+        was his turn, he went in and solved the puzzle
+        almost immediately.
+      </p>
+      <p>
+        He removed the mask and... oh, surprise! he was
+        Portia's fiance. Not only was he sagacious enough to
+        discover Portia's secret plans, but also decided to
+        surprise her by solving her second puzzle as well.
+      </p>
+      <p>
+        Portia decided to never doubt her fiance's virtues
+        again. They got married and lived happily ever after.
+      </p>
+    </div>
+    <div>
+      <button class="button-continue">Continue</button>
+    </div>
+  </div>
+
+  <div id="-state-menu-2" class="state">
+    <div class="menu-title">
+      Portia Puzzles — Portia II
+    </div>
+    <div class="menu-button-div">
+      <div>
+        <button class="menu-button" id="-button-portia-2-1">The First Test</button>
+      </div>
+      <div>
+        <button class="menu-button" id="-button-portia-2-2">The Second Test</button>
+      </div>
+    </div>
+    <div>
+      <button class="button-back">Back</button>
+    </div>
+  </div>
+
+  <div id="-state-portia-2-1-story" class="state">
+    <div class="menu-title">
+      Portia II — The First Test
+    </div>
+    <div class="backstory">
+      <p>
+        Portia and her husband had a beautiful daughter, who
+        was named Portia II, but we'll simply call her
+        Portia.
+      </p>
+      <p>
+        She grew up to be a clever and breathtaking young
+        woman, just like her mother. The apple doesn’t fall
+        far from the tree, as they say, and Portia decided
+        to choose her husband using a method very
+        similar to the one used by her mother.
+      </p>
+      <p>
+        However, she decided that her suitors had to go
+        through two tests, and she inscribed two statements
+        on each casket.
+      </p>
+    </div>
+    <div>
+      <button class="button-back">Back</button>
+      <button class="button-continue">Continue</button>
+    </div>
+  </div>
+
+  <div id="-state-portia-2-1-main" class="state">
+    <div class="room-info">
+      <h1>Portia II</h1>
+      <h2>The First Test</h2>
+      <p>
+        There is never more than one falsehood on each
+        casket.
+      </p>
+    </div>
+    <div class="caskets">
+      <div class="gold">
+        <ol>
+          <li>The portrait is not here</li>
+          <li>The portrait's painter is venetian</li>
+        </ol>
+      </div>
+      <div class="silver">
+        <ol>
+          <li>The portrait is not in the gold casket</li>
+          <li>The portrait is in the lead casket</li>
+        </ol>
+      </div>
+      <div class="lead">
+        <ol>
+          <li>The portrait is not here</li>
+          <li>The portrait is in the gold casket</li>
+        </ol>
+      </div>
+    </div>
+    <div class="question">
+      What casket has the portrait?
+    </div>
+    <div class="casket-buttons">
+      <button class="button-gold" value="0">Gold</button>
+      <button class="button-silver" value="1">Silver</button>
+      <button class="button-lead" value="2">Lead</button>
+    </div>
+    <button class="button-small-back" title="Go back"></button>
+  </div>
+
+  <div id="-state-portia-2-2-story" class="state">
+    <div class="menu-title">
+      Portia II — The Second Test
+    </div>
+    <div class="backstory">
+      <p>
+        If the suitor solved Portia’s first puzzle correctly,
+        he was presented with a new set of three caskets, each
+        one with two statements inscribed on them.
+      </p>
+      <p>
+        Yeah, I know… you might be asking yourself “where do
+        all these caskets come from?”. Actually, Portia's family
+        had a really good deal with a manufacturer, so they
+        could get as many as they wanted at a pretty cheap
+        price.
+      </p>
+    </div>
+    <div>
+      <button class="button-back">Back</button>
+      <button class="button-continue">Continue</button>
+    </div>
+  </div>
+
+  <div id="-state-portia-2-2-main" class="state">
+    <div class="room-info">
+      <h1>Portia II</h1>
+      <h2>The Second Test</h2>
+      <p>
+        In one of the caskets, both statements are true. In
+        one of the caskets, both statemens are false. In one
+        of the caskets, one is true and one is false.
+      </p>
+    </div>
+    <div class="caskets">
+      <div class="gold">
+        <ol>
+          <li>The portrait is not here</li>
+          <li>The portrait is in the silver casket</li>
+        </ol>
+      </div>
+      <div class="silver">
+        <ol>
+          <li>The portrait is not in the gold casket</li>
+          <li>The portrait is in the lead casket</li>
+        </ol>
+      </div>
+      <div class="lead">
+        <ol>
+          <li>The portrait is not here</li>
+          <li>The portrait is in the gold casket</li>
+        </ol>
+      </div>
+    </div>
+    <div class="question">
+      What casket has the portrait?
+    </div>
+    <div class="casket-buttons">
+      <button class="button-gold" value="0">Gold</button>
+      <button class="button-silver" value="1">Silver</button>
+      <button class="button-lead" value="2">Lead</button>
+    </div>
+    <button class="button-small-back" title="Go back"></button>
+  </div>
+
+  <div id="-state-menu-3" class="state">
+    <div class="menu-title">
+      Portia Puzzles — Portia III
+    </div>
+    <div class="menu-button-div">
+      <div>
+        <button class="menu-button" id="-button-portia-3-1">The First Test</button>
+      </div>
+      <div>
+        <button class="menu-button" id="-button-portia-3-2">The Second Test</button>
+      </div>
+      <div>
+        <button class="menu-button" id="-button-portia-3-3">The Third Test</button>
+      </div>
+    </div>
+    <div>
+      <button class="button-back">Back</button>
+    </div>
+  </div>
+
+  <div id="-state-portia-3-1-story" class="state">
+    <div class="menu-title">
+      Portia III — The First Test
+    </div>
+    <div class="backstory">
+      <p>
+        Portia II found a bright, handsome husband, and they
+        had a beautiful daughter. They named her, well… I
+        think you know where this is going.
+      </p>
+      <p>
+        Yes, her name was <em>Portia III</em>, but we'll
+        simply call her <strong>Portia</strong>. Now, it
+        might be a genetic trait, but when Portia reached
+        the age to get married, she decided to choose her
+        husband using caskets. Sounds familiar?
+      </p>
+      <p>
+        However, young Portia decided to implement her own
+        twist to the challenge. For one thing, she decided
+        to use just one statement per casket, just as her
+        grandmother. She also told her suitors that every
+        casket was hand–made by one of Venice’s two most
+        famous sculptors: either <strong>Cellini</strong> or
+        <strong>Bellini</strong>.
+      </p>
+      <p>
+        Everyone in Venice knew that Cellini always wrote
+        false inscriptions on the caskets he made, and
+        Bellini always wrote true inscriptions.
+      </p>
+      <p>
+        She also decided to make <em>three</em> tests for
+        her suitors. The first one had a special peculiarity:
+        The probability of solving it by random chance is two
+        thirds.
+      </p>
+      <p>
+        This is because she didn’t hide a portrait in one of
+        the caskets, but a dagger. To pass this test, the
+        suitor has to choose one of the <em>empty</em>
+        caskets, avoiding the dagger.
+      </p>
+    </div>
+    <div>
+      <button class="button-back">Back</button>
+      <button class="button-continue">Continue</button>
+    </div>
+  </div>
+
+  <div id="-state-portia-3-1-main" class="state">
+    <div class="room-info">
+      <h1>Portia III</h1>
+      <h2>The First Test</h2>
+      <p>
+        Each of the caskets was made by either <em>Cellini</em>
+        or <em>Bellini</em>.
+      </p>
+    </div>
+    <div class="caskets">
+      <div class="gold">
+        The dagger is in this casket
+      </div>
+      <div class="silver">
+        This casket is empty
+      </div>
+      <div class="lead">
+        Bellini made no more than one of these caskets
+      </div>
+    </div>
+    <div class="question">
+      Choose a casket… but not the one with the dagger!
+    </div>
+    <div class="casket-buttons">
+      <button class="button-gold" value="0">Gold</button>
+      <button class="button-silver" value="1">Silver</button>
+      <button class="button-lead" value="2">Lead</button>
+    </div>
+    <button class="button-small-back" title="Go back"></button>
+  </div>
+
+  <div id="-state-portia-3-2-story" class="state">
+    <div class="menu-title">
+      Portia III — The Second Test
+    </div>
+    <div class="backstory">
+      <p>
+        For the second test, Portia decided to use only two
+        caskets, so the probability of guessing correctly at
+        random is one half.
+      </p>
+      <p>
+        She also goes back to putting her portrait in one of
+        the caskets, and gets rid of the dagger. The caskets
+        are still made by either Cellini or Bellini, and the
+        suitor has to find the location of Portia's portrait.
+      </p>
+      <p>
+        Remember, Cellini’s inscriptions are always false,
+        while Bellini’s inscriptions are always true.
+      </p>
+    </div>
+    <div>
+      <button class="button-back">Back</button>
+      <button class="button-continue">Continue</button>
+    </div>
+  </div>
+  
+  <div id="-state-portia-3-2-main" class="state">
+    <div class="room-info">
+      <h1>Portia III</h1>
+      <h2>The Second Test</h2>
+      <p>
+        Each of the caskets was made by either <em>Cellini</em>
+        or <em>Bellini</em>.
+      </p>
+    </div>
+    <div class="caskets">
+      <div class="gold">
+        The portrait is not in this casket
+      </div>
+      <div class="silver">
+        One, and only one of these caskets was made by
+        Bellini
+      </div>
+    </div>
+    <div class="question">
+      What casket has the portrait?
+    </div>
+    <div class="casket-buttons">
+      <button class="button-gold" value="0">Gold</button>
+      <button class="button-silver" value="1">Silver</button>
+    </div>
+    <button class="button-small-back" title="Go back"></button>
+  </div>
+
+  <div id="-state-portia-3-3-story" class="state">
+    <div class="menu-title">
+      Portia III — The Third Test
+    </div>
+    <div class="backstory">
+      <p>
+        If Portia’s suitor managed to solve the previous two
+        puzzles —you see, Portia was <em>really</em>
+        beautiful—, he was taken to a new room where he was
+        presented with the third and final test.
+      </p>
+      <p>
+        This test has three caskets again, and they were made
+        by Cellini or Bellini, as usual. However, the suitor
+        now has to not only find the correct location of the
+        portrait, but also has to identify the sculptor who
+        made each casket.
+      </p>
+      <p>
+        Are you ready for Portia’s final test?
+      </p>
+    </div>
+    <div>
+      <button class="button-back">Back</button>
+      <button class="button-continue">Continue</button>
+    </div>
+  </div>
+
+  <div id="-state-portia-3-3-main" class="state">
+    <div class="room-info">
+      <h1>Portia III</h1>
+      <h2>The Third Test</h2>
+      <p>
+        Each of the caskets was made by either <em>Cellini</em>
+        or <em>Bellini</em>.
+      </p>
+    </div>
+    <div class="caskets">
+      <div class="gold">
+        The portrait is in this casket
+      </div>
+      <div class="silver">
+        The portrait is in this casket
+      </div>
+      <div class="lead">
+        Cellini made at least two of the three caskets
+      </div>
+    </div>
+    <div class="question-long">
+      Choose the casket with the portrait<br/>
+      Select the sculptor that made each casket
+    </div>
+    <div class="casket-options">
+      <label class="radio-gold"><input
+      type="radio" name="casket" value="0"/> Gold</label>
+      <label class="radio-silver"><input
+      type="radio" name="casket" value="1"/> Silver</label>
+      <label class="radio-lead"><input
+      type="radio" name="casket" value="2"/> Lead</label>
+
+      <select name="maker0" class="select-gold">
+        <option value="none">Gold sculptor:</option>
+        <option value="false">Cellini</option>
+        <option value="true">Bellini</option>
+      </select>
+      <select name="maker1" class="select-silver">
+        <option value="none">Silver sculptor:</option>
+        <option value="false">Cellini</option>
+        <option value="true">Bellini</option>
+      </select>
+      <select name="maker2" class="select-lead">
+        <option value="none">Lead sculptor:</option>
+        <option value="false">Cellini</option>
+        <option value="true">Bellini</option>
+      </select>
+      <button class="button-submit">Submit</button>
+    </div>
+    <button class="button-small-back" title="Go back"></button>
+  </div>
+
+  <div id="-state-portia-end" class="state">
+    <div class="menu-title">
+      Portia Puzzles — The End
+    </div>
+    <div class="backstory">
+      <p>
+        Congratulations! You have solved all of the
+        <em>Portia Puzzles</em>.
+      </p>
+      <p>
+        Did you find them fun? Have you considered making
+        your own puzzles? Give it a try, and if you want
+        to share them, you're welcome to post your
+        suggestions under the <em>Tips &amp; Feedback</em>
+        section.
+      </p>
+      <p>
+        Have fun!
+      </p>
+    </div>
+    <div>
+      <button class="button-continue">Continue</button>
+    </div>
+  </div>
+
+  <div id="-state-portia-end-special" class="state">
+    <div>
+      <button class="button-continue">Continue</button>
+    </div>
+  </div>
+
+  <div class="guess-bad" id="-guess-wrong" title="Sorry..">
+    The portrait is not in that casket. Try again.
+  </div>
+  <div class="guess-good" id="-guess-correct" title="Correct!">
+    Well done. You have found Portia's portrait.
+  </div>
+
+  <div class="guess-bad" id="-guess-dagger-wrong" title="Sorry..">
+    <p>
+      Oops… By chance, you have chosen the casket with the
+      dagger in it!
+    </p>
+    <p>
+      Try again.
+    </p>
+  </div>
+  <div class="guess-good" id="-guess-dagger-correct" title="Correct!">
+    Very good. You have dodged the dagger…
+  </div>
+
+  <div class="guess-bad" id="-guess-final-wrong" title="Sorry..">
+    Something is not quite right… Try again.
+  </div>
+  <div class="guess-good" id="-guess-final-correct" title="Correct!">
+    Fantastic. You have found the portrait, and deduced the
+    names of the sculptors correctly.
+  </div>
+
+  <div id="-special-ending" title="Well done!">
+    You solved all the puzzles from the <em>Portia
+    Puzzles</em> without making a single mistake.
+  </div>
+
+</div>
