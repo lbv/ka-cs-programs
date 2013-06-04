@@ -517,13 +517,13 @@ App.setupRoom = function(divID) {
 	});
 	$(divID + ' .gold').position({
 		my: 'right top',
-		at: 'left-16 top',
+		at: 'left-12 top',
 		of: divID + ' .silver',
 		collision: 'none'
 	});
 	$(divID + ' .lead').position({
 		my: 'left top',
-		at: 'right+16 top',
+		at: 'right+12 top',
 		of: divID + ' .silver',
 		collision: 'none'
 	});
@@ -842,7 +842,7 @@ App.init = function() {
 			}
 		},
 
-		//fonts: [ 'PT Serif', 'Dancing Script', 'Smythe' ],
+		fonts: [ 'PT Serif', 'Dancing Script', 'Smythe' ],
 
 		onReady: function(media) { App.media = media; },
 		draw: App.draw
