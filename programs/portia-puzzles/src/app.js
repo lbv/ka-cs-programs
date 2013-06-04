@@ -861,11 +861,32 @@ App.init = function() {
 };
 
 
+var angleMode = "radians";
+var delta = 0;
+var kWave = 4*PI/30;
+
 var draw = function() {
-	background(255, 255, 255);
-	fill(0, 0, 0);
+	background(52, 101, 164);
+	fill(255, 255, 255);
 	textAlign(CENTER, CENTER);
 	text("loading", 200, 200);
+
+	pushMatrix();
+	noStroke();
+	translate(185, 216);
+	rect(0, 0, 30, 15, 8);
+	translate(0, 7.5);
+	stroke(52, 101, 164);
+	noFill();
+	beginShape();
+	var x, y;
+	for (x = 0; x < 30; ++x) {
+		y = sin((x + delta) * kWave)*5;
+		vertex(x, y);
+	}
+	endShape();
+	popMatrix();
+	++delta;
 };
 
 
