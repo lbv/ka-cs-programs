@@ -774,7 +774,8 @@ App.unlock = function(puzzle) {
 };
 
 App.init = function() {
-	var baseURL = 'http://localhost:3333/assets';
+	var baseURL = '//dl.dropboxusercontent.com/u/17178990' +
+		'/assets/portia-puzzles';
 
 	imageMode(CENTER);
 	$global.addCSS(
