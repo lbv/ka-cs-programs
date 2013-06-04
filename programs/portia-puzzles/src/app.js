@@ -49,10 +49,13 @@ App.states.intro = {
 		$('#-button-go-portia').button().click(function() {
 			App.setState('menu');
 		});
+		$('#-button-go-extras').button().click(function() {
+			App.setState('extras');
+		});
 
 		$('#-intro-buttons').position({
 			my: 'center center',
-			at: 'center center+100',
+			at: 'center center+92',
 			of: '#-state-intro'
 		});
 
@@ -64,6 +67,11 @@ App.states.intro = {
 	},
 
 	onEnter: function() {
+		var donePortia = !! App.load('portia-all');
+		if (donePortia) {
+			$('#-button-go-extras').show(); }
+		else {
+			$('#-button-go-extras').hide(); }
 		$('#-state-intro').fadeIn();
 	},
 
@@ -306,8 +314,7 @@ App.mainSetup = function() {
 			text: 'Back',
 			click: function() { $(this).dialog('close'); }
 		} ]
-	});
-	$('.guess-bad').dialog('close');
+	}).dialog('close');
 
 	$('.guess-good').dialog({
 		close: function() {
@@ -322,8 +329,7 @@ App.mainSetup = function() {
 			text: 'Continue',
 			click: function() { $(this).dialog('close'); }
 		} ]
-	});
-	$('.guess-good').dialog('close');
+	}).dialog('close');
 	$('#-special-ending').dialog().dialog('close');
 
 	var name;

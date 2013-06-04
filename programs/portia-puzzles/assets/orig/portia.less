@@ -42,8 +42,20 @@ body {
 		button {
 			display: block;
 			margin: 12px auto;
-			padding: 4px 0;
+			padding: 0;
 			width: 180px;
+		}
+	}
+
+	a {
+		text-decoration: none;
+		color: #d3d7cf;
+
+		&:hover {
+			text-decoration: underline;
+		}
+		&:visited {
+			color: #729fcf;
 		}
 	}
 }
@@ -60,7 +72,7 @@ body {
 		width: 96px;
 	}
 
-	.button-small-back, .button-hint {
+	.button-small-back, .button-hint, .button-info {
 		height: 16px;
 		width: 16px;
 	}

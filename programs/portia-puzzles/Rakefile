@@ -10,7 +10,8 @@ PRG = 'portia-puzzles'
 	'src/states-warmup.js',
 	'src/states-menus.js',
 	'src/states-stories.js',
-	'src/states-rooms.js'
+	'src/states-rooms.js',
+	'src/states-extras.js'
 ]
 
 @less = {

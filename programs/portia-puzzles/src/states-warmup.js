@@ -37,7 +37,7 @@ App.states.warmup = {
 	}
 };
 
-var warmUpScaffold = function(id, bg, prev, next, extra) {
+var stateScaffold = function(id, bg, prev, next, extra) {
 	extra = extra || {};
 	return  {
 		setup: function() {
@@ -70,16 +70,16 @@ var warmUpScaffold = function(id, bg, prev, next, extra) {
 };
 
 
-App.states.warmup_1_story = warmUpScaffold(
+App.states.warmup_1_story = stateScaffold(
 	'#-state-warmup-1-story', 1, 'warmup', 'warmup_1a');
 
-App.states.warmup_1a = warmUpScaffold(
+App.states.warmup_1a = stateScaffold(
 	'#-state-warmup-1a', 2, 'warmup_1_story', 'warmup_1b');
-App.states.warmup_1b = warmUpScaffold(
+App.states.warmup_1b = stateScaffold(
 	'#-state-warmup-1b', 2, 'warmup_1a', 'warmup_1c');
-App.states.warmup_1c = warmUpScaffold(
+App.states.warmup_1c = stateScaffold(
 	'#-state-warmup-1c', 2, 'warmup_1b', 'warmup_1d');
-App.states.warmup_1d = warmUpScaffold(
+App.states.warmup_1d = stateScaffold(
 	'#-state-warmup-1d', 2, 'warmup_1c', 'warmup', {
 		setup: function() {
 			$('#-state-warmup-1d .button-continue').
@@ -90,14 +90,14 @@ App.states.warmup_1d = warmUpScaffold(
 		}
 	});
 
-App.states.warmup_2_story = warmUpScaffold(
+App.states.warmup_2_story = stateScaffold(
 	'#-state-warmup-2-story', 1, 'warmup', 'warmup_2a');
 
-App.states.warmup_2a = warmUpScaffold(
+App.states.warmup_2a = stateScaffold(
 	'#-state-warmup-2a', 2, 'warmup_2_story', 'warmup_2b');
-App.states.warmup_2b = warmUpScaffold(
+App.states.warmup_2b = stateScaffold(
 	'#-state-warmup-2b', 2, 'warmup_2a', 'warmup_2c');
-App.states.warmup_2c = warmUpScaffold(
+App.states.warmup_2c = stateScaffold(
 	'#-state-warmup-2c', 2, 'warmup_2b', 'warmup', {
 		setup: function() {
 			$('#-state-warmup-2c .button-continue').
@@ -108,14 +108,14 @@ App.states.warmup_2c = warmUpScaffold(
 		}
 	});
 
-App.states.warmup_3_story = warmUpScaffold(
+App.states.warmup_3_story = stateScaffold(
 	'#-state-warmup-3-story', 1, 'warmup', 'warmup_3a');
 
-App.states.warmup_3a = warmUpScaffold(
+App.states.warmup_3a = stateScaffold(
 	'#-state-warmup-3a', 2, 'warmup_3_story', 'warmup_3b');
-App.states.warmup_3b = warmUpScaffold(
+App.states.warmup_3b = stateScaffold(
 	'#-state-warmup-3b', 2, 'warmup_3a', 'warmup_3c');
-App.states.warmup_3c = warmUpScaffold(
+App.states.warmup_3c = stateScaffold(
 	'#-state-warmup-3c', 2, 'warmup_3b', 'warmup_end', {
 		setup: function() {
 			$('#-state-warmup-3c .button-continue').
@@ -125,5 +125,5 @@ App.states.warmup_3c = warmUpScaffold(
 		}
 	});
 
-App.states.warmup_end = warmUpScaffold(
+App.states.warmup_end = stateScaffold(
 	'#-state-warmup-end', 3, 'intro', 'intro');
