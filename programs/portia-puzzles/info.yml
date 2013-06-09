@@ -63,8 +63,15 @@ summary: |
   * Fonts supplied by Google Web Fonts.
     http://www.google.com/fonts/
 
-version: rev1
+version: rev2
 changelog: |
+  2013-06-09
+
+      * Fixed gray background on the images of portraits and
+        the dagger, when fading in and out.
+      * Updated MAM to version pre4, which may solve a major
+        bug in browsers like Safari.
+
   2013-06-04
 
       * First version of this program.

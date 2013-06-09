@@ -5,8 +5,15 @@ var Graphics = $class(function() {
 
 Graphics.prototype.make = function(width, height) {
 	var gfx = createGraphics(width, height, P2D);
+	gfx.background(0, 0);
 	gfx.imageMode(CENTER);
 	return gfx;
+};
+
+Graphics.prototype.drawAlpha = function(img, x, y) {
+	tint(255, 255, 255, this.alpha);
+	image(img, x, y);
+	noTint();
 };
 
 Graphics.prototype.draw = function() {};
@@ -34,9 +41,7 @@ Portrait.prototype.animate = function() {
 Portrait.prototype.draw = function() {
 	switch(this.state) {
 	case 'fadeIn':
-		tint(255, 255, 255, this.alpha);
-		image(this.img, 200, 200);
-		noTint();
+		this.drawAlpha(this.img, 200, 200);
 		this.alpha += 10;
 		if (this.alpha > 255) {
 			this.state = 'display';
@@ -78,9 +83,7 @@ Casket.prototype.animate = function(state) {
 Casket.prototype.draw = function() {
 	switch(this.state) {
 	case 'fadeIn':
-		tint(255, 255, 255, this.alpha);
-		image(this.imgOpen, this.x, 250);
-		noTint();
+		this.drawAlpha(this.imgOpen, this.x, 250);
 		this.alpha += 10;
 		if (this.alpha > 255) {
 			this.state = 'open';
@@ -89,9 +92,7 @@ Casket.prototype.draw = function() {
 		break;
 
 	case 'fadeOut':
-		tint(255, 255, 255, this.alpha);
-		image(this.imgClosed, this.x, 250);
-		noTint();
+		this.drawAlpha(this.imgClosed, this.x, 250);
 		this.alpha -= 10;
 		if (this.alpha < 0) {
 			this.state = 'none';
@@ -128,9 +129,7 @@ Dagger.prototype.animate = function() {
 Dagger.prototype.draw = function() {
 	switch(this.state) {
 	case 'fadeIn':
-		tint(255, 255, 255, this.alpha);
-		image(this.img, 200, 200);
-		noTint();
+		this.drawAlpha(this.img, 200, 200);
 		this.alpha += 10;
 		if (this.alpha > 255) {
 			this.state = 'display';

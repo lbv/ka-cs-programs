@@ -10,7 +10,7 @@ var URL_JQUI = '//ajax.googleapis.com/ajax/libs/jqueryui/' +
 var URL_JQUI_CSS = '//ajax.googleapis.com/ajax/libs/' +
 	'jqueryui/1.10.3/themes/THEME/jquery-ui.css';
 var URL_MAM = '//googledrive.com/host/0BzcEQMWUa0znRE1wQU'+
-	'9KUGR2R2s/mam/mam-pre3-min.js';
+	'9KUGR2R2s/mam/mam-pre4-min.js';
 
 
 m4_undivert(`util-class.js')
