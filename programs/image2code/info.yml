@@ -22,8 +22,20 @@ summary: |
 
   http://lbv.github.io/ka-cs-programs/other/sandbox.html
 
-version: rev3
+  This is just a simple experiment that could be used to
+  incorporate relatively small images inside your programs as
+  encoded strings. Another alternative, which could result
+  more appropriate for certain programs, is MAM: a JavaScript
+  library that helps you import media assets from your
+  programs, including external images. You can find a link
+  below.
+
+version: rev4
 changelog: |
+  2013-06-11
+
+      * Mention MAM in the comments.
+
   2013-05-12
 
       * Always give the option to open the code in a new tab
@@ -48,6 +60,8 @@ links:
     url  : https://www.khanacademy.org/cs/image2code/1626862725
   - desc : This program on GitHub
     url  : https://github.com/lbv/ka-cs-programs/tree/master/programs/image2code
+  - desc : MAM, the Media Assets Manager library
+    url  : http://lbv.github.io/mam/
   - desc : Background image from the Tango "Mimetypes" icons
     url  : http://commons.wikimedia.org/wiki/Tango_icons
 todo:

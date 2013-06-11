@@ -1,4 +1,4 @@
-title: Gif Reader
+title: GIF Reader
 description: >
   A decoder for images in the GIF format.
 tags: images, gif, decoder, base64
@@ -34,8 +34,10 @@ summary: |
   However, if you're just interested in displaying a
   particular image in your program, from any image format used
   in web pages, like JPG, PNG or GIF, you may want to check
-  out the `Image2Code` program. You can find a link to it
-  below.
+  out the `Image2Code` program. I have also worked in a JS
+  library called MAM, which helps you import media assets like
+  images inside your programs. You can find links to these
+  resources below.
 
   If you want to learn about the internal details of the GIF
   format, you might enjoy the following two documents:
@@ -43,14 +45,12 @@ summary: |
      http://www.cs.cmu.edu/~cil/lzw.and.gif.txt
      http://www.w3.org/Graphics/GIF/spec-gif89a.txt
 
-  - - -
-  
-  This program was partly inspired by the "Mona Lisa" program,
-  by Peter Collingridge, which produces a very nice picture
-  using purely basic drawing primitives. Check it out!
-
-version: rev4
+version: rev5
 changelog: |
+  2013-06-11
+
+      * Mention MAM in the comments.
+
   2013-05-09
 
       * Upgraded components. Added link to Image2Code program.
@@ -74,7 +74,7 @@ links:
     url  : https://github.com/lbv/ka-cs-programs/tree/master/programs/gif-reader
   - desc : The Image2Code program
     url  : https://www.khanacademy.org/cs/image2code/1626862725
-  - desc : The Mona Lisa program
-    url  : http://www.khanacademy.org/cs/mona-lisa/1153732313
+  - desc : MAM, the Media Assets Manager library
+    url  : http://lbv.github.io/mam/
 todo:
 
