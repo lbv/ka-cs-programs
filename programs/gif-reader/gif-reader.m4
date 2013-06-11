@@ -1,6 +1,6 @@
 /**
 
-m4_undivert(`doc/top-summary.md')
+m4_undivert(`gen/top-summary.md')
 **/
 
 m4_include(`base64.js')

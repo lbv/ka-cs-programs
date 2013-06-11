@@ -18,7 +18,7 @@ task :default => "out/#{PRG}.js"
 @deps = [
 	'../../lib/base64.js',
 	'../../lib/gif-reader.js',
-	'doc/top-summary.md',
+	'gen/top-summary.md',
 	'src/app.js',
 	"#{PRG}.m4"
 ]
@@ -37,7 +37,7 @@ task :default => "out/#{PRG}.js"
 	end
 end
 
-file 'doc/top-summary.md' => [ 'info.yml' ] do
+file 'gen/top-summary.md' => [ 'info.yml' ] do
 	sh tool_doc_top
 end
 
