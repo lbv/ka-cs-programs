@@ -1,0 +1,428 @@
+<!DOCTYPE html><html><head><base href="http://lbv.github.io/ka-cs-programs/" /><meta name="description" content="Collection of assets created for the Khan Academy computer science
+platform." /><meta charset="utf-8" /><link rel="stylesheet" href="css/vendor/normalize.css" /><link rel="stylesheet" href="css/vendor/unsemantic.css" /><link rel="stylesheet" href="css/vendor/zenburn.css" /><link rel="stylesheet" href="css/global.css" /><title>Using Web Storage | KA CS</title><link href="//fonts.googleapis.com/css?family=Roboto:700" rel="stylesheet" type="text/css" /></head><body><header class="grid-container site-header"><div class="grid-100"><span class="ka">KA</span><span class="cs">CS</span></div><div class="grid-100 tagline"><span>Coding for the Khan Academy computer science platform</span></div><nav class="grid-100"><a href="">Home</a><span> &#8883; </span><a href="#tutorials">Tutorials</a><span> &#8883; </span><span>Web Storage</span></nav></header><section class="grid-container site-body"><h1>Using Web&nbsp;Storage</h1>
+<p>I&#8217;ve recently created a program called <a href="programs/portia-puzzles.html">The Portia Puzzles</a>, which
+includes a feature that some people have found interesting: it stores the
+progress made by the user so that, even if the browser gets closed, the next
+time the program is visited it remembers the puzzles you have already&nbsp;solved.</p>
+<p>This functionality is based on a technology known as <a href="http://en.wikipedia.org/wiki/Web_storage">Web
+Storage</a>, and even though it&#8217;s
+pretty straightforward to use, incorporating it in programs for the Khan
+Academy platform requires a bit of extra effort. Nothing difficult,&nbsp;though.</p>
+<p>For the benefit of the people who have taken the effort to ask me about
+this, and of everyone else who might find this interesting in the future,
+I&#8217;m writing this short guide about using <em>Web Storage</em> in JavaScript programs.
+And more specifically, in K.A.&nbsp;programs.</p>
+<div class="notice">
+<p>
+<strong>Notice</strong>
+</p>
+<p>
+This guide is about elements that are part of the <span class="caps">HTML5</span>+JavaScript stack of
+technologies. However, they are undocumented in the Khan Academy&#8217;s Computer
+Science section. The examples here, and the general approach used in them,
+may stop working in the future, inside the K.A.. Nonetheless, this can still
+be useful if you decide to create your own stand&#8211;alone HTML5&nbsp;applications.
+</p>
+<p>
+Beyond the technical factors involved in using <span class="caps">HTML5</span> technologies like Web
+Storage inside the K.A., there are also social aspects that are worth
+considering when using undocumented features such as these. You may find the
+rationale behind my decision to write this guide in this document: <a href="other/sandbox.html">The Khan
+Academy <span class="caps">C.S.</span> Sandbox</a>.
+</p>
+<p>
+I encourage you to use technologies like this responsibly, and to consider
+this as an opportunity to share your wonderful creativity and inspiration
+with the world, in ways that are both gratifying for you and uplifting to
+everyone around&nbsp;you.
+</p>
+</div>
+
+<h2>Persistent Storage for the&nbsp;Web</h2>
+<p>Let us begin. What is persistent storage? Well, it refers to any mechanism
+that allows you to store data, making it <em>persist</em> through&nbsp;time.</p>
+<p>Imagine, for example, that we write a simple program that draws a tiny dot
+on the canvas, and that makes it possible to move the dot using the
+keyboard. To do this, we could try storing the dot&#8217;s position (its <em>X</em> and
+<em>Y</em> coordinates) in variables, and then, when the relevant keys are pressed,
+we modify those&nbsp;variables.</p>
+<p>However, as you may have noticed, variables are &#8212;by its very nature&#8212;
+volatile. What I mean is, if we restart our program, or leave the program
+and launch it again, the variables will not &#8220;remember&#8221; the last state they
+were in. It will be as if we&#8217;re running the program for the first time,
+every time. Is it possible to improve our dot program, to make it remember
+its position even after the program is closed? It turns out it&nbsp;is!</p>
+<p>A common mechanism to store data persistently in web applications is to use
+<em>Cookies</em>; small pieces of data that are interchanged between the
+application and the user&#8217;s browser, and stored by the latter. Cookies got
+popularized many years ago, practically from the beginning of the Web as we
+know it, and are a good alternative. However, there are some downsides to
+them. For instance, they have a relatively small size limit (cookies are
+usually rectricted to about 4kb), they have to be transmitted back and forth
+for every request from the client to the server, and they require doing
+things like negotiating their &#8220;expiration times&#8221;, which in many situations
+feels like an unnecessary&nbsp;hassle.</p>
+<p>Along with cookies, there are many other alternatives to store data
+persistently from web documents, including solutions designed for specific
+browsers or media containers (like Flash, or Silverlight), and other
+solutions similar to cookies, but (ab)using <span class="caps">HTTP</span> headers not originally
+intended for&nbsp;cookies.</p>
+<p><span class="caps">HTML5</span> &#8212;the latest, shiniest, most charming standard to create web
+applications&#8212; introduced a new mechanism called <em>Web Storage</em>, which comes
+in two &#8220;flavours&#8221;: local storage and session storage. It comes with a few
+important differences in comparison to other mechanisms like cookies: data
+is kept on the client side at all times, web storage has a more reasonable
+size limit by default &#8212;most browsers allow the use of about <span class="caps">5MB</span> for
+storage, per &#8220;origin&#8221; (we&#8217;ll see what this means later on)&#8212;, and also
+their &#8220;programming interface&#8221; is dead simple. It would be really difficult
+to think of an <em>easier</em> way to use Web&nbsp;Storage.</p>
+<p>We&#8217;ll explore the <em>local</em> storage in this guide, but adjusting things to use
+<em>session</em> storage instead is easy&#8211;peasy. The difference between them is in
+the lifetime given to the persistent data.  Things stored in &#8220;session&#8221; mode
+are generally deleted when the browser is closed.  Things stored in &#8220;local&#8221;
+mode are kept there even after the browser is closed; until your application
+decides to delete them (or the user, who is always in control of his/her&nbsp;browser).</p>
+<h2>Basic&nbsp;Usage</h2>
+<p>So you&#8217;ve heard me saying that Web Storage is simple, but how simple? Well,
+consider the following snippet of code, which chooses a &#8220;lucky&#8221;
+number &#8212;just a random integer between 1 and 100&#8212;, and stores it so it&#8217;s
+remembered every time the program is run&nbsp;again:</p>
+<pre><code class="lang-javascript"><span class="keyword">var</span> lucky = localStorage.getItem(<span class="string">'luckyNumber'</span>);
+
+<span class="keyword">if</span> (! lucky) {
+    <span class="comment">// there is no lucky number stored, so choose one..</span>
+    lucky = floor(random(<span class="number">100</span>)) + <span class="number">1</span>;
+
+    <span class="comment">// ..and store it</span>
+    localStorage.setItem(<span class="string">'luckyNumber'</span>, lucky);
+}
+
+<span class="comment">// Now `lucky` has the lucky number, which is also stored in</span>
+<span class="comment">// the user's browser as `luckyNumber` in its local storage</span></code></pre>
+<p>Hopefully you can follow what this code does without much effort.
+<code>localStorage</code> is the &#8220;channel&#8221; you use to interact with the browser&#8217;s local
+storage. It provides the methods <code>setItem</code> and <code>getItem</code>, which are pretty
+self&#8211;explanatory. The expression <code>floor(random(n))+1</code> simply calculates a
+pseudo&#8211;random integer between 1 and <em>n</em>.</p>
+<p>You may feel tempted to try this right now; to copy and paste this code into
+a <a href="https://www.khanacademy.org/cs/new">new program</a> in the K.A.. That&#8217;s a
+great idea! I like your enthusiasm and curiosity! Please, go right ahead and
+try&nbsp;it.</p>
+<p>Okay, have you tried it yet? What did you&nbsp;see?</p>
+<p>Hmm.. what is going on here? Is this web storage business just a bunch of
+lies? Is the Khan Academy forbidding us to use it? Does the green &#8220;oh noes&#8221;
+fellow rejoice in our misery? Why did the chicken cross the road? Why do I
+keep thinking of lame&nbsp;jokes?</p>
+<p>Well, I&#8217;m not sure I have the answer to all these questions, but I can share
+with you a few things about the Khan Academy&#8217;s programming environment. It
+is a very nice environment which has been diligently created by very smart,
+generous and handsome people who want only the best for you and&nbsp;me.</p>
+<p>The environment is based on a few technologies that are very flexible and
+powerful, including <em><span class="caps">HTML</span></em>, <em>JavaScript</em> and <em>Processing.js</em>. However, the
+environment seems to be overly focused, by design, on simple tasks that make
+it easy to create visual programs using a few drawing primitives and not
+much more than that. Many <em>symbols</em> (like <code>rect</code>, <code>line</code>, <code>stroke</code>, <code>image</code>,
+and so on) can be used directly in your programs, without any special
+boilerplate code, or the need to access
+<code>deep.attributes.inside.javascript.code</code>. At the same time, many symbols
+that are the bread and butter of many JavaScript programs (like <code>String</code>,
+<code>RegExp</code>, <code>Error</code>, etc.) are <em>not</em> available in the <span class="caps">K.A.</span> environment&#8217;s main
+scope, so we can&#8217;t access them <em>directly</em>.</p>
+<p>This does not necessarily mean, however, that the <span class="caps">K.A.</span> team in charge of the
+C.S. section has deliberately &#8220;removed&#8221; or forbade the use of certain
+basic elements from the JavaScript language. There certainly is a lot of
+speculation around this issue, and all I have to say in this respect is that
+I&#8217;ve never seen a single &#8220;official&#8221; statement from someone in the K.A.
+development team regarding &#8220;bans&#8221; or &#8220;restrictions&#8221; on the JavaScript
+environment. It would be quite nice to have an upfront conversation about
+this with someone in the know, but so far all we can do is use the
+environment we have. An environment that, I think, would be vastly different
+from what we can see today if the people in charge were truly pushing for
+harder restrictions on the use of certain fundamental pieces of its
+stack of&nbsp;technologies.</p>
+<p>But enough jibber&#8211;jabber. You might be thinking to yourself, &#8220;show me how
+to use this, then!&#8221;. Okay, here&#8217;s a small variation of the previous example,
+ready to run on the K.A.&nbsp;environment:</p>
+<pre><code class="lang-javascript"><span class="keyword">var</span> storage;
+
+(<span class="keyword">function</span>() {
+    storage = <span class="keyword">this</span>.localStorage;
+})();
+
+<span class="keyword">var</span> lucky = storage.getItem(<span class="string">'luckyNumber'</span>);
+
+<span class="keyword">if</span> (! lucky) {
+    <span class="comment">// there is no lucky number stored, so choose one..</span>
+    lucky = floor(random(<span class="number">100</span>)) + <span class="number">1</span>;
+
+    <span class="comment">// ..and store it</span>
+    storage.setItem(<span class="string">'luckyNumber'</span>, lucky);
+
+    println(<span class="string">"I can see that your lucky number is "</span> + lucky);
+}
+<span class="keyword">else</span> {
+    println(<span class="string">"Hi! I remember your lucky number: "</span> + lucky);
+}</code></pre>
+<p>Try it&#8230; try also closing your browser, opening it and running this program
+once again. How did it go? How do you feel about the green fellow <em>now</em>?
+What do you think goes through the mind of a chicken standing in front of a&nbsp;road?</p>
+<p>Okay, back to our example. As you can see, this new version is very similar
+to the previous one. The main difference is that we&#8217;re now declaring a
+<code>storage</code> variable, which, through some weird looking &#8212;at least at first
+glance&#8212; lines of code, is initialized with a reference to the real
+<code>localStorage</code> object from the&nbsp;browser.</p>
+<p>In reality there is nothing mysterious or esoteric about those lines of
+code. One of the implementation details from the <span class="caps">K.A.</span> environment, currently
+affecting every program in there, is that the default <a href="http://en.wikipedia.org/wiki/Scope_%28computer_science%29">scope</a> in
+which your program runs is not JavaScript&#8217;s real <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects">global scope</a>.
+Instead, it runs in a special scope, chained to lookup symbols from a
+<a href="http://processingjs.org/articles/jsQuickStart.html#javascriptonlyprocessingcode">Processing.js instance</a> by default. (By the way, have you
+noticed how much I seem to like the word &#8220;scope&#8221;? What&#8217;s the deal with&nbsp;that?)</p>
+<p>Objects like <code>localStorage</code> live in the global scope, so how to reach that
+place? Well the <code>(function() { /* code here */ })();</code> pattern is an
+effective way to do it. It works because, in JavaScript, an <a href="http://en.wikipedia.org/wiki/Anonymous_function">anonymous
+function</a> always runs in the global scope by&nbsp;default.</p>
+<p>If you feel like I&#8217;m going crazy, and the last couple of paragraphs look
+like gibberish to you, don&#8217;t worry. I feel the same way. Anyhow, what we may
+take out of this is that you don&#8217;t really need to understand how stuff like
+this works, but being informed doesn&#8217;t hurt either, don&#8217;t you&nbsp;think?</p>
+<h2>Serializing and Deserializing&nbsp;Data</h2>
+<p>Okay, so we&#8217;ve had our first bites of this new dish called <em>Web Storage</em>.
+Let&#8217;s try something else. Let&#8217;s try storing a counter, indicating how many
+times a program has been&nbsp;run.</p>
+<p>After taking a few moments to ponder the problem, our first draft of a
+solution for this could look something&nbsp;like:</p>
+<pre><code class="lang-javascript"><span class="keyword">var</span> storage;
+
+(<span class="keyword">function</span>() {
+    storage = <span class="keyword">this</span>.localStorage;
+})();
+
+<span class="keyword">var</span> counter = storage.getItem(<span class="string">'counter'</span>);
+
+<span class="keyword">if</span> (! counter) { counter = <span class="number">0</span>; }
+counter = counter + <span class="number">1</span>;
+
+storage.setItem(<span class="string">'counter'</span>, counter);
+
+println(<span class="string">"Current counter: "</span> + counter);</code></pre>
+<p>Give it a try. How did it go? The first run showed a counter of 1&#8230; so far
+so good. The second run, it showed&#8230; wait a minute&#8230; 11? And then 111?
+What&#8217;s happening&nbsp;here?</p>
+<p>Well, if you&#8217;ve encountered this type of problem before, or if you&#8217;re
+familiar with how variables work in <span class="caps">JS</span>, the problem should be clear:
+all we are storing inside <code>localStorage</code> are <em>strings</em>, and <em>strings</em> only.
+We may try storing a number, but the browser will implicitly convert it into
+a string before actually placing it inside the local&nbsp;storage.</p>
+<p>So, what happens is that in <span class="caps">JS</span>, <code>1 + 1</code> (both numbers) is equal to 2, but
+<code>"1" + 1</code> is equal to <code>"11"</code>, because the second term is converted into a
+string and appended to the first term (which is a&nbsp;string).</p>
+<p>Okay, no biggie. We could try using something like <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseInt"><code>parseInt</code></a> to
+convert the string into an integer, but let&#8217;s explore a more general&nbsp;solution.</p>
+<p>Remember our original project? The one we wanted to do, drawing a tiny dot
+which could be moved with the keyboard? The one we planned to sell for
+millions of dollars and become rich? Oh, yeah&#8230; that last part was <em>my</em>
+secret plan&#8230; I shouldn&#8217;t have mentioned it&#8230; forget I said&nbsp;anything.</p>
+<p>Anyway, let&#8217;s say that we wanted to store three things in that program: a
+counter, and the location of the dot (as two coordinates, named <em>X</em> and
+<em>Y</em>). This means that our basic persistent data structure may look like&nbsp;this:</p>
+<pre><code class="lang-javascript"><span class="keyword">var</span> data = {
+    counter: <span class="number">0</span>,
+    X: <span class="number">200</span>,
+    Y: <span class="number">200</span>
+};</code></pre>
+<p>It would be nice to store and load this object using the local storage.
+However, we can only store strings there, and an object like our <code>data</code>
+above is converted into a string by default in a way that is kind of
+useless &#8212;it becomes something like <code>"[object Object]"</code>.</p>
+<p>What to do? Well, no need to fret, my friend. There is a fairly simple
+mechanism that works well in <span class="caps">JS</span>, which is called
+<a href="http://www.json.org/"><span class="caps">JSON</span></a>. Technically, it is a data&#8211;interchange format,
+or &#8212;in other words&#8212;  a set of strict rules that specify how to arrange
+data so that it can be moved around and understood by different parties
+(people or machines). Sounds like something useful for our situation,&nbsp;right?</p>
+<p>Something nice is that, &#8220;JavaScript&#8221; accounting for the first two letters in
+the <span class="caps">JSON</span> acronym, it&#8217;s no surprise that the JavaScript language has good
+built&#8211;in support for JSON. There is a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON"><code>JSON</code></a> object that
+provides two useful methods: <code>stringify</code>, to convert a <span class="caps">JS</span> object into a JSON
+string, and <code>parse</code>, to convert a <span class="caps">JSON</span> string into an object.  These two
+processes &#8212;converting an object into a string, and vice&#8211;versa&#8212; are
+usually called &#8220;serializing&#8221; and &#8220;deserializing&#8221;&nbsp;data.</p>
+<p>It&#8217;s worth noting that the <code>JSON</code> object lives in the global scope inside a
+browser. Luckily, we already know how to deal with&nbsp;that&#8230;</p>
+<pre><code class="lang-javascript"><span class="keyword">var</span> json, storage;
+
+(<span class="keyword">function</span>() {
+    json    = <span class="keyword">this</span>.<span class="caps">JSON</span>;
+    storage = <span class="keyword">this</span>.localStorage;
+})();
+
+<span class="keyword">var</span> data;
+
+<span class="keyword">var</span> dataJSON = storage.getItem(<span class="string">'dot-program-data'</span>);
+
+<span class="keyword">if</span> (dataJSON) {
+    data = json.parse(dataJSON);
+    println(<span class="string">"The data was successfully loaded"</span>);
+}
+<span class="keyword">else</span> {
+    println(<span class="string">"No data found in storage, using the default"</span>);
+    data = {
+        counter: <span class="number">0</span>,
+        X: <span class="number">200</span>,
+        Y: <span class="number">200</span>
+    };
+}
+
+data.counter = data.counter + <span class="number">1</span>;
+
+println(<span class="string">"The counter is: "</span> + data.counter);
+
+storage.setItem(<span class="string">'dot-program-data'</span>, json.stringify(data));
+
+println(<span class="string">"The data has been stored"</span>);</code></pre>
+<h2>Full&nbsp;Example</h2>
+<p>We&#8217;re now ready to release our soon&#8211;to&#8211;be&#8211;famous <em>Dot</em>&nbsp;program:</p>
+<pre><code class="lang-javascript"><span class="keyword">var</span> json, storage;
+
+(<span class="keyword">function</span>() {
+    json    = <span class="keyword">this</span>.<span class="caps">JSON</span>;
+    storage = <span class="keyword">this</span>.localStorage;
+})();
+
+<span class="keyword">var</span> data;
+<span class="keyword">var</span> dotRadius = <span class="number">2</span>;
+<span class="keyword">var</span> dotStep   = <span class="number">3</span>;
+<span class="keyword">var</span> pressedKeys = {};
+
+<span class="keyword">var</span> dataJSON = storage.getItem(<span class="string">'dot-program-data'</span>);
+
+<span class="keyword">if</span> (dataJSON) {
+    data = json.parse(dataJSON);
+}
+<span class="keyword">else</span> {
+    data = {
+        counter: <span class="number">0</span>,
+        X: <span class="number">200</span>,
+        Y: <span class="number">200</span>
+    };
+}
+
+data.counter = data.counter + <span class="number">1</span>;
+
+<span class="keyword">var</span> msg = <span class="string">"Welcome, you have run this program "</span> +
+    data.counter + <span class="string">" times"</span>;
+
+<span class="keyword">var</span> saveData = <span class="keyword">function</span>() {
+    <span class="keyword">var</span> jsonData = json.stringify(data);
+    storage.setItem(<span class="string">'dot-program-data'</span>, jsonData);
+};
+
+saveData();
+
+<span class="keyword">var</span> keyPressed = <span class="keyword">function</span>() {
+    pressedKeys[keyCode] = <span class="literal">true</span>;
+};
+
+<span class="keyword">var</span> keyReleased = <span class="keyword">function</span>() {
+    pressedKeys[keyCode] = <span class="literal">false</span>;
+};
+
+<span class="keyword">var</span> draw = <span class="keyword">function</span>() {
+    background(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>);
+
+    <span class="comment">// the dot</span>
+    noStroke();
+    fill(<span class="number">255</span>, <span class="number">0</span>, <span class="number">0</span>);
+    ellipse(data.X, data.Y, dotRadius * <span class="number">2</span>, dotRadius * <span class="number">2</span>);
+
+    <span class="comment">// the message</span>
+    fill(<span class="number">0</span>, <span class="number">0</span>, <span class="number">255</span>);
+    textAlign(<span class="caps">CENTER</span>, TOP);
+    text(msg, <span class="number">200</span>, <span class="number">8</span>);
+
+    <span class="comment">// control movement</span>
+    <span class="keyword">var</span> moved = <span class="literal">false</span>;
+
+    <span class="keyword">if</span> (pressedKeys[<span class="caps">UP</span>]) {
+        data.Y = max(<span class="number">0</span>, data.Y - dotStep);
+        moved = <span class="literal">true</span>;
+    }
+    <span class="keyword">if</span> (pressedKeys[<span class="caps">DOWN</span>]) {
+        data.Y = min(<span class="number">400</span>, data.Y + dotStep);
+        moved = <span class="literal">true</span>;
+    }
+    <span class="keyword">if</span> (pressedKeys[<span class="caps">LEFT</span>]) {
+        data.X = max(<span class="number">0</span>, data.X - dotStep);
+        moved = <span class="literal">true</span>;
+    }
+    <span class="keyword">if</span> (pressedKeys[<span class="caps">RIGHT</span>]) {
+        data.X = min(<span class="number">400</span>, data.X + dotStep);
+        moved = <span class="literal">true</span>;
+    }
+
+    <span class="keyword">if</span> (moved) {
+        saveData();
+    }
+};</code></pre>
+<h2>Final&nbsp;Recommendations</h2>
+<p>Remember when I mentioned that we were going to talk more about how web
+storage has a size limit of about 5 <span class="caps">MB</span> <em>per origin</em>? Me neither. But let&#8217;s
+talk about it&nbsp;anyway.</p>
+<p>Here&#8217;s the thing: computers store persistent data using devices such as hard
+disks, that have a fixed capacity. In other words, you can&#8217;t put an infinite
+amount of data inside them (imagine the kind of world we would be living in,
+if it <em>were</em> possible). So, how does this size limit restriction work in
+practice for <em>Web Storage</em>?  Well, as I mentioned a moment ago (I know you
+can remember <em>that</em>), browsers usually allot about <span class="caps">5MB</span> to each <em>origin</em>.
+There&#8217;s that word again&#8230; what is an <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/origin-0.html">origin</a>?</p>
+<p>Well, it&#8217;s basically the combination of three things, in relation to a web
+document: the protocol under which it&#8217;s served (like <span class="caps">HTTP</span>, or HTTPS), a
+domain name (like <em>www.example.com</em>), and a port (a number like 80, normally
+used by web servers). In the case of the <span class="caps">K.A.</span> environment, all programs in
+the C.S. section run from a server with the following origin:
+<code>https://kasandbox.org</code> (the port 80 is&nbsp;implied).</p>
+<p>Why should we care? Well, because when you think about what I have told you,
+you can see that, since all programs have the same origin, <em>all programs in
+the <span class="caps">K.A.</span> share the same storage space, with its size limit</em>.  Can you see
+why this is important&nbsp;now?</p>
+<p>Anyway, I know you&#8217;re a pretty nice programmer. I know you will write
+programs that make conscious use of technologies like Web Storage. I know
+this. But we have to be aware that perhaps not <em>everyone</em> is as nice as&nbsp;you.</p>
+<p>For this reason, here&#8217;s a few recommendations I want to give&nbsp;you:</p>
+<ul>
+<li><p>Try to avoid polluting the <code>localStorage</code> space with too many &#8220;keys&#8221;. For
+example, in our Dot program, we use only one key to store our data, which
+is <code>dot-program-data</code>. Since we serialize our data, there&#8217;s no need for
+more than one key per program. Let us be polite and not hog more keys than
+we&nbsp;need.</p>
+</li>
+<li><p>Be aware that any other program <em>can</em> read the data you store from your
+own programs, and even overwrite it. There&#8217;s no way around this, unless a
+big change in the K.A.&#8217;s setup happens, providing an unique <em>origin</em> for
+each program, but I wouldn&#8217;t hold my breath waiting for it. Because of
+this, try to avoid storing persistently anything you&#8217;d call &#8220;important&#8221;.
+Use web storage for data that you would not miss if it dissapears or gets
+corrupted for some&nbsp;reason.</p>
+</li>
+<li><p>Adjust your code, given the possibility that the stored data may get
+modified by external forces. Some programmers refer to this as <a href="http://en.wikipedia.org/wiki/Defensive_programming">defensive
+programming</a>. For example, if your program stores something as
+<code>data.score</code>, which is expected to be an integer, be prepared for the case
+where <code>data.score</code> may be stored as a string, or an array, or some other&nbsp;thing.</p>
+</li>
+<li><p>Having said that, don&#8217;t get too caught up in trying to account for
+<em>everything</em>. If the data you persist is in fact nothing too serious, then
+there&#8217;s no reason to get all serious yourself or get stressed about it&#8230;
+Have&nbsp;fun!</p>
+</li>
+</ul>
+<h2>More&nbsp;Information</h2>
+<ul>
+<li><a href="http://www.w3.org/TR/2013/PR-webstorage-20130409/">Web Storage</a>. The official specification, by the&nbsp;<span class="caps">W3C</span>.</li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/Guide/DOM/Storage"><span class="caps">DOM</span> Storage guide</a>. A terse, yet informative guide about
+Web Storage, on the the Mozilla Developer&nbsp;Network.</li>
+<li><a href="http://diveintohtml5.info/storage.html">Local Storage</a>. A nice and friendly tutorial, from the Dive
+Into <span class="caps">HTML5</span>&nbsp;website.</li>
+</ul>
+</section><footer class="grid-container"><div class="grid-100 site-footer"><p><a href="http://creativecommons.org/publicdomain/zero/1.0/">No rights reserved</a></p></div></footer></body></html>
