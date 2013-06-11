@@ -6,7 +6,7 @@ siteDev =
     styles: [
         'css/vendor/normalize.css'
         'css/vendor/unsemantic.css'
-        'css/vendor/zenburn.css'
+        'css/vendor/highlight/pojoaque.css'
         'css/global.css'
     ]
     scripts: []

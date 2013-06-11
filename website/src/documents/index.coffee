@@ -29,7 +29,8 @@ template = (site) ->
     n = programs.length
     displayPrg = renderable (prg) ->
       div '.grid-50', ->
-        img '.program-list-thumb', src: prg.img
+        a href: prg.url, ->
+          img '.program-list-thumb', src: prg.img
         markdown """
           [**#{prg.title}**](#{prg.url})
         """
