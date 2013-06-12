@@ -1,6 +1,6 @@
 var App = {
-	rows: 5,
-	cols: 5,
+	rows: 7,
+	cols: 7,
 
 	gravity: 0.0005,
 
@@ -69,7 +69,10 @@ App.init = function() {
 
 	var updateG = function(val) {
 		App.gravity = val;
-		App.startSimulation();
+
+		App.psys.popForce();
+		var g = new $pjs.PVector(0, App.gravity);
+		App.psys.pushForce(g);
 	};
 
 	var scaleRows    = new GUIHScale(3, 10, 1, updateRows);

@@ -62,9 +62,10 @@ summary: |
 
 version: rev2
 changelog: |
-  2013-06-11
+  2013-06-12
 
       * Updated dependencies.
+      * Don't restart the simulation when gravity is changed.
 
   2013-03-19
 
