@@ -8,6 +8,7 @@ tool_doc_top = "#{File.dirname(__FILE__)}/doc-top"
 defaultFiles = [ "out/#{PRG}.js" ]
 
 @coffeeGen ||= []
+@less ||= []
 
 @deps.push('gen/top-summary.md', "#{PRG}.m4")
 
