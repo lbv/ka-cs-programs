@@ -1,0 +1,71 @@
+<!DOCTYPE html><html><head><base href="http://lbv.github.io/ka-cs-programs/" /><meta name="description" content="Collection of assets created for the Khan Academy computer science
+platform." /><meta charset="utf-8" /><link rel="stylesheet" href="css/vendor/normalize.css" /><link rel="stylesheet" href="css/vendor/unsemantic.css" /><link rel="stylesheet" href="css/vendor/highlight/pojoaque.css" /><link rel="stylesheet" href="css/global.css" /><title>Cloth Simulation | KA CS</title><link href="//fonts.googleapis.com/css?family=Roboto:700" rel="stylesheet" type="text/css" /></head><body><header class="grid-container site-header"><div class="grid-100"><span class="ka">KA</span><span class="cs">CS</span></div><div class="grid-100 tagline"><span>Coding for the Khan Academy computer science platform</span></div><nav class="grid-100"><a href="">Home</a><span> &#8883; </span><a href="#programs">Programs</a><span> &#8883; </span><span>Cloth Simulation</span></nav></header><section class="grid-container site-body"><section class="grid-100 program"><img class="program-thumb" src="img/programs/cloth-simulation.png" /><h1>Cloth Simulation</h1><p>A demo of a simple physics simulation based on the (now classic) paper by Thomas Jakobsen, &#8220;Advanced Character&nbsp;Physics&#8221;.</p>
+<p><strong>Tags</strong>: physics, simulation, particles,&nbsp;cloth</p>
+<h2>Summary</h2><p>This is based on a mechanism to manipulate particles called
+&#8220;Verlet integration&#8221;. The key elements of this approach&nbsp;are:</p>
+<ul>
+<li><p>Each particle is stored as a set of vectors that represent
+its position, its previous position (where the particle
+was located one time step ago), its acceleration and an
+scalar that represents its&nbsp;mass.</p>
+</li>
+<li><p>Forces can act on the particles, which affect their
+acceleration, in inverse proportion to their&nbsp;mass.</p>
+</li>
+<li><p>No need to store velocities, since they&#8217;re implied by the
+relation (new position - previous&nbsp;position).</p>
+</li>
+<li><p>A set of &#8220;constraints&#8221; can also be enforced on pairs of
+particles. Constraints try to keep these pairs at a
+constant distance, so if they get too far away, they are
+moved closer together, and&nbsp;vice-versa.</p>
+</li>
+</ul>
+<p>The resulting system tends to be stable, given a fluid
+framerate. That is, if there&#8217;s not a lot of variation
+between the&nbsp;time-steps.</p>
+<p>This can be used in games, for example, to produce
+interesting effects, but be careful if you plan to use it in
+elements directly related to gameplay (like the position of
+characters in a side-scroller, for example), because its
+behaviour can be unpredictable when the framerate is not
+fluid. Unless, of course, you&#8217;re creating a game based on
+quirky physics that allows for some randomness. In any case,
+this could be remedied by forcing a steady time-step at each
+frame, but then the simulation&#8217;s perceived speed will
+fluctuate. It&#8217;s basically a balancing&nbsp;act.</p>
+<p>The beauty of this system, at least for me, is that this
+illustrates how seemingly &#8220;complex&#8221; behaviour, like how a
+piece of cloth should look like when moving in space, can be
+emulated by very simple rules (forces, constraints) applied
+to a simple system (just a group of particles). Particles
+individually do not possess any &#8220;knowledge&#8221; about the
+overall system, they simply move around trying to satisfy
+the constraints that affect them, and yet the global
+behaviour simply emerges from those small individual
+operations. I just find that deeply&nbsp;fascinating.</p>
+<p>For more details about the physics simulation process and
+the math behind it, you may refer&nbsp;to:</p>
+<ul>
+<li><p>Advanced Character Physics. Jakobsen, Thomas.
+<a href="http://goo.gl/4fjVW">http://goo.gl/4fjVW</a></p>
+</li>
+<li><p>A Simple Time-Corrected Verlet Integration Method. Dummer,
+Jonathan.
+<a href="http://goo.gl/YZyLM">http://goo.gl/YZyLM</a></p>
+</li>
+</ul>
+<h2>Links</h2><ul>
+<li><a href="http://www.khanacademy.org/cs/cloth-simulation/1473881030">This program on Khan&nbsp;Academy</a></li>
+<li><a href="https://github.com/lbv/ka-cs-programs/tree/master/programs/cloth-simulation">This program on&nbsp;GitHub</a></li>
+</ul>
+<h2>ChangeLog</h2><p><strong>Current revision</strong>:&nbsp;rev2</p>
+<pre><code>2013-06-12
+
+    * Updated dependencies.
+    * Don't restart the simulation when gravity is changed.
+
+2013-03-19
+
+    * First version of this program.</code></pre>
+<h2>To Do</h2></section></section><footer class="grid-container"><div class="grid-100 site-footer"><p><a href="http://creativecommons.org/publicdomain/zero/1.0/">No rights reserved</a></p></div></footer></body></html>

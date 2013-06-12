@@ -1,5 +1,5 @@
 <!DOCTYPE html><html><head><base href="http://lbv.github.io/ka-cs-programs/" /><meta name="description" content="Collection of assets created for the Khan Academy computer science
-platform." /><meta charset="utf-8" /><link rel="stylesheet" href="css/vendor/normalize.css" /><link rel="stylesheet" href="css/vendor/unsemantic.css" /><link rel="stylesheet" href="css/vendor/highlight/pojoaque.css" /><link rel="stylesheet" href="css/global.css" /><title>Gif Reader | KA CS</title><link href="//fonts.googleapis.com/css?family=Roboto:700" rel="stylesheet" type="text/css" /></head><body><header class="grid-container site-header"><div class="grid-100"><span class="ka">KA</span><span class="cs">CS</span></div><div class="grid-100 tagline"><span>Coding for the Khan Academy computer science platform</span></div><nav class="grid-100"><a href="">Home</a><span> &#8883; </span><a href="#programs">Programs</a><span> &#8883; </span><span>Gif Reader</span></nav></header><section class="grid-container site-body"><section class="grid-100 program"><img class="program-thumb" src="img/programs/gif-reader.png" /><h1>Gif Reader</h1><p>A decoder for images in the <span class="caps">GIF</span>&nbsp;format.</p>
+platform." /><meta charset="utf-8" /><link rel="stylesheet" href="css/vendor/normalize.css" /><link rel="stylesheet" href="css/vendor/unsemantic.css" /><link rel="stylesheet" href="css/vendor/highlight/pojoaque.css" /><link rel="stylesheet" href="css/global.css" /><title>GIF Reader | KA CS</title><link href="//fonts.googleapis.com/css?family=Roboto:700" rel="stylesheet" type="text/css" /></head><body><header class="grid-container site-header"><div class="grid-100"><span class="ka">KA</span><span class="cs">CS</span></div><div class="grid-100 tagline"><span>Coding for the Khan Academy computer science platform</span></div><nav class="grid-100"><a href="">Home</a><span> &#8883; </span><a href="#programs">Programs</a><span> &#8883; </span><span>GIF Reader</span></nav></header><section class="grid-container site-body"><section class="grid-100 program"><img class="program-thumb" src="img/programs/gif-reader.png" /><h1>GIF Reader</h1><p>A decoder for images in the <span class="caps">GIF</span>&nbsp;format.</p>
 <p><strong>Tags</strong>: images, gif, decoder,&nbsp;base64</p>
 <h2>Summary</h2><p>This is just an experiment to see if it was feasible to
 implement a <span class="caps">GIF</span> decoder entirely in javascript, taking the
@@ -26,23 +26,26 @@ store binary data in a readable&nbsp;format.</p>
 <p>However, if you&#8217;re just interested in displaying a
 particular image in your program, from any image format used
 in web pages, like <span class="caps">JPG</span>, PNG or GIF, you may want to check
-out the <code>Image2Code</code> program. You can find a link to it&nbsp;below.</p>
+out the <code>Image2Code</code> program. I have also worked in a <span class="caps">JS</span>
+library called MAM, which helps you import media assets like
+images inside your programs. You can find links to these
+resources&nbsp;below.</p>
 <p>If you want to learn about the internal details of the <span class="caps">GIF</span>
 format, you might enjoy the following two&nbsp;documents:</p>
 <p>   <a href="http://www.cs.cmu.edu/~cil/lzw.and.gif.txt">http://www.cs.cmu.edu/~cil/lzw.and.gif.txt</a>
    <a href="http://www.w3.org/Graphics/GIF/spec-gif89a.txt">http://www.w3.org/Graphics/<span class="caps">GIF</span>/spec-gif89a.txt</a></p>
-<hr>
-<p>This program was partly inspired by the &#8220;Mona Lisa&#8221; program,
-by Peter Collingridge, which produces a very nice picture
-using purely basic drawing primitives. Check it&nbsp;out!</p>
 <h2>Links</h2><ul>
 <li><a href="https://www.khanacademy.org/cs/gif-reader/1449958817">This program on Khan&nbsp;Academy</a></li>
 <li><a href="https://github.com/lbv/ka-cs-programs/tree/master/programs/gif-reader">This program on&nbsp;GitHub</a></li>
 <li><a href="https://www.khanacademy.org/cs/image2code/1626862725">The Image2Code&nbsp;program</a></li>
-<li><a href="http://www.khanacademy.org/cs/mona-lisa/1153732313">The Mona Lisa&nbsp;program</a></li>
+<li><a href="http://lbv.github.io/mam/"><span class="caps">MAM</span>, the Media Assets Manager&nbsp;library</a></li>
 </ul>
-<h2>ChangeLog</h2><p><strong>Current revision</strong>:&nbsp;rev4</p>
-<pre><code>2013-05-09
+<h2>ChangeLog</h2><p><strong>Current revision</strong>:&nbsp;rev5</p>
+<pre><code>2013-06-11
+
+    * Mention MAM in the comments.
+
+2013-05-09
 
     * Upgraded components. Added link to Image2Code program.
 
