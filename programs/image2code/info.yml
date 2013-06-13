@@ -30,8 +30,12 @@ summary: |
   programs, including external images. You can find a link
   below.
 
-version: rev4
+version: rev5
 changelog: |
+  2013-06-
+
+      * Moved UI to asset files.
+
   2013-06-11
 
       * Mention MAM in the comments.

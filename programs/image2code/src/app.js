@@ -26,11 +26,11 @@ App.downloadLink = function(linkHTML) {
 		data : App.fileBase64
 	});
 
-	var blob = new ($G.get('Blob'))(
+	var blob = new ($global.get('Blob'))(
 		[ code ], { type : 'application/javascript'});
 
 	var a = $(linkHTML);
-	var url = ($G.get('URL')).createObjectURL(blob);
+	var url = ($global.get('URL')).createObjectURL(blob);
 	a[0].href = url;
 	$('body').append(a);
 	a[0].click();
@@ -85,70 +85,33 @@ App.onOpen = function() {
 	App.downloadLink(html);
 };
 
-App.buildUI = function() {
-	$('body').css({
-		fontSize  : '11px',
-		textAlign : 'justify'
-	});
-	$('input').addClass('ui-widget ui-corner-all');
+App.onLoad = function(html) {
+	$global.insertHTML(html[0]);
 
-	$('#Frame').css({
-		backgroundColor : '#ffffff',
-		opacity : '0.9',
-		margin  : '0',
-		padding : '0',
-		width   : '400px',
-		height  : '400px'
-	}).position({
+	
+
+	$('#Frame').position({
 		my : 'left top',
 		at : 'left top',
-		of : '#output'
+		of : '#output',
+		collision: 'none'
 	});
 
-	$('#Intro').addClass('ui-widget ui-widget-content')
-	.css({
-		width     : '336px',
-		height    : '336px',
-		margin    : '12px 0 0 0',
-		padding   : '32px',
-		overflowY : 'auto'
-	});
+	$('input').addClass('ui-widget ui-corner-all');
 
-	$('#Continue').css({
-		float : 'right'
-	}).button().click(App.onContinue);
+	$('#Intro').addClass('ui-widget ui-widget-content');
+	$('#Main').addClass('ui-widget ui-widget-content');
 
-	$('#Main').addClass('ui-widget ui-widget-content')
-	.css({
-		width     : '336px',
-		height    : '336px',
-		margin    : '12px 0 0 0',
-		padding   : '32px',
-		overflowY : 'auto'
-	});
-
-	$('#SpanId').css({
-		fontFamily : 'monospace',
-		fontWeight : 'bold'
-	});
-	$('#Download').button().css({
-		margin  : '4px auto',
-		display : 'block'
-	});
-	$('#Open').button().css({
-		margin  : '4px auto',
-		display : 'block'
-	});
-	$('#IdError').css({
-		padding   : '8px',
-		marginTop : '12px'
-	}).addClass(
+	$('#IdError').addClass(
 		'ui-widget ui-state-error ui-corner-all');
+
+	$('.button').button();
+	$('#Continue').click(App.onContinue);
+	$('#Download').click(App.onDownload);
+	$('#Open').click(App.onOpen);
 
 	$('#ImgId').on('keyup', App.onImgIdChanged);
 	$('#FileInput').on('change', App.onFileChanged);
-	$('#Download').click(App.onDownload);
-	$('#Open').click(App.onOpen);
 
 	if (! App.supportsDownload) {
 		$('#DownloadDiv').hide(); }
@@ -158,13 +121,20 @@ App.buildUI = function() {
 	$('#Main').hide();
 };
 
-App.onBackgroundReady = function(bg) {
-	background(255, 255, 255);
-	image(bg, 0, 0);
-};
-
 App.init = function() {
-	loadBackground(App.onBackgroundReady);
+	var baseURL = "http://localhost:3333/assets/";
+
+	var mamConfig = {
+		images: {
+			bg: baseURL + 'img/bg.jpg'
+		},
+		onReady: function(media) {
+			App.bg = media.images.bg;
+		},
+		draw: function() {
+			image(App.bg, 0, 0);
+		}
+	};
 
 	App.fileOK = false;
 	App.idOK   = false;
@@ -173,11 +143,21 @@ App.init = function() {
 	App.supportsDownload = (
 		testTag[0].download !== undefined);
 
-	App.fileReader = new ($G.get('FileReader'))();
+	App.fileReader = new ($global.get('FileReader'))();
 	App.fileReader.onload = App.onFileLoaded;
 
-	$G.insertHtml(htmlUI);
-	$G.loadJQueryUI(App.buildUI, 'redmond');
+	$global.addCSS('css-i2c', baseURL + 'css/default.css');
+
+	$.when(
+		$global.ajax('UI', baseURL + 'htm/ui.htm', 'html'),
+		$global.loadMAM(mamConfig),
+		$global.loadJQueryUI('redmond')).done(App.onLoad);
+};
+
+textAlign(CENTER, CENTER);
+var draw = function() {
+	background(255, 255, 255);
+	text("loading", 200, 200);
 };
 
 App.init();
