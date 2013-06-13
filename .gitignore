@@ -1,4 +1,7 @@
-/*/*/doc
+/*/*/assets/out
+/**/assets/**/*.xcf
+/**/assets/**/*.png
+
 /*/*/gen
 /*/*/out
 /website
