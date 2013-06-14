@@ -48,17 +48,9 @@ App.onDownload = function() {
 	App.downloadLink(html);
 };
 
-App.onFileChanged = function() {
-	if (this.files.length === 0) {
-		App.fileOK = false;
-		return;
-	}
-	App.fileReader.readAsDataURL(this.files[0]);
-};
-
-App.onFileLoaded = function() {
+App.onFileLoaded = function(data) {
 	App.fileOK     = true;
-	App.fileBase64 = this.result;
+	App.fileBase64 = data;
 
 	App.checkForDownload();
 };
@@ -85,16 +77,19 @@ App.onOpen = function() {
 	App.downloadLink(html);
 };
 
-App.onLoad = function(html) {
+App.onLoad = function(html, fileReaderTpl) {
 	$global.insertHTML(html[0]);
 
-	
-
+	App.entered = false;
 	$('#Frame').position({
 		my : 'left top',
 		at : 'left top',
 		of : '#output',
 		collision: 'none'
+	}).on('mouseenter', function() {
+		if (App.entered) { return; }
+		$(this).animate({ opacity: 0.9 });
+		App.entered = true;
 	});
 
 	$('input').addClass('ui-widget ui-corner-all');
@@ -111,7 +106,10 @@ App.onLoad = function(html) {
 	$('#Open').click(App.onOpen);
 
 	$('#ImgId').on('keyup', App.onImgIdChanged);
-	$('#FileInput').on('change', App.onFileChanged);
+
+	var fileReader = new $FileReader(
+		fileReaderTpl[0], '#-image-select');
+	fileReader.onLoad = App.onFileLoaded;
 
 	if (! App.supportsDownload) {
 		$('#DownloadDiv').hide(); }
@@ -143,13 +141,12 @@ App.init = function() {
 	App.supportsDownload = (
 		testTag[0].download !== undefined);
 
-	App.fileReader = new ($global.get('FileReader'))();
-	App.fileReader.onload = App.onFileLoaded;
-
 	$global.addCSS('css-i2c', baseURL + 'css/default.css');
 
 	$.when(
 		$global.ajax('UI', baseURL + 'htm/ui.htm', 'html'),
+		$global.ajax('FileReader', baseURL +
+			'htm/file-reader.htm', 'html'),
 		$global.loadMAM(mamConfig),
 		$global.loadJQueryUI('redmond')).done(App.onLoad);
 };

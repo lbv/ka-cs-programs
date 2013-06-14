@@ -24,6 +24,7 @@ var URL_MAM = '//googledrive.com/host/0BzcEQMWUa0znRE1wQU'+
 m4_undivert(`util-global.js')
 m4_undivert(`lib-jqueryui.js')
 m4_undivert(`lib-mam.js')
+m4_undivert(`util-files.js')
 
 m4_undivert(`gen/imgcode-template.js')
 

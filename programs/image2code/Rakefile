@@ -4,12 +4,13 @@ PRG = 'image2code'
 	'../../lib/util-global.js',
 	'../../lib/lib-jqueryui.js',
 	'../../lib/lib-mam.js',
+	'../../lib/util-files.js',
 	'src/app.js'
 ]
 
 @coffee = [ 'imgcode-template' ]
 
 @less = [ 'default' ]
-@html = [ 'ui' ]
+@html = [ 'ui', 'file-reader' ]
 
 import "#{File.dirname(__FILE__)}/../../tools/rake-common.rb"

@@ -34,6 +34,7 @@ version: rev5
 changelog: |
   2013-06-
 
+      * Changed background image.
       * Moved UI to asset files.
 
   2013-06-11

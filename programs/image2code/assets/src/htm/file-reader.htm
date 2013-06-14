@@ -1,0 +1,49 @@
+<div class="choose ui-widget ui-corner-all">
+  <button style="margin: 8px;">Choose File</button>
+
+  <div class="file-load choose-msg">
+    <span class="ui-icon ui-icon-info"
+     style="float: left; margin-right: .3em;"></span>
+    <span class="filename"></span><br/>
+    File loading...
+  </div>
+
+  <div class="file-ok choose-msg">
+    <span class="ui-icon ui-icon-check"
+     style="float: left; margin-right: .3em;"></span>
+    <span class="filename"></span><br/>
+    The file was loaded successfully
+  </div>
+
+  <div class="file-error choose-msg">
+    <span class="ui-icon ui-icon-alert"
+     style="float: left; margin-right: .3em;"></span>
+    <span class="filename"></span><br />
+    There was an error loading the file.
+    <span class="error-msg"></span>
+  </div>
+</div>
+
+<div class="dialog" title="Choose your file">
+  <div class="ui-widget-header ui-corner-all">
+    <span class="method">
+      <input type="radio" id="method0" value="local" name="method"/>
+      <label for="method0">Local</label>
+      <input type="radio" id="method1" value="remote" name="method"/>
+      <label for="method1">Remote</label>
+    </span>
+  </div>
+  <div class="local" style="padding: 2em .5em;">
+    Choose a file from your computer:<br/>
+    <form><input type="file" required/><input type="submit"/></form>
+  </div>
+  <div class="remote" style="padding: 2em .5em;">
+    Choose a file from the Internet:<br/>
+    <form>
+      <input style="width: 100%" type="url" required
+       placeholder="Type an URL, like http://example.com/img.jpg" />
+       <input type="submit"/>
+    </form>
+  </div>
+</div>
+
