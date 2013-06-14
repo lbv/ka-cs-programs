@@ -136,6 +136,7 @@ App.init = function() {
 };
 
 textAlign(CENTER, CENTER);
+fill(52, 101, 164);
 var draw = function() {
 	background(255, 255, 255);
 	text("loading", 200, 200);
