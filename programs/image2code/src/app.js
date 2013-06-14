@@ -98,7 +98,7 @@ App.onLoad = function(html, fileReaderTpl) {
 
 	$('.filereader-notice').dialog({
 		buttons: [ {
-			text: 'Continue',
+			text: 'Close',
 			click: function() { $(this).dialog('close'); }
 		} ]
 	}).dialog('close');
