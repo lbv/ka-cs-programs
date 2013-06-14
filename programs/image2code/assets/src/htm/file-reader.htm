@@ -1,35 +1,84 @@
-<div class="choose ui-widget ui-corner-all">
-  <button style="margin: 8px;">Choose File</button>
+<div class="choose ui-widget ui-corner-all"
+     style="width: 100%;">
+  <button>Choose File</button>
 
   <div class="file-load choose-msg">
-    <span class="ui-icon ui-icon-info"
-     style="float: left; margin-right: .3em;"></span>
-    <span class="filename"></span><br/>
-    File loading...
+    <p>
+      <span class="ui-icon ui-icon-info"
+       style="float: left; margin-right: .3em;"></span>
+      <span class="filename"></span>
+    </p>
+    <p>
+      File loading...
+    </p>
   </div>
 
   <div class="file-ok choose-msg">
-    <span class="ui-icon ui-icon-check"
-     style="float: left; margin-right: .3em;"></span>
-    <span class="filename"></span><br/>
-    The file was loaded successfully
+    <p>
+      <span class="ui-icon ui-icon-check"
+       style="float: left; margin-right: .3em;"></span>
+      <span class="filename"></span>
+    </p>
+    <p>
+      The file was loaded successfully
+    </p>
   </div>
 
   <div class="file-error choose-msg">
-    <span class="ui-icon ui-icon-alert"
-     style="float: left; margin-right: .3em;"></span>
-    <span class="filename"></span><br />
-    There was an error loading the file.
-    <span class="error-msg"></span>
+    <p>
+      <span class="ui-icon ui-icon-alert"
+       style="float: left; margin-right: .3em;"></span>
+      <span class="filename"></span>
+    </p>
+    <p>
+      There was an error loading the file.
+      <span class="error-msg"></span>
+    </p>
+    <p>
+      <span class="error-toggle" title="Details"
+       style="height: 24px; width: 24px;"></span>
+    </p>
+    <div class="error-details">
+      <p>
+        If you're having troubles downloading a file from a
+        remote server, please verify that the URL you have
+        types is valid, <em>and</em> that the server allows the
+        use of the resource from different origins, using a
+        technology <a
+        href="http://en.wikipedia.org/wiki/Cross-origin_resource_sharing" target="_blank">CORS</a>.
+      </p>
+      <p>
+        You may try the following alternatives:
+      </p>
+      <ul>
+        <li>
+          Try downloading files from your own hosting solutions.
+          Two services with free plans where you can store your files
+          and have support for CORS are <a
+          href="https://www.dropbox.com/"
+          target="_blank">DropBox</a> and <a
+          href="https://drive.google.com/"
+          target="_blank">Google Drive</a>.
+        </li>
+        <li>
+          You could also try a proxy, such as <a
+          href="http://www.corsproxy.com/" target="_blank">CORS Proxy</a>
+        </li>
+        <li class="filereader-support">
+          Try downloading the file locally to your computer, and then
+          importing it using the <em>Local</em> option.
+        </li>
+      </ul>
+    </div>
   </div>
 </div>
 
 <div class="dialog" title="Choose your file">
-  <div class="ui-widget-header ui-corner-all">
+  <div class="ui-widget-header ui-corner-all filereader-support">
     <span class="method">
       <input type="radio" id="method0" value="local" name="method"/>
       <label for="method0">Local</label>
-      <input type="radio" id="method1" value="remote" name="method"/>
+      <input type="radio" id="method1" value="remote" name="method" checked/>
       <label for="method1">Remote</label>
     </span>
   </div>
@@ -38,10 +87,10 @@
     <form><input type="file" required/><input type="submit"/></form>
   </div>
   <div class="remote" style="padding: 2em .5em;">
-    Choose a file from the Internet:<br/>
+    Type the URL for your file:<br/>
     <form>
       <input style="width: 100%" type="url" required
-       placeholder="Type an URL, like http://example.com/img.jpg" />
+       placeholder="For example, http://example.com/img.jpg" />
        <input type="submit"/>
     </form>
   </div>

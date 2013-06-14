@@ -30,12 +30,21 @@ summary: |
   programs, including external images. You can find a link
   below.
 
-version: rev5
+version: rev6
 changelog: |
-  2013-06-
+  2013-06-14
 
-      * Changed background image.
+      * Added notice for browser that don't support
+        FileReader.
+      * Added more details about errors in downloading remote
+        files.
+      * Other minor usability fixes.
+
+  2013-06-13
+
       * Moved UI to asset files.
+      * Changed background image.
+      * Added support for reading files from URLs.
 
   2013-06-11
 

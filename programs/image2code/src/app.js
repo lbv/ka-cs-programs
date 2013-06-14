@@ -1,51 +1,33 @@
 var App = {};
 
-
 App.Templates = {
-	imgcode : _.template(imgCodeTemplate),
-	aDownload : _.template(
-		'<a download="<%= filename %>"></a>'),
-	aOpen : _.template(
-		'<a target="_blank"></a>')
+	imgcode : _.template(imgCodeTemplate)
 };
 
 
 App.checkForDownload = function() {
-	if (App.fileOK && App.idOK) {
-		$('#SpanId').html(_.escape(App.imgID));
-		$('#FileReady').fadeIn();
-	}
-	else {
+	if (! App.fileOK || !App.idOK) {
 		$('#FileReady').fadeOut();
+		return;
 	}
-};
 
-App.downloadLink = function(linkHTML) {
+	$('#SpanId').html(_.escape(App.imgID));
+	$('#FileReady').fadeIn();
+
 	var code = App.Templates.imgcode({
 		id   : App.imgID,
 		data : App.fileBase64
 	});
-
-	var blob = new ($global.get('Blob'))(
-		[ code ], { type : 'application/javascript'});
-
-	var a = $(linkHTML);
-	var url = ($global.get('URL')).createObjectURL(blob);
-	a[0].href = url;
-	$('body').append(a);
-	a[0].click();
+	if (_.isObject(App.downloader)) {
+		App.downloader.destroy(); }
+	App.downloader = new $FileDownload(
+		code, 'application/javascript');
 };
 
 App.onContinue = function() {
-	$('#Intro').hide();
-	$('#Main').fadeIn();
-};
-
-App.onDownload = function() {
-	var html = App.Templates.aDownload({
-		filename : App.imgID + ".js"
+	$('#Intro').fadeOut().promise().then(function() {
+		$('#Main').fadeIn();
 	});
-	App.downloadLink(html);
 };
 
 App.onFileLoaded = function(data) {
@@ -70,11 +52,6 @@ App.onImgIdChanged = function() {
 		$('#IdError').fadeOut();
 	}
 	App.checkForDownload();
-};
-
-App.onOpen = function() {
-	var html = App.Templates.aOpen();
-	App.downloadLink(html);
 };
 
 App.onLoad = function(html, fileReaderTpl) {
@@ -102,8 +79,13 @@ App.onLoad = function(html, fileReaderTpl) {
 
 	$('.button').button();
 	$('#Continue').click(App.onContinue);
-	$('#Download').click(App.onDownload);
-	$('#Open').click(App.onOpen);
+
+	$('#Download').click(function() {
+		App.downloader.download(App.imgID + '.js');
+	});
+	$('#Open').click(function() {
+		App.downloader.open();
+	});
 
 	$('#ImgId').on('keyup', App.onImgIdChanged);
 
@@ -111,35 +93,37 @@ App.onLoad = function(html, fileReaderTpl) {
 		fileReaderTpl[0], '#-image-select');
 	fileReader.onLoad = App.onFileLoaded;
 
-	if (! App.supportsDownload) {
+	if (! $File.support.Download) {
 		$('#DownloadDiv').hide(); }
+
+	$('.filereader-notice').dialog({
+		buttons: [ {
+			text: 'Continue',
+			click: function() { $(this).dialog('close'); }
+		} ]
+	}).dialog('close');
 
 	$('#IdError').hide();
 	$('#FileReady').hide();
 	$('#Main').hide();
+
+	if (! $File.support.FileReader) {
+		$('.filereader-notice').dialog('open'); }
 };
 
 App.init = function() {
-	var baseURL = "http://localhost:3333/assets/";
+	var baseURL = URLS[ENV].APP_BASE;
 
 	var mamConfig = {
-		images: {
-			bg: baseURL + 'img/bg.jpg'
-		},
+		images: { bg: baseURL + 'img/bg.jpg' },
 		onReady: function(media) {
 			App.bg = media.images.bg;
 		},
-		draw: function() {
-			image(App.bg, 0, 0);
-		}
+		draw: function() { image(App.bg, 0, 0); }
 	};
 
 	App.fileOK = false;
 	App.idOK   = false;
-
-	var testTag = $('<a></a>');
-	App.supportsDownload = (
-		testTag[0].download !== undefined);
 
 	$global.addCSS('css-i2c', baseURL + 'css/default.css');
 

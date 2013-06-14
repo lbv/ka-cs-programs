@@ -1,32 +1,54 @@
 <div id="Frame">
 
-<div id="Intro">
+<div class="filereader-notice" title="Notice">
+  <p>
+    <span class="ui-icon ui-icon-alert"
+    style="float:left; margin: 0 .3em;"></span>
+    Your browser does not have support for the
+    <code>FileReader</code> feature. Reading files from your
+    local computer will be disabled.
+  </p>
+  <p>
+    To enable this program’s full functionality, you may
+    try using a recent version of any of the following
+    browsers:
+  </p>
+  <ul>
+    <li><a href="http://www.google.com/chrome/" target="_blank">Google Chrome</a></li>
+    <li><a href="http://www.mozilla.org/" target="_blank">Mozilla Firefox</a></li>
+  </ul>
+</div>
+
+<div id="Intro" class="state">
   <h2>Image2Code</h2>
   <p>
     A simple utility that receives an image file, and turns it
     into JavaScript code that you can use directly in your
     Khan Academy programs.
   </p>
-  <h3>But before you continue &hellip;</h3>
+  <h3>But before you continue…</h3>
   <p>
-    &hellip; I'd like to invite you to take a few moments to
-    reflect upon the decisions you take every day, including
-    the decision of whether to use this program or not, and
-    how to use it.
+    …I'd like to invite you to take a few moments to
+    reflect upon the actions you are about to take.
   </p>
-  <p>
-    A wise man once said, <q>A man is but the product of his
-    thoughts. What he thinks, he becomes.</q>
+  <ul>
+    <li>Please be mindful of other people’s rights, including
+    copyrights and trademarks.</li>
+    <li>Consider the things that go through your mind, and
+    that you project out to others. In the words of a
+    <em>great soul</em>, <q>A man is but the product of his
+    thoughts. What he thinks, he  becomes.</q></li>
+  </ul>
   </p>
   <p>
     May you act based on the voice from within your heart,
-    and seek to rise up, bringing the world around you
+    always seeking to rise up, bringing the world
     upwards with you.
   </p>
   <button id="Continue" class="button">Continue</button>
 </div>
 
-<div id="Main">
+<div id="Main" class="state">
   <div id="MainDesc">
     <h2>Image2Code</h2>
     <p>
@@ -69,24 +91,21 @@
       Your code for <span id="SpanId"></span> is ready.
     </p>
 
-    <div id="DownloadDiv">
+    <div class="download ui-corner-all">
       <p>
-        You may press the button below to download it, and
+        You may press the button below, and the code should
+        show up in a new window or tab in your browser. You
+        can then select it and copy it.
+      </p>
+      <button id="Open" class="button button-center">Open Code</button>
+    </div>
+
+    <div class="download ui-corner-all" id="DownloadDiv">
+      <p>
+        Or you may press the button below to download it, and
         then open it with a text editor.
       </p>
       <button id="Download" class="button button-center">Download Code</button>
-      <p>
-        Or&hellip;
-      </p>
-    </div>
-
-    <div>
-      <p>
-        You may press the button below, and the code should
-        show up in a <span>n</span>ew window or tab in your
-        browser. You can then select it and copy it.
-      </p>
-      <button id="Open" class="button button-center">Open Code</button>
     </div>
 
     <p>
