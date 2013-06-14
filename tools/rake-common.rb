@@ -61,3 +61,10 @@ file "out/#{PRG}.js" => @deps do
 end
 
 task :default => defaultFiles
+
+desc 'Dropbots'
+task :dropbox do
+	from = "assets/out/"
+	to   = "~/Dropbox/Public/assets/#{PRG}/"
+	sh "rsync -vur --delete #{from} #{to}"
+end
