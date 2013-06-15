@@ -1,5 +1,28 @@
 <!DOCTYPE html><html><head><base href="http://lbv.github.io/ka-cs-programs/" /><meta name="description" content="Collection of assets created for the Khan Academy computer science
 platform." /><meta charset="utf-8" /><link rel="stylesheet" href="css/vendor/normalize.css" /><link rel="stylesheet" href="css/vendor/unsemantic.css" /><link rel="stylesheet" href="css/vendor/highlight/pojoaque.css" /><link rel="stylesheet" href="css/global.css" /><title>Using Web Storage | KA CS</title><link href="//fonts.googleapis.com/css?family=Roboto:700" rel="stylesheet" type="text/css" /></head><body><header class="grid-container site-header"><div class="grid-100"><span class="ka">KA</span><span class="cs">CS</span></div><div class="grid-100 tagline"><span>Coding for the Khan Academy computer science platform</span></div><nav class="grid-100"><a href="">Home</a><span> &#8883; </span><a href="#tutorials">Tutorials</a><span> &#8883; </span><span>Web Storage</span></nav></header><section class="grid-container site-body"><h1>Using Web&nbsp;Storage</h1>
+<h3>Document&nbsp;History</h3>
+<table><thead>
+<tr><th align="center">Date</th><th align="center">Changes</th></tr>
+</thead><tbody>
+<tr>
+  <td>2013-06-15</td>
+  <td>
+    <ul>
+      <li>Added information about the <code>remoteItem</code> method.</li>
+      <li>Fixed a bug in the final example, to avoid &#8220;double&nbsp;counts&#8221;.</li>
+      <li>Other minor&nbsp;corrections.</li>
+    </ul>
+  </td>
+</tr>
+<tr>
+  <td>2013-06-11</td>
+  <td>
+    First release.
+  </td>
+</tr>
+</tbody></table>
+
+<hr>
 <p>I&#8217;ve recently created a program called <a href="programs/portia-puzzles.html">The Portia Puzzles</a>, which
 includes a feature that some people have found interesting: it stores the
 progress made by the user so that, even if the browser gets closed, the next
@@ -20,8 +43,8 @@ And more specifically, in K.A.&nbsp;programs.</p>
 This guide is about elements that are part of the <span class="caps">HTML5</span>+JavaScript stack of
 technologies. However, they are undocumented in the Khan Academy&#8217;s Computer
 Science section. The examples here, and the general approach used in them,
-may stop working in the future, inside the K.A.. Nonetheless, this can still
-be useful if you decide to create your own stand&#8211;alone HTML5&nbsp;applications.
+may stop working in the K.A. environment in the future.  Nonetheless, this
+can still be useful if you decide to create your own stand&#8211;alone HTML5&nbsp;applications.
 </p>
 <p>
 Beyond the technical factors involved in using <span class="caps">HTML5</span> technologies like Web
@@ -102,8 +125,10 @@ remembered every time the program is run&nbsp;again:</p>
 <p>Hopefully you can follow what this code does without much effort.
 <code>localStorage</code> is the &#8220;channel&#8221; you use to interact with the browser&#8217;s local
 storage. It provides the methods <code>setItem</code> and <code>getItem</code>, which are pretty
-self&#8211;explanatory. The expression <code>floor(random(n))+1</code> simply calculates a
-pseudo&#8211;random integer between 1 and <em>n</em>.</p>
+self&#8211;explanatory. It also has a <code>removeItem</code> method, which does what you&#8217;d
+expect (we&#8217;ll see it in action later on). The expression
+<code>floor(random(n))+1</code> simply calculates a pseudo&#8211;random integer between 1
+and <em>n</em>.</p>
 <p>You may feel tempted to try this right now; to copy and paste this code into
 a <a href="https://www.khanacademy.org/cs/new">new program</a> in the K.A.. That&#8217;s a
 great idea! I like your enthusiasm and curiosity! Please, go right ahead and
@@ -126,8 +151,8 @@ and so on) can be used directly in your programs, without any special
 boilerplate code, or the need to access
 <code>deep.attributes.inside.javascript.code</code>. At the same time, many symbols
 that are the bread and butter of many JavaScript programs (like <code>String</code>,
-<code>RegExp</code>, <code>Error</code>, etc.) are <em>not</em> available in the <span class="caps">K.A.</span> environment&#8217;s main
-scope, so we can&#8217;t access them <em>directly</em>.</p>
+<code>Date</code>, <code>RegExp</code>, <code>Error</code>, etc.) are <em>not</em> available in the <span class="caps">K.A.
+</span>environment&#8217;s main scope, so we can&#8217;t access them <em>directly</em>.</p>
 <p>This does not necessarily mean, however, that the <span class="caps">K.A.</span> team in charge of the
 C.S. section has deliberately &#8220;removed&#8221; or forbade the use of certain
 basic elements from the JavaScript language. There certainly is a lot of
@@ -177,9 +202,11 @@ affecting every program in there, is that the default <a href="http://en.wikiped
 which your program runs is not JavaScript&#8217;s real <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects">global scope</a>.
 Instead, it runs in a special scope, chained to lookup symbols from a
 <a href="http://processingjs.org/articles/jsQuickStart.html#javascriptonlyprocessingcode">Processing.js instance</a> by default. (By the way, have you
-noticed how much I seem to like the word &#8220;scope&#8221;? What&#8217;s the deal with&nbsp;that?)</p>
+noticed how much I seem to like the word &#8220;scope&#8221;? What&#8217;s the deal with that?
+Maybe it&#8217;s the way it sounds? Scope, scope, bo&#8211;bope / Banana&#8211;fana fo&#8211;fope
+/ Fee&#8211;fi&#8211;mo&#8211;mope /&nbsp;Scope&#8230;)</p>
 <p>Objects like <code>localStorage</code> live in the global scope, so how to reach that
-place? Well the <code>(function() { /* code here */ })();</code> pattern is an
+place? Well, the <code>(function() { /* code here */ })();</code> pattern is an
 effective way to do it. It works because, in JavaScript, an <a href="http://en.wikipedia.org/wiki/Anonymous_function">anonymous
 function</a> always runs in the global scope by&nbsp;default.</p>
 <p>If you feel like I&#8217;m going crazy, and the last couple of paragraphs look
@@ -238,9 +265,9 @@ useless &#8212;it becomes something like <code>"[object Object]"</code>.</p>
 <p>What to do? Well, no need to fret, my friend. There is a fairly simple
 mechanism that works well in <span class="caps">JS</span>, which is called
 <a href="http://www.json.org/"><span class="caps">JSON</span></a>. Technically, it is a data&#8211;interchange format,
-or &#8212;in other words&#8212;  a set of strict rules that specify how to arrange
-data so that it can be moved around and understood by different parties
-(people or machines). Sounds like something useful for our situation,&nbsp;right?</p>
+or, in other words, a set of strict rules that specify how to arrange data
+so that it can be moved around and understood by different parties (people
+or machines). Sounds like something useful for our situation,&nbsp;right?</p>
 <p>Something nice is that, &#8220;JavaScript&#8221; accounting for the first two letters in
 the <span class="caps">JSON</span> acronym, it&#8217;s no surprise that the JavaScript language has good
 built&#8211;in support for JSON. There is a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON"><code>JSON</code></a> object that
@@ -281,8 +308,12 @@ println(<span class="string">"The counter is: "</span> + data.counter);
 storage.setItem(<span class="string">'dot-program-data'</span>, json.stringify(data));
 
 println(<span class="string">"The data has been stored"</span>);</code></pre>
+<p>It seems now like we&#8217;re getting somewhere. Let&#8217;s complete our <em>Dot</em> project,
+shall&nbsp;we?</p>
 <h2>Full&nbsp;Example</h2>
-<p>We&#8217;re now ready to release our soon&#8211;to&#8211;be&#8211;famous <em>Dot</em>&nbsp;program:</p>
+<p>So, let&#8217;s throw our previous code in a pot, add the drawing of the dot, some
+control with the keyboard, the ability to delete the web storage data, and,
+<em>baby, we&#8217;ve got a stew&nbsp;going&#8230;</em></p>
 <p>
   <strong>Example:</strong>
   <a href="http://www.khanacademy.org/cs/example-the-dot-using-web-storage/1722256361" title="See this example running!">The Dot, using Web&nbsp;Storage</a>
@@ -296,27 +327,36 @@ println(<span class="string">"The data has been stored"</span>);</code></pre>
 })();
 
 <span class="keyword">var</span> data;
+<span class="keyword">var</span> dataJSON;
 <span class="keyword">var</span> dotRadius = <span class="number">2</span>;
 <span class="keyword">var</span> dotStep   = <span class="number">3</span>;
 <span class="keyword">var</span> pressedKeys = {};
 
-<span class="keyword">var</span> dataJSON = storage.getItem(<span class="string">'dot-program-data'</span>);
-
-<span class="keyword">if</span> (dataJSON) {
-    data = json.parse(dataJSON);
-}
-<span class="keyword">else</span> {
+<span class="keyword">var</span> initializeData = <span class="keyword">function</span>() {
     data = {
         counter: <span class="number">0</span>,
         X: <span class="number">200</span>,
         Y: <span class="number">200</span>
     };
+};
+
+dataJSON = storage.getItem(<span class="string">'dot-program-data'</span>);
+
+<span class="keyword">if</span> (dataJSON) {
+    data = json.parse(dataJSON);
+}
+<span class="keyword">else</span> {
+    initializeData();
 }
 
 data.counter = data.counter + <span class="number">1</span>;
 
-<span class="keyword">var</span> msg = <span class="string">"Welcome, you have run this program "</span> +
-    data.counter + <span class="string">" times"</span>;
+<span class="keyword">var</span> msgCounter = <span class="string">"Welcome, you have run this program "</span> +
+    data.counter + <span class="string">" time(s)\n Press C to clear the data"</span>;
+
+<span class="keyword">var</span> msgCleared = <span class="string">"You have cleared the stored data"</span>;
+
+<span class="keyword">var</span> hasBeenCleared = <span class="literal">false</span>;
 
 <span class="keyword">var</span> saveData = <span class="keyword">function</span>() {
     <span class="keyword">var</span> jsonData = json.stringify(data);
@@ -325,15 +365,23 @@ data.counter = data.counter + <span class="number">1</span>;
 
 saveData();
 
-<span class="keyword">var</span> keyPressed = <span class="keyword">function</span>() {
+
+<span class="keyword">this</span>.keyPressed = <span class="keyword">function</span>() {
     pressedKeys[keyCode] = <span class="literal">true</span>;
+
+    <span class="comment">// C is keyCode 67</span>
+    <span class="keyword">if</span> (keyCode === <span class="number">67</span>) {
+        storage.removeItem(<span class="string">'dot-program-data'</span>);
+        initializeData();
+        hasBeenCleared = <span class="literal">true</span>;
+    }
 };
 
-<span class="keyword">var</span> keyReleased = <span class="keyword">function</span>() {
+<span class="keyword">this</span>.keyReleased = <span class="keyword">function</span>() {
     pressedKeys[keyCode] = <span class="literal">false</span>;
 };
 
-<span class="keyword">var</span> draw = <span class="keyword">function</span>() {
+<span class="keyword">this</span>.draw = <span class="keyword">function</span>() {
     background(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>);
 
     <span class="comment">// the dot</span>
@@ -344,7 +392,13 @@ saveData();
     <span class="comment">// the message</span>
     fill(<span class="number">0</span>, <span class="number">0</span>, <span class="number">255</span>);
     textAlign(<span class="caps">CENTER</span>, TOP);
-    text(msg, <span class="number">200</span>, <span class="number">8</span>);
+
+    <span class="keyword">if</span> (hasBeenCleared) {
+        text(msgCleared, <span class="number">200</span>, <span class="number">8</span>);
+    }
+    <span class="keyword">else</span> {
+        text(msgCounter, <span class="number">200</span>, <span class="number">8</span>);
+    }
 
     <span class="comment">// control movement</span>
     <span class="keyword">var</span> moved = <span class="literal">false</span>;
@@ -370,6 +424,18 @@ saveData();
         saveData();
     }
 };</code></pre>
+<p>By the way, careful observers might notice that I&#8217;ve declared
+<em>Processing.js</em> functions like <code>draw</code> as <code>this.draw = ...</code> instead of
+<code>var draw = ...</code> or simply <code>draw = ...</code>. The reason for this is to avoid a
+small glitch (probably related to the code injection mechanism implemented
+in the <span class="caps">K.A.</span> environment) that causes the program to be run two times in
+rapid succession when it&#8217;s opened in a browser. This would produce an
+unexpected behaviour where you would see the message &#8220;you have run this
+program 2 time(s)&#8221; the first time you run it, and then 4, and then 6, and so&nbsp;on.</p>
+<p>Life in software development is filled with moments like this, where you
+have something in your mind that &#8212;in theory&#8212; should work flawlessly. And
+then you implement it and, surprise! The upside from this is that you get to
+learn a lot from these experiences&nbsp;=).</p>
 <h2>Final&nbsp;Recommendations</h2>
 <p>Remember when I mentioned that we were going to talk more about how web
 storage has a size limit of about 5 <span class="caps">MB</span> <em>per origin</em>? Me neither. But let&#8217;s
@@ -411,10 +477,11 @@ Use web storage for data that you would not miss if it dissapears or gets
 corrupted for some&nbsp;reason.</p>
 </li>
 <li><p>Adjust your code, given the possibility that the stored data may get
-modified by external forces. Some programmers refer to this as <a href="http://en.wikipedia.org/wiki/Defensive_programming">defensive
-programming</a>. For example, if your program stores something as
-<code>data.score</code>, which is expected to be an integer, be prepared for the case
-where <code>data.score</code> may be stored as a string, or an array, or some other&nbsp;thing.</p>
+modified by external forces. Software developers sometimes refer to this
+as <a href="http://en.wikipedia.org/wiki/Defensive_programming">defensive programming</a>. For example, if your program stores
+something as <code>data.score</code>, which is expected to be an integer, be prepared
+for the case where <code>data.score</code> may be stored as a string, or an array, or
+some other&nbsp;thing.</p>
 </li>
 <li><p>Having said that, don&#8217;t get too caught up in trying to account for
 <em>everything</em>. If the data you persist is in fact nothing too serious, then
