@@ -7,7 +7,7 @@ var mamLoad=function(m){return function(a){mamLoad.f=true;
 (function(){var t=this;var i=function(){if(mamLoad.f){if(
 !t._mamScript){t.$.ajaxSetup({cache:true});t._mamScript=t.
 $.getScript("//googledrive.com/host/0BzcEQMWUa0znRE1wQU9"+
-"KUGR2R2s/mam/mam-pre3-min.js");}t._mamScript.done(
+"KUGR2R2s/mam/mam-pre5p1-min.js");}t._mamScript.done(
 function(){if(!t._mam){t._mam=new (t.MAM)(a,m);}t._mam.
 run();});}};t.setTimeout(i,0);})();};}(this);
 
@@ -32,6 +32,8 @@ var animation = {
 var musicPlaying = false;
 
 var toggleMusic = function() {
+	if (! media.audio.theme) { return; }
+
 	if (musicPlaying) {
 		media.audio.theme.pause();
 	}
@@ -58,26 +60,30 @@ var drawIntro = function() {
 		"Press the SPACE key to continue", 200, 200);
 };
 
+//
+// Show information about audio (if the browser suuports it)
+//
+var drawAudioInfo = function() {
+	if (! media.support.audio) { return; }
 
-//
-// Key-press handler
-//
-var keyPressed = function() {
-	if (showIntro) {
-		if (keyCode === 32) {  // Space
-			showIntro = false;
+	textAlign(RIGHT, BASELINE);
+	textFont(media.fonts[2], 12);
+	fill(255, 255, 255);
+
+	if (media.audio.theme) {
+		var msg;
+		if (musicPlaying) {
+			msg = "Music is playing, press M to pause it";
 		}
+		else {
+			msg = "Music is paused, press M to play";
+		}
+		text(msg, 392, 392);
 	}
-	else {
-		if (keyCode === 77) {  // M
-			toggleMusic();
-		}
-		else if (keyCode === 83) {  // S
-			media.audio.boom.play();
-		}
+	if (media.audio.boom) {
+		text("Press S to play a sound effect", 392, 374);
 	}
 };
-
 
 //
 // This will be the new `draw` function after the assets
@@ -161,19 +167,7 @@ var drawScene = function() {
 		y += size + 12;
 	}
 
-	// Information about audio
-	textAlign(RIGHT, BASELINE);
-	textFont(media.fonts[2], 12);
-	fill(255, 255, 255);
-	var msg;
-	if (musicPlaying) {
-		msg = "Music is playing, press M to pause it";
-	}
-	else {
-		msg = "Music is paused, press M to play";
-	}
-	text(msg, 392, 392);
-	text("Press S to play a sound effect", 392, 374);
+	drawAudioInfo();
 };
 
 
@@ -185,6 +179,7 @@ var baseUrl = 'https://dl.dropboxusercontent.com/u/' +
 	'17178990/assets/mam-demo';
 
 var config = {
+	debug: true,
 	images: {
 		tiles: baseUrl + '/img/tiles.png',
 		guy: baseUrl + '/img/guy.png'
@@ -241,8 +236,14 @@ var config = {
 	},
 
 	audio: {
-		theme: baseUrl + '/snd/theme.ogg',
-		boom: baseUrl + '/snd/boom.ogg'
+		theme: [
+			baseUrl + '/snd/theme.ogg',
+			baseUrl + '/snd/theme.mp3'
+		],
+		boom: [
+			baseUrl + '/snd/boom.ogg',
+			baseUrl + '/snd/boom.mp3'
+		]
 	},
 
 	fonts: [
@@ -278,7 +279,7 @@ mamLoad(config);
 var angle = 0;
 var angleMode = "radians";
 
-var draw = function() {
+this.draw = function() {
 	background(255, 255, 255);
 
 	// write message
@@ -298,4 +299,23 @@ var draw = function() {
 	popMatrix();
 
 	angle += PI/12;
+};
+
+//
+// Key-press handler
+//
+this.keyPressed = function() {
+	if (showIntro) {
+		if (keyCode === 32) {  // Space
+			showIntro = false;
+		}
+	}
+	else if (media.support.audio) {
+		if (keyCode === 77) {  // M
+			toggleMusic();
+		}
+		else if (keyCode === 83) {  // S
+			media.audio.boom.play();
+		}
+	}
 };
