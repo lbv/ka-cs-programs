@@ -1,6 +1,7 @@
 /*/*/assets/out
-/**/assets/**/*.xcf
+/**/assets/**/*.jpg
 /**/assets/**/*.png
+/**/assets/**/*.xcf
 
 /*/*/gen
 /*/*/out
