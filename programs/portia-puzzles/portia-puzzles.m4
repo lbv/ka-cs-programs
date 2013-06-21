@@ -4,7 +4,7 @@ m4_undivert(`gen/top-summary.md')
 **/
 
 var DEBUG = false;
-var ENV   = 'dev';
+var ENV   = 'prod';
 
 var URLS = {
 	dev: {
