@@ -14,8 +14,7 @@ PRG = 'portia-puzzles'
 	'src/states-extras.js'
 ]
 
-@less = {
-	'assets/orig/portia.less' => 'assets/css/portia.css'
-}
+@less = [ 'portia' ]
+@html = [ 'ui' ]
 
 import "#{File.dirname(__FILE__)}/../../tools/rake-common.rb"

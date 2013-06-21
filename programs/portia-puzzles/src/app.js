@@ -774,12 +774,11 @@ App.unlock = function(puzzle) {
 };
 
 App.init = function() {
-	var baseURL = '//dl.dropboxusercontent.com/u/17178990' +
-		'/assets/portia-puzzles';
+	var baseURL = URLS[ENV].APP_BASE;
 
 	imageMode(CENTER);
 	$global.addCSS(
-		'portia-styles', baseURL + '/css/portia.css');
+		'portia-styles', baseURL + 'css/portia.css');
 
 	App.json    = $global.get('JSON');
 	App.storage = $global.get('localStorage');
@@ -795,11 +794,11 @@ App.init = function() {
 
 	var mamConfig = {
 		images: {
-			backgrounds: baseURL + '/img/backgrounds.jpg',
-			chests: baseURL + '/img/chests.png',
-			dagger: baseURL + '/img/dagger.png',
-			frame: baseURL + '/img/frame.png',
-			portraits: baseURL + '/img/portraits.jpg'
+			backgrounds: baseURL + 'img/backgrounds.jpg',
+			chests: baseURL + 'img/chests.png',
+			dagger: baseURL + 'img/dagger.png',
+			frame: baseURL + 'img/frame.png',
+			portraits: baseURL + 'img/portraits.jpg'
 		},
 
 		sprites: {
@@ -850,7 +849,7 @@ App.init = function() {
 	};
 
 	var htmlPromise = $global.ajax(
-		'UI', baseURL + '/htm/ui.htm', 'html');
+		'UI', baseURL + 'htm/ui.htm', 'html');
 	htmlPromise.done(function(data) {
 		$global.insertHTML(data);
 	});
